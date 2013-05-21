@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-controller="PageController">
+<head>
+	<title>Scylla - Keeping Mariners on their toes for 10,000 years</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="components/bootstrap/css/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="styles/scylla.css" media="screen">
+    <link rel="stylesheet" href="components/toastr/toastr.css" media="screen">
+	<script type="text/javascript" src="components/jquery/jquery.js"></script>
+	<script type="text/javascript" src="components/angular/angular.js"></script>
+	<script type="text/javascript" src="dpd.js"></script>
+</head>
+<body>
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container">
+	          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="brand" href="#">Scylla</a>
+	          <div class="nav-collapse collapse">
+	            <ul class="nav">
+	              <li ng-repeat="page in pages" ng-id="{{page.id}}" ng-class="isActive(page)">
+                      <a ng-href="{{page.href}}">{{page.label}}</a>
+                  </li>
+	            </ul>
+	          </div><!--/.nav-collapse -->
+	        </div>
+		</div>
+	</div>
+	<div id="mainView" ng-view>
+        <h1>This is Scylla!</h1>
+	</div>
+
+	<a id="addReport" href="#">Add Report</a>
+	<script>
+		$("#addReport").click(function(){
+			dpd.reports.post({name:"Test", url:"http://test/"})
+		})
+	</script>
+	<script type="text/javascript" src="components/bootstrap/js/bootstrap.js"></script>
+    <script data-main="app/main" src="components/requirejs/require.js"></script>
+</body>
+</html>

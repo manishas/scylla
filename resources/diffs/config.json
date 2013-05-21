@@ -1,0 +1,61 @@
+{
+	"type": "Collection",
+	"properties": {
+		"reportResultA": {
+			"name": "reportResultA",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "reportResultA",
+			"order": 0
+		},
+		"reportResultAName": {
+			"name": "reportResultAName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "reportResultAName",
+			"order": 1
+		},
+		"reportResultB": {
+			"name": "reportResultB",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "reportResultB",
+			"order": 2
+		},
+		"reportResultBName": {
+			"name": "reportResultBName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "reportResultBName",
+			"order": 3
+		},
+		"distortion": {
+			"name": "distortion",
+			"type": "number",
+			"typeLabel": "number",
+			"required": true,
+			"id": "distortion",
+			"order": 4
+		},
+		"image": {
+			"name": "image",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "image",
+			"order": 5
+		},
+		"meta": {
+			"name": "meta",
+			"type": "object",
+			"typeLabel": "object",
+			"required": false,
+			"id": "meta",
+			"order": 6
+		}
+	}
+}

@@ -1,0 +1,18 @@
+body{
+    height: 100%;
+    background: #EEEEEE url("../images/scylla.png") no-repeat fixed 100% 100%;
+}
+#mainView{
+    margin-top:-20px;/* bootstrap navbar has a 20px navbar bottom */
+    background:rgba(255, 255, 255, 0.7);
+    padding:10px;
+}
+
+.bigThumb{
+    width:120px;
+    height:120px;
+}
+
+.masterResultHeader{
+    color:green;
+}

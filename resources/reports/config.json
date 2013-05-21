@@ -1,0 +1,29 @@
+{
+	"type": "Collection",
+	"properties": {
+		"name": {
+			"name": "name",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "name",
+			"order": 0
+		},
+		"url": {
+			"name": "url",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "url",
+			"order": 1
+		},
+		"masterResult": {
+			"name": "masterResult",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "masterResult",
+			"order": 2
+		}
+	}
+}

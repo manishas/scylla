@@ -1,0 +1,38 @@
+<div>
+    <div class="pull-right">
+        <a data-toggle="modal" data-target="#newReport" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> New</a>
+    </div>
+    <h1>Reports</h1>
+    <div class="media" ng-repeat="report in reports">
+        <a class="pull-left" href="#">
+            <img class="media-object bigThumb" src="{{ getThumbnail(report) }}">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading"><a ng-href="#/reports/{{report.id}}">{{report.name}}</a></h4>
+            <span>Stats</span>
+        </div>
+    </div>
+    <div id="newReport" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Create a New Report</h3>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-error" style="display:none">
+                    There was an error.
+                </div>
+                <form class="form-horizontal" ng-submit="addReport(newReportTitle, newReportUrl)">
+                    <input id="report-title" type="text" ng-model="newReportTitle"
+                           placeholder="Identifiable Report Name" required
+                           class="input-xxlarge" />
+                    <input id="report-url" type="text" ng-model="newReportUrl"
+                           placeholder="http://app.simplymeasured.com/report/id" required
+                           class="input-xxlarge" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-primary" ng-click="addReport(newReportTitle, newReportUrl)">Add Report</button>
+            </div>
+    </div>
+</div>

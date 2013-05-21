@@ -1,0 +1,45 @@
+{
+	"type": "Collection",
+	"properties": {
+		"report": {
+			"name": "report",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "report",
+			"order": 0
+		},
+		"timestamp": {
+			"name": "timestamp",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "timestamp",
+			"order": 1
+		},
+		"result": {
+			"name": "result",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "result",
+			"order": 2
+		},
+		"diff": {
+			"name": "diff",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "diff",
+			"order": 3
+		},
+		"meta": {
+			"name": "meta",
+			"type": "object",
+			"typeLabel": "object",
+			"required": false,
+			"id": "meta",
+			"order": 4
+		}
+	}
+}

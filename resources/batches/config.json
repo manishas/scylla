@@ -1,0 +1,29 @@
+{
+	"type": "Collection",
+	"properties": {
+		"name": {
+			"name": "name",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "name",
+			"order": 0
+		},
+		"watchers": {
+			"name": "watchers",
+			"type": "array",
+			"typeLabel": "array",
+			"required": true,
+			"id": "watchers",
+			"order": 1
+		},
+		"reports": {
+			"name": "reports",
+			"type": "array",
+			"typeLabel": "array",
+			"required": true,
+			"id": "reports",
+			"order": 2
+		}
+	}
+}

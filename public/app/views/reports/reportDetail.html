@@ -1,0 +1,14 @@
+<div>
+    <h2>{{report.name}}</h2>
+    <div class="media" ng-repeat="result in report.results">
+        <a class="pull-left" href="#">
+            <img class="media-object bigThumb" ng-src="{{result.result}}">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading {{getResultHeaderClass(result)}}">{{formatResultHeader(result)}}<ui-if></ui-if></h4>
+            <ol>
+                <li ng-repeat="diff in result.diffs">{{dateFormat(diff.reportResultAName)}} <i class="icon-arrow-right"></i> {{dateFormat(diff.reportResultBName)}}</li>
+            </ol>
+        </div>
+    </div>
+</div>
