@@ -13,6 +13,32 @@ body{
     height:120px;
 }
 
-.masterResultHeader{
+.masterResult .media-heading{
     color:green;
+}
+.masterResult .notMasterStar{
+    display:none;
+}
+.notMasterResult .masterStar{
+    display:none;
+}
+.clickable{
+    cursor: pointer;
+}
+.gold {
+    color:#ffd700;
+}
+.actionColor{
+    color:blue;
+}
+
+.diff.resultAIsMaster .resultA, .diff.resultBIsMaster .resultB{
+    color:green;
+}
+
+.diff.pass .distortion{
+    color:#AAAAAA;
+}
+.diff.fail .distortion{
+    color:#FF0000;
 }

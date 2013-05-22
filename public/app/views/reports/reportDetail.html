@@ -1,13 +1,21 @@
 <div>
     <h2>{{report.name}}</h2>
-    <div class="media" ng-repeat="result in report.results">
+    <div class="media {{getResultClass(result)}}" ng-repeat="result in report.results">
         <a class="pull-left" href="#">
             <img class="media-object bigThumb" ng-src="{{result.result}}">
         </a>
         <div class="media-body">
-            <h4 class="media-heading {{getResultHeaderClass(result)}}">{{formatResultHeader(result)}}<ui-if></ui-if></h4>
+            <h4 class="media-heading">{{formatResultHeader(result)}}
+                <i class="icon-star gold masterStar" title="Master"></i>
+                <a class="clickable notMasterStar" ng-click="setNewMaster(result)"><i class="icon-star-empty actionColor" title="Set as New Master"></i></a>
+            </h4>
             <ol>
-                <li ng-repeat="diff in result.diffs">{{dateFormat(diff.reportResultAName)}} <i class="icon-arrow-right"></i> {{dateFormat(diff.reportResultBName)}}</li>
+                <li ng-repeat="diff in result.diffs" class="diff {{getDiffClass(diff)}}">
+                    <span class="resultA">{{dateFormat(diff.reportResultAName)}}</span>
+                    <i class="icon-arrow-right"></i>
+                    <span class="resultB">{{dateFormat(diff.reportResultBName)}}</span>
+                    <span class="distortion">{{diff.distortion}}</span>
+                </li>
             </ol>
         </div>
     </div>

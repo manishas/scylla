@@ -1,8 +1,8 @@
 Scylla
 ======
+Scylla - Keeping Mariners on their toes for 10,000 years
 
-A tool for snatching snapshots of urls... specifically, reports.
-
+A tool for managing snapshots of urls... specifically, reports.
 
 
 
