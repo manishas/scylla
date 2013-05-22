@@ -1,0 +1,63 @@
+<div>
+
+    <div class="diffControl">
+        <div class="controls">
+            <span class="selectors">
+                <span>{{diff.report.name}}</span>
+                &nbsp;&nbsp;
+                <a href="{{diff.report.url}}"><i class="icon-globe" title="View Url"></i></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type  = "radio"
+                       name  = "diffStyle"
+                       id    = "swipe"
+                       value = "small" />
+                <label for   = "swipe">Swipe</label>
+
+                <input type  = "radio"
+                       name  = "diffStyle"
+                       id    = "onion"
+                       value = "medium"
+                       checked />
+                <label for = "onion">Diff Overlay</label>
+            </span>
+            <input id="slider" type="range" min="0" step="0.2" max="100" value="100" style="width:100%" />
+        </div>
+        <img class="master" ng-src="{{diff.reportResultA.result}}"
+        /><img class="output" ng-src="{{diff.reportResultB.result}}"
+        /><img class="diff" ng-src="{{diff.image}}" />
+
+    </div>
+    <script>
+        $(".diff").load(function(){
+            $(".controls").width($(".diff").width());
+        })
+        //$(".diff").resize();
+        $("#swipe").click(function(){
+            $(".diff").hide();
+            $("#slider").unbind("change");
+            $("#slider").change(function(){
+                var $o = $(".output");
+                var position = (this.value / 100) * $o.width();
+                $o.css("clip", "rect(0px, " + $o.width() + "px, " + $o.height() + "px, " + position +"px)");
+            });
+            $("#slider").change();
+
+        });
+        $("#onion").click(function(){
+            $(".output").css("clip","auto");
+            $(".diff").show();
+            $("#slider").unbind("change");
+            $("#slider").change(function(){
+                $(".diff").css("opacity", this.value / 100);
+            });
+            $("#slider").change();
+        });
+        $("#onion").click();
+        jwerty.key('s', function(){
+            $("#swipe").click();
+        });
+        jwerty.key('o', function(){
+            $("#onion").click();
+        })
+    </script>
+</div>

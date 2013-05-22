@@ -42,3 +42,35 @@ body{
 .diff.fail .distortion{
     color:#FF0000;
 }
+
+
+
+/** Diff Detail **/
+input, label{
+    display:inline;
+}
+.diffControl {
+    min-height: 1000px;
+    position:absolute;
+}
+.diffControl .selectors{
+    padding: 20px 30px;
+
+}
+
+.diffControl .controls{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width:100%;
+    box-sizing:border-box;
+    margin: 43px 0px 0 0px;
+    background-color: #EEEEFF;
+}
+
+.diffControl img{
+    position:absolute;
+    top:25px;
+    margin-left:-10px;
+}

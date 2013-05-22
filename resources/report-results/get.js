@@ -1,21 +1,23 @@
-
-this.diffs = [];
-dpd.diffs.get(
-    { $or:[
-        {reportResultA: this.id},
-        {reportResultB: this.id}
-        ], 
-    /** This seems like a bug, this certainly isn't a recursive call, but it fails without a high limit */
-    $limitRecursion: 255
+if(query.exclude !== "diffs"){
     
-    }, function(diffs, error) {
-    if(error){
-        console.log("Error:", error);
-    }
-    if(diffs){
-        this.diffs = diffs;
-        this.numDiffs = diffs.length;
-    } else {
-        console.log("No Diffs loaded for: " + this.id);
-    }
-});
+    this.diffs = [];
+    dpd.diffs.get(
+        { $or:[
+            {reportResultA: this.id},
+            {reportResultB: this.id}
+            ], 
+        /** This seems like a bug, this certainly isn't a recursive call, but it fails without a high limit */
+        $limitRecursion: 255
+        
+        }, function(diffs, error) {
+        if(error){
+            console.log("Error:", error);
+        }
+        if(diffs){
+            this.diffs = diffs;
+            this.numDiffs = diffs.length;
+        } else {
+            console.log("No Diffs loaded for: " + this.id);
+        }
+    });
+}

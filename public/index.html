@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/scylla.css" media="screen">
     <link rel="stylesheet" href="components/toastr/toastr.css" media="screen">
 	<script type="text/javascript" src="components/jquery/jquery.js"></script>
+    <script type="text/javascript" src="components/jwerty/jwerty.js"></script>
 	<script type="text/javascript" src="components/angular/angular.js"></script>
 	<script type="text/javascript" src="dpd.js"></script>
 </head>
@@ -34,12 +35,7 @@
         <h1>This is Scylla!</h1>
 	</div>
 
-	<a id="addReport" href="#">Add Report</a>
-	<script>
-		$("#addReport").click(function(){
-			dpd.reports.post({name:"Test", url:"http://test/"})
-		})
-	</script>
+
 	<script type="text/javascript" src="components/bootstrap/js/bootstrap.js"></script>
     <script data-main="app/main" src="components/requirejs/require.js"></script>
 </body>

@@ -15,6 +15,7 @@ require.config({
 require([
     'angular',
     'scyllaApp',
+    'controllers/diffDetailController',
     'controllers/pageController',
     'controllers/homeController',
     'controllers/reportController',
@@ -23,6 +24,9 @@ require([
 ], function (
     angular,
     scyllaApp,
+    DiffDetailController,
+    PageController,
+    HomeController,
     ReportController,
     ReportDetailController,
     BatchController
@@ -42,6 +46,9 @@ require([
             .when('/reports/:id',
                   {templateUrl:'app/views/reports/reportDetail.html',
                       controller:"ReportDetailController"})
+            .when('/diffs/:id',
+                  {templateUrl:'app/views/diffs/diffDetail.html',
+                      controller:"DiffDetailController"})
             .when('/batches',
                   {templateUrl:'app/views/batches.html',
                       controller:"BatchController"})
