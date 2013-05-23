@@ -4,10 +4,13 @@ require.config({
         jquery:"stubs/jquery",
         angular:"stubs/angular",
         toastr:"../components/toastr/toastr",
-        moment:"../components/moment/moment"
+        moment:"../components/moment/moment",
+        dpd:"/dpd"
     },
     shim:{
-
+        dpd:{
+            exports:'dpd'
+        }
     }
 });
 

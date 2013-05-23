@@ -5,14 +5,15 @@
     <h1>Reports</h1>
     <div class="media" ng-repeat="report in reports">
         <a class="pull-left" href="#">
-            <img class="media-object bigThumb" src="{{ getThumbnail(report) }}">
+            <img class="media-object bigThumb" ng-src="{{ getThumbnail(report) }}">
         </a>
         <div class="media-body">
-            <h4 class="media-heading"><a ng-href="#/reports/{{report.id}}">{{report.name}}</a></h4>
+            <h4 class="media-heading"><a ng-href="#/reports/{{report.id}}">{{report.name}}</a>
+                <a data-toggle="modal" data-target="#deleteReport" ng-click="deleteReport(report)" class="clickable"><i class="icon-trash" title="Delete Report"></i></a></h4>
             <span>Stats</span>
         </div>
     </div>
-    <div id="newReport" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="newReport" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">Create a New Report</h3>
@@ -34,5 +35,19 @@
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                 <button class="btn btn-primary" ng-click="addReport(newReportTitle, newReportUrl)">Add Report</button>
             </div>
+    </div>
+    <div id="deleteReport" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="deleteModalLabel">Delete Report</h3>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete this report?<br/>
+            {{reportToDelete.results.length}} Results and all associated diffs will be deleted as well.
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary" ng-click="confirmDeleteReport(reportToDelete)">Delete Report</button>
+        </div>
     </div>
 </div>

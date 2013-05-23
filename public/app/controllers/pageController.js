@@ -13,7 +13,7 @@ define([
             {label:"Batches", href:"#/batches", id:"batchesNav", active:false}
         ];
         $scope.isActive = function(item){
-            console.log(item.id, Page.firstLevelNavId());
+            //console.log(item.id, Page.firstLevelNavId());
             return item.id === Page.firstLevelNavId() ? "active" : "";
         }
 
