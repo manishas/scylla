@@ -1,11 +1,13 @@
 define([
     "scyllaApp",
     "toastr",
-    "moment"
+    "moment",
+    "dpd"
 ], function(
     scyllaApp,
     toastr,
-    moment
+    moment,
+    dpd
     ){
 
     return scyllaApp.controller("BatchDetailController", function($scope, $route, $routeParams, $http, Page) {
@@ -13,6 +15,13 @@ define([
         $scope.batch = {};
         $scope.selectedReportsToAdd = [];
         $scope.availableReports = [];
+        dpd.batchresults.on("create", function(batchResult){
+            console.log("DPD Event", batchResult);
+            if(batchResult.batchId == $scope.batch.id){
+                $scope.getBatch($scope.batch.id);
+            }
+        });
+
 
         var filterOutAlreadyIncludedReports = function(report){
             return !$scope.batch.reports.some(function(includedReport){
@@ -61,9 +70,6 @@ define([
                 })
         }
 
-        var resultSort = function(a,b){
-            return a.timestamp < b.timestamp;
-        }
 
         $scope.dateFormat = function(isoString) {
             return moment(isoString).format("MMMM Do, h:mm A");
@@ -96,7 +102,7 @@ define([
         $scope.getBatch = function(id){
             $http.get("/batches/" + id, {params:{includeResults:"true", includeReports:"true"}})
                 .success(function(batch){
-                    batch.results.sort(resultSort);
+                    batch.results.sort(function(a,b) { return a.end < b.end; } );
                     $scope.batch = batch
                 })
                 .error(function(err){
