@@ -1,4 +1,8 @@
 <div>
+    <div class="pull-right">
+        <a data-toggle="modal" data-target="#addBatch" ng-click="loadAvailableReports()" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> New Batch</a>
+    </div>
+
     <h1>Batches</h1>
     <div class="media batch" ng-repeat="batch in batches">
         <div class="media-body">
@@ -11,5 +15,27 @@
             </ol>
         </div>
     </div>
-
+    <div id="addBatch" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myEditBatchModalLabel">Add New Batch</h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-error" style="display:none">
+                There was an error.
+            </div>
+            <form class="form-horizontal" ng-submit="addBatch(newBatchName, newBatchReportIds)">
+                <input id="report-title" type="text" ng-model="newBatchName"
+                       placeholder="Identifiable Batch Name" required
+                       class="input-xxlarge" />
+                <select multiple="multiple" ng-model="newBatchReportIds" class="input-xxlarge">
+                    <option ng-repeat="report in availableReports" value="{{report.id}}">{{report.name}}</option>
+                </select>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary" ng-click="addBatch(newBatchName, newBatchReportIds)">Add Batch</button>
+        </div>
+    </div>
 </div>

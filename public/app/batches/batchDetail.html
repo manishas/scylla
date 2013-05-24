@@ -1,0 +1,80 @@
+<div>
+    <div class="pull-right">
+        <a data-toggle="modal" data-target="#addReport" ng-click="loadAvailableReports()" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Add Report</a>
+    </div>
+    <h2>
+        {{batch.name}}
+        <a data-toggle="modal" data-target="#editBatch" class="clickable"><i class="icon-edit" title="Edit Batch"></i></a>
+    </h2>
+    <div class="row-fluid">
+        <div class="span6">
+            <h3 style="display:inline">Reports</h3>
+            <div class="media" ng-repeat="report in batch.reports">
+                <a class="pull-left" href="#">
+                    <img class="media-object bigThumb" ng-src="{{ getThumbnail(report) }}">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading"><a ng-href="#/reports/{{report.id}}">{{report.name}}</a>
+                        <a data-toggle="modal" data-target="#deleteReport" ng-click="removeReport(report.id)" class="clickable"><i class="icon-trash" title="Delete Report"></i></a></h4>
+                    <span>Stats</span>
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <h3>Results</h3>
+            <div class="media" ng-repeat="result in batch.results">
+                <div class="media-body">
+                    <h4 class="media-heading">{{dateFormat(result.end)}}</h4>
+                    <ol>
+                        <li ng-repeat="reportResult in result.reportResultSummaries" class="reportResult">
+                            <span class="">{{reportResult.name}}</span>
+                            (<span class="{{getReportResultClass(reportResult)}}">{{reportResult.diff}}</span>)
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="addReport" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Add Report to Batch</h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-error" style="display:none">
+                There was an error.
+            </div>
+            <form class="form-horizontal" ng-submit="addReports(selectedReportsToAdd)">
+                <select multiple="multiple" ng-model="selectedReportsToAdd" class="input-xxlarge">
+                    <option ng-repeat="report in availableReports" value="{{report.id}}">{{report.name}}</option>
+                </select>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary" ng-click="addReports(selectedReportsToAdd)">Add Report</button>
+        </div>
+    </div>
+    <div id="editBatch" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myEditBatchModalLabel">Edit Batch</h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-error" style="display:none">
+                There was an error.
+            </div>
+            <form class="form-horizontal" ng-submit="editBatch(batch)">
+                <input id="report-title" type="text" ng-model="batch.name"
+                       placeholder="Identifiable Batch Name" required
+                       class="input-xxlarge" />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary" ng-click="editBatch(batch)">Save Batch</button>
+        </div>
+    </div>
+
+</div>

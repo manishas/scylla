@@ -1,12 +1,12 @@
 {
 	"type": "Collection",
 	"properties": {
-		"report": {
-			"name": "report",
+		"reportId": {
+			"name": "reportId",
 			"type": "string",
 			"typeLabel": "string",
 			"required": true,
-			"id": "report",
+			"id": "reportId",
 			"order": 0
 		},
 		"timestamp": {

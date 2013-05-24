@@ -1,12 +1,12 @@
 {
 	"type": "Collection",
 	"properties": {
-		"batch": {
-			"name": "batch",
+		"batchId": {
+			"name": "batchId",
 			"type": "string",
 			"typeLabel": "string",
 			"required": true,
-			"id": "batch",
+			"id": "batchId",
 			"order": 0
 		},
 		"pass": {
@@ -49,12 +49,12 @@
 			"id": "end",
 			"order": 5
 		},
-		"reportResults": {
-			"name": "reportResults",
+		"reportResultSummaries": {
+			"name": "reportResultSummaries",
 			"type": "object",
 			"typeLabel": "object",
 			"required": false,
-			"id": "reportResults",
+			"id": "reportResultSummaries",
 			"order": 6
 		}
 	}

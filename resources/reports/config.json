@@ -17,12 +17,12 @@
 			"id": "url",
 			"order": 1
 		},
-		"masterResult": {
-			"name": "masterResult",
+		"masterResultId": {
+			"name": "masterResultId",
 			"type": "string",
 			"typeLabel": "string",
 			"required": false,
-			"id": "masterResult",
+			"id": "masterResultId",
 			"order": 2
 		}
 	}

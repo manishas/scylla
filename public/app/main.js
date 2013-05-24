@@ -23,7 +23,8 @@ require([
     'home/homeController',
     'reports/reportController',
     'reports/reportDetailController',
-    'batches/batchController'
+    'batches/batchController',
+    'batches/batchDetailController'
 ], function (
     angular,
     scyllaApp,
@@ -32,7 +33,8 @@ require([
     HomeController,
     ReportController,
     ReportDetailController,
-    BatchController
+    BatchController,
+    BatchDetailController
     ) {
 
 
@@ -50,11 +52,14 @@ require([
                   {templateUrl:'app/reports/reportDetail.html',
                       controller:"ReportDetailController"})
             .when('/diffs/:id',
-                  {templateUrl:'app/views/diffs/diffDetail.html',
+                  {templateUrl:'app/diffs/diffDetail.html',
                       controller:"DiffDetailController"})
             .when('/batches',
                   {templateUrl:'app/batches/batches.html',
                       controller:"BatchController"})
+            .when('/batches/:id',
+                  {templateUrl:'app/batches/batchDetail.html',
+                      controller:"BatchDetailController"})
             .otherwise({redirectTo:"/home"})
     }]);
 

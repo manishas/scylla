@@ -9,20 +9,20 @@
 			"id": "name",
 			"order": 0
 		},
+		"reportIds": {
+			"name": "reportIds",
+			"type": "array",
+			"typeLabel": "array",
+			"required": true,
+			"id": "reportIds",
+			"order": 1
+		},
 		"watchers": {
 			"name": "watchers",
 			"type": "array",
 			"typeLabel": "array",
-			"required": true,
+			"required": false,
 			"id": "watchers",
-			"order": 1
-		},
-		"reports": {
-			"name": "reports",
-			"type": "array",
-			"typeLabel": "array",
-			"required": true,
-			"id": "reports",
 			"order": 2
 		}
 	}

@@ -75,13 +75,13 @@ input, label{
     margin-left:-10px;
 }
 
-.batch.media .pass{
+.batch.media .pass, .reportResult .pass{
     color:#7cfc00;
 }
-.batch.media .fail{
+.batch.media .fail, .reportResult .fail{
     color:#ff4500;
 }
-.batch.media .exception{
+.batch.media .exception, .reportResult .exception{
     color:#8b0000;
 }
 

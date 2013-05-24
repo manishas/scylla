@@ -1,20 +1,20 @@
 {
 	"type": "Collection",
 	"properties": {
-		"report": {
-			"name": "report",
+		"reportId": {
+			"name": "reportId",
 			"type": "string",
 			"typeLabel": "string",
 			"required": true,
-			"id": "report",
+			"id": "reportId",
 			"order": 0
 		},
-		"reportResultA": {
-			"name": "reportResultA",
+		"reportResultAId": {
+			"name": "reportResultAId",
 			"type": "string",
 			"typeLabel": "string",
 			"required": true,
-			"id": "reportResultA",
+			"id": "reportResultAId",
 			"order": 1
 		},
 		"reportResultAName": {
@@ -25,12 +25,12 @@
 			"id": "reportResultAName",
 			"order": 2
 		},
-		"reportResultB": {
-			"name": "reportResultB",
+		"reportResultBId": {
+			"name": "reportResultBId",
 			"type": "string",
 			"typeLabel": "string",
 			"required": true,
-			"id": "reportResultB",
+			"id": "reportResultBId",
 			"order": 3
 		},
 		"reportResultBName": {

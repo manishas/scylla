@@ -3,8 +3,8 @@ if(query.exclude !== "diffs"){
     this.diffs = [];
     dpd.diffs.get(
         { $or:[
-            {reportResultA: this.id},
-            {reportResultB: this.id}
+            {reportResultAId: this.id},
+            {reportResultBId: this.id}
             ], 
         /** This seems like a bug, this certainly isn't a recursive call, but it fails without a high limit */
         $limitRecursion: 255

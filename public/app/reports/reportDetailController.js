@@ -34,16 +34,16 @@ define([
             return moment(isoString).format("MMMM Do, h:mm A");
         };
         $scope.getResultClass = function(result) {
-            if($scope.report.masterResult && result.id == $scope.report.masterResult.id) {
+            if($scope.report.masterResultId && result.id == $scope.report.masterResultId) {
                 return "masterResult"
             }
             return "notMasterResult";
         };
         $scope.getDiffClass = function(diff){
             var classes = [];
-            if($scope.report.masterResult && diff.reportResultA == $scope.report.masterResult.id) {
+            if($scope.report.masterResult && diff.reportResultAId == $scope.report.masterResultId) {
                 classes.push( "resultAIsMaster");
-            } else if($scope.report.masterResult && diff.reportResultB == $scope.report.masterResult.id) {
+            } else if($scope.report.masterResult && diff.reportResultBId == $scope.report.masterResultId) {
                 classes.push( "resultBIsMaster");
             }
             classes.push (diff.distortion > 0 ? "fail" : "pass");
@@ -58,14 +58,21 @@ define([
         };
 
         $scope.setNewMaster = function setNewMaster(result){
-            $scope.report.masterResult = result.id;
-            $scope.saveReport($scope.report);
+            $scope.report.masterResultId = result.id;
             $scope.report.masterResult = result;
+            $scope.saveReport($scope.report);
         };
+
+        $scope.editReport = function(report) {
+            $scope.saveReport(report)
+                .success(function(){
+                    $("#editReport").modal('hide');
+                });
+        }
 
         $scope.saveReport = function(report){
             console.log("Save Report: ", report);
-            $http.put("/reports/" + report.id, report)
+            return $http.put("/reports/" + report.id, report)
                 .success(function(report){
                     toastr.success("Report Saved: " + report.name);
                  })
