@@ -18,12 +18,12 @@ require.config({
 require([
     'angular',
     'scyllaApp',
-    'controllers/diffDetailController',
-    'controllers/pageController',
-    'controllers/homeController',
-    'controllers/reportController',
-    'controllers/reportDetailController',
-    'controllers/batchController'
+    'diffs/diffDetailController',
+    'home/pageController',
+    'home/homeController',
+    'reports/reportController',
+    'reports/reportDetailController',
+    'batches/batchController'
 ], function (
     angular,
     scyllaApp,
@@ -41,19 +41,19 @@ require([
         console.log("Configuring Routes");
         $routeProvider
             .when('/home',
-                  {templateUrl:'app/views/home.html',
+                  {templateUrl:'app/home/home.html',
                       controller:"HomeController"})
             .when('/reports',
-                  {templateUrl:'app/views/reports.html',
+                  {templateUrl:'app/reports/reports.html',
                       controller:"ReportController"})
             .when('/reports/:id',
-                  {templateUrl:'app/views/reports/reportDetail.html',
+                  {templateUrl:'app/reports/reportDetail.html',
                       controller:"ReportDetailController"})
             .when('/diffs/:id',
                   {templateUrl:'app/views/diffs/diffDetail.html',
                       controller:"DiffDetailController"})
             .when('/batches',
-                  {templateUrl:'app/views/batches.html',
+                  {templateUrl:'app/batches/batches.html',
                       controller:"BatchController"})
             .otherwise({redirectTo:"/home"})
     }]);

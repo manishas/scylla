@@ -1,6 +1,6 @@
 define([
     "scyllaApp",
-    "services/page"
+    "home/page"
 ], function(
     scyllaApp,
     Page

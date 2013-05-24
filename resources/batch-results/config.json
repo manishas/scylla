@@ -3,8 +3,8 @@
 	"properties": {
 		"batch": {
 			"name": "batch",
-			"type": "object",
-			"typeLabel": "object",
+			"type": "string",
+			"typeLabel": "string",
 			"required": true,
 			"id": "batch",
 			"order": 0
@@ -35,24 +35,24 @@
 		},
 		"start": {
 			"name": "start",
-			"type": "object",
-			"typeLabel": "object",
+			"type": "string",
+			"typeLabel": "string",
 			"required": true,
 			"id": "start",
 			"order": 4
 		},
 		"end": {
 			"name": "end",
-			"type": "object",
-			"typeLabel": "object",
+			"type": "string",
+			"typeLabel": "string",
 			"required": true,
 			"id": "end",
 			"order": 5
 		},
 		"reportResults": {
 			"name": "reportResults",
-			"type": "array",
-			"typeLabel": "array",
+			"type": "object",
+			"typeLabel": "object",
 			"required": false,
 			"id": "reportResults",
 			"order": 6

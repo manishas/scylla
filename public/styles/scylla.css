@@ -74,3 +74,15 @@ input, label{
     top:25px;
     margin-left:-10px;
 }
+
+.batch.media .pass{
+    color:#7cfc00;
+}
+.batch.media .fail{
+    color:#ff4500;
+}
+.batch.media .exception{
+    color:#8b0000;
+}
+
+}

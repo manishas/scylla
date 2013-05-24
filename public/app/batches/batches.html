@@ -1,0 +1,15 @@
+<div>
+    <h1>Batches</h1>
+    <div class="media batch" ng-repeat="batch in batches">
+        <div class="media-body">
+            <h4 class="media-heading"><a href="#/batches/{{batch.id}}">{{batch.name}}</a></h4>
+            <ol>
+                <li ng-repeat="result in batch.results">
+                    <a href="#/batchresult/{{result.id}}">{{dateFormat(result.end)}}</a>
+                    <span class="pass">{{result.pass}}</span>/<span class="fail">{{result.fail}}</span>/<span class="exception">{{result.exception}}</span>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+</div>
