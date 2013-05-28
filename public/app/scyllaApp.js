@@ -1,10 +1,14 @@
 define([
-    "angular"
+    "angular",
+    "aBootstrap"
 ], function(
-    angular
+    angular,
+    aBootstrap
     ){
+    var app = angular.module("scyllaApp",["ui.bootstrap"]);
 
-    return angular.module("scyllaApp",[]);
+
+    return app;
 
 })
 

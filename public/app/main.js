@@ -2,6 +2,7 @@
 require.config({
     paths:{
         jquery:"stubs/jquery",
+        aBootstrap:"../components/angular-bootstrap/ui-bootstrap-tpls",
         angular:"stubs/angular",
         toastr:"../components/toastr/toastr",
         moment:"../components/moment/moment",
@@ -24,7 +25,8 @@ require([
     'reports/reportController',
     'reports/reportDetailController',
     'batches/batchController',
-    'batches/batchDetailController'
+    'batches/batchDetailController',
+    'batches/batchResultController'
 ], function (
     angular,
     scyllaApp,
@@ -34,9 +36,9 @@ require([
     ReportController,
     ReportDetailController,
     BatchController,
-    BatchDetailController
+    BatchDetailController,
+    BatchResultController
     ) {
-
 
 
     scyllaApp.config(['$routeProvider',function($routeProvider){
@@ -57,6 +59,10 @@ require([
             .when('/batches',
                   {templateUrl:'app/batches/batches.html',
                       controller:"BatchController"})
+            .when('/batches/:batchId/results/:resultId',
+                  {templateUrl:'app/batches/batchResult.html',
+                      controller:"BatchResultController",
+                      reloadOnSearch:false})
             .when('/batches/:id',
                   {templateUrl:'app/batches/batchDetail.html',
                       controller:"BatchDetailController"})

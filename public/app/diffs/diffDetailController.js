@@ -1,11 +1,13 @@
 define([
     "scyllaApp",
     "toastr",
-    "moment"
+    "moment",
+    "directives/diff/diff"
 ], function(
     scyllaApp,
     toastr,
-    moment
+    moment,
+    diffDirective
     ){
 
     return scyllaApp.controller("DiffDetailController", function($scope, $route, $routeParams, $http, Page) {

@@ -15,6 +15,8 @@ define([
         $scope.batch = {};
         $scope.selectedReportsToAdd = [];
         $scope.availableReports = [];
+
+        //TODO: Tear this down when controller destroyed.
         dpd.batchresults.on("create", function(batchResult){
             console.log("DPD Event", batchResult);
             if(batchResult.batchId == $scope.batch.id){

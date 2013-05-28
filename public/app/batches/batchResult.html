@@ -1,0 +1,28 @@
+
+<div diff="currentDiff">
+    <select id="resultSelector" ng-model="selectedSummary" ng-change="selectDiff(selectedSummary)">
+        <option ng-repeat="summary in batchResult.reportResultSummaries"
+                ng-class="{pass:summary.diff == 0, fail:summary.diff != 0}"
+                ng-selected="summary.diffId == currentDiff.id"
+                value="{{summary.diffId}}"
+                >{{summary.name}}</option>
+    </select>
+    <a class="clickable" id="goPrevLink"><i class="icon-chevron-left"></i></a>
+    <a class="clickable" id="goNextLink"><i class="icon-chevron-right"></i></a>
+    <script>
+        $("#goPrevLink").click(function(){
+            $("#resultSelector").prop("selectedIndex", $("#resultSelector").prop("selectedIndex")-1);
+            $("#resultSelector").change();
+        });
+        $("#goNextLink").click(function(){
+            $("#resultSelector").prop("selectedIndex", $("#resultSelector").prop("selectedIndex")+1);
+            $("#resultSelector").change();
+        });
+        jwerty.key('j', function(){
+            $("#goNextLink").click();
+        });
+        jwerty.key('k', function(){
+            $("#goPrevLink").click();
+        });
+    </script>
+</div>

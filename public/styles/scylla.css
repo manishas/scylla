@@ -85,4 +85,9 @@ input, label{
     color:#8b0000;
 }
 
+#resultSelector .pass{
+    color: #00FF00;
+}
+#resultSelector .fail{
+    color: #FF0000;
 }
