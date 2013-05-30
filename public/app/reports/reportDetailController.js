@@ -61,7 +61,15 @@ define([
 
         $scope.setNewMaster = function setNewMaster(result){
             $scope.report.masterResult = result;
-            $scope.saveReport($scope.report);
+            $http.put("/reports/" + $scope.report._id + "/masterResult", result)
+                .success(function(){
+                    toastr.success("Master Result Set");
+                })
+                .error(function(error){
+                    console.error("Error Saving Master: ", error);
+                    alert(error);
+                })
+            //$scope.saveReport($scope.report);
         };
 
         $scope.editReport = function(report) {

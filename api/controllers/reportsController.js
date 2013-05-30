@@ -57,4 +57,19 @@ module.exports = function(app, models){
     });
 
 
+    app.put('/reports/:reportId/masterResult', function (req, res) {
+        console.log("Saving Master Result on Report:", req.body);
+
+        models.Report.findOne({_id: new ObjectId(req.params.reportId)},
+            function (err, report) {
+                report.masterResult = new ObjectId(req.body._id);
+                report.save(function (err) {
+                    res.send({success:!err});
+                })
+            })
+
+
+    });
+
+
 }
