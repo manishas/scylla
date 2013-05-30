@@ -1,6 +1,6 @@
 <div>
     <div class="pull-right">
-        <a data-toggle="modal" data-target="#newReport" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> New</a>
+        <a class="btn btn-primary" ng-click="showNewReport = true"><i class="icon-plus-sign icon-white"></i> New</a>
     </div>
     <h1>Reports</h1>
     <div class="media" ng-repeat="report in reports">
@@ -8,12 +8,12 @@
             <img class="media-object bigThumb" ng-src="{{ getThumbnail(report) }}">
         </a>
         <div class="media-body">
-            <h4 class="media-heading"><a ng-href="#/reports/{{report.id}}">{{report.name}}</a>
-                <a data-toggle="modal" data-target="#deleteReport" ng-click="deleteReport(report)" class="clickable"><i class="icon-trash" title="Delete Report"></i></a></h4>
+            <h4 class="media-heading"><a ng-href="#/reports/{{report._id}}">{{report.name}}</a>
+                <a ng-click="deleteReport(report);" class="clickable"><i class="icon-trash" title="Delete Report"></i></a></h4>
             <span>Stats</span>
         </div>
     </div>
-    <div id="newReport" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="newReport" class="modal hide fade" tabindex="-1" modal="showNewReport" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">Create a New Report</h3>
@@ -36,7 +36,7 @@
                 <button class="btn btn-primary" ng-click="addReport(newReportTitle, newReportUrl)">Add Report</button>
             </div>
     </div>
-    <div id="deleteReport" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="deleteReport" class="modal hide fade" tabindex="-1" modal="showDeleteReport" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="deleteModalLabel">Delete Report</h3>

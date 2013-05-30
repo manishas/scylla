@@ -9,11 +9,13 @@ define([
         Page.setFirstLevelNavId("batchesNav");
         $scope.batches = [];
 
+        $scope.showNewBatch = false;
         $scope.availableReports = [];
         $scope.newBatchName = "";
         $scope.newBatchReportIds = [];
 
-        $scope.loadAvailableReports = function(){
+        $scope.showNewBatchWindow = function(){
+            $scope.showNewBatch = true;
             $http.get("/reports")
                 .success(function(reports){
                     $scope.availableReports = reports;
@@ -24,9 +26,9 @@ define([
         };
 
         $scope.addBatch = function(batchName, reportIds){
-            $scope.saveBatch({name:batchName, reportIds:reportIds})
+            $scope.saveBatch({name:batchName, reports:reportIds})
                 .success(function(batch){
-                    $("#addBatch").modal('hide');
+                    $scope.showNewBatch = false;
                 })
         };
 

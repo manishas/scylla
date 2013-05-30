@@ -5,13 +5,7 @@ require.config({
         aBootstrap:"../components/angular-bootstrap/ui-bootstrap-tpls",
         angular:"stubs/angular",
         toastr:"../components/toastr/toastr",
-        moment:"../components/moment/moment",
-        dpd:"/dpd"
-    },
-    shim:{
-        dpd:{
-            exports:'dpd'
-        }
+        moment:"../components/moment/moment"
     }
 });
 

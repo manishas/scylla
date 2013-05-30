@@ -1,17 +1,18 @@
 define([
     "scyllaApp",
-    "toastr",
-    "dpd"
+    "toastr"
 ], function(
     scyllaApp,
-    toastr,
-    dpd
+    toastr
     ){
 
     return scyllaApp.controller("ReportController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("reportsNav");
         $scope.reports = [];
         $scope.reportToDelete = {};
+
+        $scope.showDeleteReport = false;
+        $scope.showNewReport = false;
 
         $scope.getThumbnail = function getThumbnail(report){
             if(report && report.masterResult) {
@@ -34,6 +35,7 @@ define([
         $scope.getAllReports();
 
         $scope.deleteReport = function deleteReport(report){
+            $scope.showDeleteReport = true
             $scope.reportToDelete = report;
             console.log("Report to Delete", report);
         };
@@ -54,22 +56,24 @@ define([
         $scope.confirmDeleteReport = function confirmDeleteReport(report){
             console.log("Deleting Report", report);
             var diffBeingDeleted = {};//Hash Map to ensure we only try to delete diffs once
-            $http.get("/reports/" + report.id, {params:{include:"results"}})
+            $http.get("/reports/" + report._id, {params:{include:"results"}})
                 .success(function(report){
-                    report.results.forEach(function(result){
-                        result.diffs.forEach(function(diff){
-                            if(!diffBeingDeleted[diff.id]){
-                                $scope.deleteDiff(diff.id);
-                                diffBeingDeleted[diff.id] = true;
-                            }
+                    if(report.results){
+                        report.results.forEach(function(result){
+                            result.diffs.forEach(function(diff){
+                                if(!diffBeingDeleted[diff._id]){
+                                    $scope.deleteDiff(diff._id);
+                                    diffBeingDeleted[diff._id] = true;
+                                }
+                            });
+                            $scope.deleteResult(result._id);
                         });
-                        $scope.deleteResult(result.id);
-                    });
-                    $http.delete("/reports/" + report.id)
+                    }
+                    $http.delete("/reports/" + report._id)
                         .success(function(deletedReport){
                             console.log("Deleted Report",deletedReport);
                             $scope.getAllReports();
-                            $("#deleteReport").modal('hide');
+                            $scope.showDeleteReport = false;
                         })
                         .error(function(err){
                             console.error(err);
@@ -82,7 +86,7 @@ define([
             console.log("New Report: ", name, url);
             $http.post("/reports", {name:name,url:url})
                 .success(function(report){
-                    $("#newReport").modal('hide');
+                    $scope.showNewReport = false;
                     toastr.success("New Report Created: " + report.name);
                     $scope.getAllReports();
                  })

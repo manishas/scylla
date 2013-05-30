@@ -1,41 +1,74 @@
 <!DOCTYPE html>
 <html ng-controller="PageController">
 <head>
-	<title>Scylla - Keeping Mariners on their toes for 10,000 years</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scylla - Keeping Mariners on their toes for 10,000 years</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="components/bootstrap/css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="styles/scylla.css" media="screen">
     <link rel="stylesheet" href="components/toastr/toastr.css" media="screen">
-	<script type="text/javascript" src="components/jquery/jquery.js"></script>
+    <script type="text/javascript" src="components/jquery/jquery.js"></script>
     <script type="text/javascript" src="components/jwerty/jwerty.js"></script>
-	<script type="text/javascript" src="components/angular/angular.js"></script>
-	<script type="text/javascript" src="dpd.js"></script>
+    <script type="text/javascript" src="components/angular/angular.js"></script>
 </head>
 <body>
-	<div class="navbar">
-		<div class="navbar-inner">
-			<div class="container">
-	          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	          </button>
-	          <a class="brand" href="#">Scylla</a>
-	          <div class="nav-collapse collapse">
-	            <ul class="nav">
-	              <li ng-repeat="page in pages" ng-id="{{page.id}}" ng-class="isActive(page)">
-                      <a ng-href="{{page.href}}">{{page.label}}</a>
-                  </li>
-	            </ul>
-	          </div><!--/.nav-collapse -->
-	        </div>
-		</div>
-	</div>
-	<div id="mainView" ng-view>
-        <h1>Loading...</h1>
-	</div>
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="#">Scylla</a>
 
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li ng-repeat="page in pages" ng-id="{{page.id}}" ng-class="isActive(page)">
+                        <a ng-href="{{page.href}}">{{page.label}}</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+            <div class="pull-right">
+                <a id="loginButton" ng-click="showLogin()">Login</a> /
+                <a id="registerButton" ng-click="showRegister()">Register</a>
+            </div>
 
-    <script data-main="app/main" src="components/requirejs/require.js"></script>
+        </div>
+    </div>
+</div>
+<div id="mainView" ng-view>
+    <h1>Loading...</h1>
+</div>
+
+<div modal="showLoginModal" close="closeLogin()" options="loginWindowOptions">
+    <div class="modal-header">
+        <h4>Login</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-vertical" ng-submit="login(email, password)">
+            <input ng-model="email" type="text" placeholder="email">
+            <input ng-model="password" type="password">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn cancel" ng-click="closeLogin()">Cancel</button>
+        <button class="btn btn-primary" ng-click="login(email, password)">Login</button>
+    </div>
+</div>
+
+<div modal="showRegisterModal" close="closeLogin()" options="loginWindowOptions">
+    <div class="modal-header">
+        <h4>Register</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-vertical" ng-submit="register(name, email, password)">
+            <input ng-model="name" type="text" placeholder="name">
+            <input ng-model="email" type="text" placeholder="email">
+            <input ng-model="password" type="password" placeholder="password">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn cancel" ng-click="closeLogin()">Cancel</button>
+        <button class="btn btn-primary" ng-click="register(name, email, password)">Login</button>
+    </div>
+</div>
+
+<script data-main="app/main" src="components/requirejs/require.js"></script>
 </body>
 </html>

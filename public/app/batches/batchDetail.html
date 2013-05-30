@@ -1,10 +1,10 @@
 <div>
     <div class="pull-right">
-        <a data-toggle="modal" data-target="#addReport" ng-click="loadAvailableReports()" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Add Report</a>
+        <a ng-click="showAddReportsModal()" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Add Report</a>
     </div>
     <h2>
         {{batch.name}}
-        <a data-toggle="modal" data-target="#editBatch" class="clickable"><i class="icon-edit" title="Edit Batch"></i></a>
+        <a class="clickable" ng-click="showEditBatch = true"><i class="icon-edit" title="Edit Batch"></i></a>
     </h2>
     <div class="row-fluid">
         <div class="span6">
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div id="addReport" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="addReport" class="modal hide fade" tabindex="-1" modal="showAddReport" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Add Report to Batch</h3>
@@ -47,7 +47,7 @@
             </div>
             <form class="form-horizontal" ng-submit="addReports(selectedReportsToAdd)">
                 <select multiple="multiple" ng-model="selectedReportsToAdd" class="input-xxlarge">
-                    <option ng-repeat="report in availableReports" value="{{report.id}}">{{report.name}}</option>
+                    <option ng-repeat="report in availableReports" value="{{report._id}}">{{report.name}}</option>
                 </select>
 
             </form>
@@ -57,7 +57,7 @@
             <button class="btn btn-primary" ng-click="addReports(selectedReportsToAdd)">Add Report</button>
         </div>
     </div>
-    <div id="editBatch" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="editBatch" class="modal hide fade" tabindex="-1" modal="showEditBatch" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myEditBatchModalLabel">Edit Batch</h3>

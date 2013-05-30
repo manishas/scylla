@@ -1,7 +1,7 @@
 <div>
     <h2>
         {{report.name}}
-        <a data-toggle="modal" data-target="#editReport" class="clickable"><i class="icon-edit" title="Edit Report"></i></a>
+        <a class="clickable" ng-click="showEditModal = true;"><i class="icon-edit" title="Edit Report"></i></a>
     </h2>
     <div class="media {{getResultClass(result)}}" ng-repeat="result in report.results">
         <a class="pull-left" href="#">
@@ -18,12 +18,12 @@
                     <i class="icon-arrow-right"></i>
                     <span class="resultB">{{dateFormat(diff.reportResultBName)}}</span>
                     <span class="distortion">{{diff.distortion}}</span>
-                    <span class="viewDiff"><a href="#/diffs/{{diff.id}}" class="clickable"><i class="icon-eye-open" title="View Diff"></i></a></span>
+                    <span class="viewDiff"><a href="#/diffs/{{diff._id}}" class="clickable"><i class="icon-eye-open" title="View Diff"></i></a></span>
                 </li>
             </ol>
         </div>
     </div>
-    <div id="editReport" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="editReport" class="modal hide fade" tabindex="-1" modal="showEditModal" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Edit Report</h3>

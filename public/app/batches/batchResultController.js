@@ -2,13 +2,11 @@ define([
     "scyllaApp",
     "toastr",
     "moment",
-    "dpd",
     "directives/diff/diff"
 ], function(
     scyllaApp,
     toastr,
     moment,
-    dpd,
     diffDirective
     ){
 

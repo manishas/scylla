@@ -1,37 +1,43 @@
 define([
     "scyllaApp",
     "toastr",
-    "moment",
-    "dpd"
+    "moment"
 ], function(
     scyllaApp,
     toastr,
-    moment,
-    dpd
+    moment
     ){
 
     return scyllaApp.controller("BatchDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("batchesNav");
         $scope.batch = {};
+
+        $scope.showEditBatch = false;
+        $scope.showAddReport = false;
+
         $scope.selectedReportsToAdd = [];
         $scope.availableReports = [];
 
         //TODO: Tear this down when controller destroyed.
+        //TODO: Move to Socket.io
+        /*
         dpd.batchresults.on("create", function(batchResult){
             console.log("DPD Event", batchResult);
-            if(batchResult.batchId == $scope.batch.id){
-                $scope.getBatch($scope.batch.id);
+            if(batchResult.batchId == $scope.batch._id){
+                $scope.getBatch($scope.batch._id);
             }
         });
+        */
 
 
         var filterOutAlreadyIncludedReports = function(report){
             return !$scope.batch.reports.some(function(includedReport){
-                return (includedReport.id == report.id);
+                return (includedReport._id == report._id);
             });
         };
 
-        $scope.loadAvailableReports = function(){
+        $scope.showAddReportsModal = function(){
+            $scope.showAddReport = true;
             $http.get("/reports")
                 .success(function(reports){
                     $scope.availableReports = reports.filter(filterOutAlreadyIncludedReports);
@@ -39,38 +45,38 @@ define([
                 .error(function(err){
                     alert(err);
                 });
-        }
+        };
 
         $scope.addReports = function(reportsToAdd){
-            $scope.batch.reportIds = $scope.batch.reportIds.concat(reportsToAdd);
+            $scope.batch.reports = $scope.batch.reports.concat(reportsToAdd);
             $scope.saveBatch($scope.batch)
                 .success(function(){
-                    $("#addReport").modal('hide');
+                    $scope.showAddReport = false;
                 });
         };
-        $scope.removeReport = function(reportIdToRemove){
-            var reportIndex = $scope.batch.reportIds.indexOf(reportIdToRemove);
+        $scope.removeReport = function(reportToRemove){
+            var reportIndex = $scope.batch.reports.indexOf(reportToRemove);
             if(reportIndex > -1){
-                $scope.batch.reportIds.splice(reportIndex, 1);
+                $scope.batch.reports.splice(reportIndex, 1);
                 $scope.saveBatch($scope.batch);
             }
-        }
+        };
         $scope.editBatch = function(batch){
             $scope.saveBatch(batch)
                 .success(function(batch){
-                    $("#editBatch").modal('hide');
+                    $scope.showEditBatch = false;
                 })
-        }
+        };
         $scope.saveBatch = function(batch){
-            return $http.put("/batches/" + batch.id, batch)
+            return $http.put("/batches/" + batch._id, batch)
                 .success(function(batch){
-                    $scope.getBatch(batch.id);
+                    $scope.getBatch(batch._id);
                     toastr.success("Batch Saved: " + batch.name);
                 })
                 .error(function(err){
                     alert(err);
                 })
-        }
+        };
 
 
         $scope.dateFormat = function(isoString) {
@@ -104,7 +110,8 @@ define([
         $scope.getBatch = function(id){
             $http.get("/batches/" + id, {params:{includeResults:"true", includeReports:"true"}})
                 .success(function(batch){
-                    batch.results.sort(function(a,b) { return a.end < b.end; } );
+                    if(batch.results)
+                        batch.results.sort(function(a,b) { return a.end < b.end; } );
                     $scope.batch = batch
                 })
                 .error(function(err){

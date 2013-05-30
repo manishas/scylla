@@ -1,21 +1,21 @@
 <div>
     <div class="pull-right">
-        <a data-toggle="modal" data-target="#addBatch" ng-click="loadAvailableReports()" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> New Batch</a>
+        <a ng-click="showNewBatchWindow()" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> New Batch</a>
     </div>
 
     <h1>Batches</h1>
     <div class="media batch" ng-repeat="batch in batches">
         <div class="media-body">
-            <h4 class="media-heading"><a href="#/batches/{{batch.id}}">{{batch.name}}</a></h4>
+            <h4 class="media-heading"><a href="#/batches/{{batch._id}}">{{batch.name}}</a></h4>
             <ol>
                 <li ng-repeat="result in batch.results">
-                    <a href="#/batchresult/{{result.id}}">{{dateFormat(result.end)}}</a>
+                    <a href="#/batchresult/{{result._id}}">{{dateFormat(result.end)}}</a>
                     <span class="pass">{{result.pass}}</span>/<span class="fail">{{result.fail}}</span>/<span class="exception">{{result.exception}}</span>
                 </li>
             </ol>
         </div>
     </div>
-    <div id="addBatch" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="addBatch" class="modal hide fade" tabindex="-1" modal="showNewBatch" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myEditBatchModalLabel">Add New Batch</h3>
@@ -29,7 +29,7 @@
                        placeholder="Identifiable Batch Name" required
                        class="input-xxlarge" />
                 <select multiple="multiple" ng-model="newBatchReportIds" class="input-xxlarge">
-                    <option ng-repeat="report in availableReports" value="{{report.id}}">{{report.name}}</option>
+                    <option ng-repeat="report in availableReports" value="{{report._id}}">{{report.name}}</option>
                 </select>
             </form>
         </div>
