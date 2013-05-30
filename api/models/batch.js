@@ -4,7 +4,7 @@ module.exports = function(mongoose){
         reports:[{type : mongoose.Schema.ObjectId, ref : 'reports'}]
     });
 
-    var Batches = mongoose.model('batches', BatchSchema);
+    var Batch = mongoose.model('batches', BatchSchema);
 
-    return Batches;
+    return Batch;
 }

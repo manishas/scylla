@@ -15,13 +15,13 @@ module.exports = function(app, models){
     }
 
     app.get('/batches', function(req, res) {
-        models.Batches.find()
+        models.Batch.find()
             .exec()
             .then(send(res), sendErr(res))
     });
 
     app.get('/batches/:batchId', function(req, res) {
-        var query = models.Batches.findOne({_id:new ObjectId(req.params.batchId)});
+        var query = models.Batch.findOne({_id:new ObjectId(req.params.batchId)});
         console.log("Params", req.params);
         if(req.query.includeReports)
             query = query.populate("reports");
@@ -34,7 +34,7 @@ module.exports = function(app, models){
         var id = new ObjectId(req.params.batchId);
         var batch = req.body;
         delete batch._id;
-        models.Batches.findOneAndUpdate({_id:id}, batch,
+        models.Batch.findOneAndUpdate({_id:id}, batch,
             function(err, result){
                 console.log(err);
                 res.send(result);
@@ -42,7 +42,7 @@ module.exports = function(app, models){
     });
 
     app.del('/batches/:batch', function(req, res) {
-        models.Batches.findOne({_id:new ObjectId(req.params.batchId)})
+        models.Batch.findOne({_id:new ObjectId(req.params.batchId)})
             .remove(function(err, result){
                 console.log("Deleting:", result);
                 res.send({_id:req.params.batchId});
@@ -51,7 +51,7 @@ module.exports = function(app, models){
 
     app.post('/batches', function(req, res) {
         console.log("Saving Batch", req.body);
-        var batch = new models.Batches(req.body);
+        var batch = new models.Batch(req.body);
         batch.save(function(err, result){
             res.send(result);
         });

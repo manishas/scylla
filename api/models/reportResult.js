@@ -6,7 +6,7 @@ module.exports = function(mongoose){
         diff:{type:String}
     });
 
-    var ReportResults = mongoose.model('report-results', ReportResultSchema);
+    var ReportResult = mongoose.model('report-results', ReportResultSchema);
 
-    return ReportResults;
+    return ReportResult;
 }

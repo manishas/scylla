@@ -1,0 +1,26 @@
+{
+  "name": "scylla",
+  "version": "0.0.0",
+  "description": "Scylla",
+  "dependencies": {
+    "express": "3.x",
+    "mongoose": "~3.6.11",
+    "nodemailer": "~0.4.4",
+    "connect": "~2.7.10"
+  },
+  "main": "development.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/simplymeasured/scylla.git"
+  },
+  "author": "Dusty Jewett",
+  "license": "BSD",
+  "gitHead": "10fa9b5ef1faae5b4a94ac77df047bc09255d07c",
+  "readmeFilename": "readme.md",
+  "bugs": {
+    "url": "https://github.com/simplymeasured/scylla/issues"
+  }
+}

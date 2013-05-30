@@ -19,7 +19,7 @@ define([
 
         $scope.getReport = function(id){
 
-            $http.get("/reports/" + id, {params:{include:"results"}})
+            $http.get("/reports/" + id, {params:{includeResults:true}})
                 .success(function(report){
                              $scope.loaded = true;
                              if(report.results)
