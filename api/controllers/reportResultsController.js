@@ -1,31 +1,18 @@
 module.exports = function(app, models){
     var ObjectId = require('mongoose').Types.ObjectId;
+    var handleQueryResult = require('./commonController')().handleQueryResult;
 
-    var send = function generateSend(res){
-        return function sendResponse(body){
-            console.log("Sending Response: ", body.length);
-            res.send(body);
-        }
-    }
-
-    var sendErr = function generateErr(res){
-        return function sendError(err){
-            res.send(500, body);
-        }
-    }
 
     app.get('/report-results', function(req, res) {
         models.ReportResult.find()
             .populate("report")
-            .exec()
-            .then(send(res), sendErr(res))
+            .exec(handleQueryResult(res));
     });
 
     app.get('/report-results/:resultId', function(req, res) {
         models.ReportResult.findOne({_id:new ObjectId(req.params.resultId)})
             .populate("report")
-            .exec()
-            .then(send(res), sendErr(res))
+            .exec(handleQueryResult(res));
     });
 
     app.put('/report-results/:resultId', function(req, res) {
@@ -33,10 +20,7 @@ module.exports = function(app, models){
         var repResult = req.body;
         delete repResult._id;
         models.ReportResult.findOneAndUpdate({_id:id}, repResult,
-            function(err, result){
-                console.log(err);
-                res.send(result);
-            })
+            handleQueryResult(res))
     });
 
     app.del('/report-results/:resultId', function(req, res) {
