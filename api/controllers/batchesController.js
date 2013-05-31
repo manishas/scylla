@@ -1,23 +1,12 @@
 module.exports = function(app, models){
     var ObjectId = require('mongoose').Types.ObjectId;
+    var handleQueryResult = require('./commonController')().handleQueryResult;
 
-    var send = function generateSend(res){
-        return function sendResponse(body){
-            console.log("Sending Response: ", body.length);
-            res.send(body);
-        }
-    }
 
-    var sendErr = function generateErr(res){
-        return function sendError(err){
-            res.send(500, body);
-        }
-    }
 
     app.get('/batches', function(req, res) {
         models.Batch.find()
-            .exec()
-            .then(send(res), sendErr(res))
+            .exec(handleQueryResult(res));
     });
 
     app.get('/batches/:batchId', function(req, res) {
@@ -26,8 +15,7 @@ module.exports = function(app, models){
         if(req.query.includeReports)
             query = query.populate("reports");
 
-        query.exec()
-            .then(send(res), sendErr(res))
+        query.exec(handleQueryResult(res));
     });
 
     app.put('/batches/:batchId', function(req, res) {
@@ -35,13 +23,10 @@ module.exports = function(app, models){
         var batch = req.body;
         delete batch._id;
         models.Batch.findOneAndUpdate({_id:id}, batch,
-            function(err, result){
-                console.log(err);
-                res.send(result);
-            })
+            handleQueryResult(res))
     });
 
-    app.del('/batches/:batch', function(req, res) {
+    app.del('/batches/:batchId', function(req, res) {
         models.Batch.findOne({_id:new ObjectId(req.params.batchId)})
             .remove(function(err, result){
                 console.log("Deleting:", result);
@@ -52,9 +37,7 @@ module.exports = function(app, models){
     app.post('/batches', function(req, res) {
         console.log("Saving Batch", req.body);
         var batch = new models.Batch(req.body);
-        batch.save(function(err, result){
-            res.send(result);
-        });
+        batch.save(handleQueryResult(res));
     });
 
 }

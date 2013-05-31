@@ -14,49 +14,49 @@ module.exports = function(app, models){
         }
     }
 
-    app.get('/report-results', function(req, res) {
-        models.Report.find()
-            .populate("report")
+    app.get('/batch-results', function(req, res) {
+        models.BatchResult.find()
+            //.populate("batch")
             .exec()
             .then(send(res), sendErr(res))
     });
 
-    app.get('/report-results/:resultId', function(req, res) {
-        models.Report.findOne({_id:new ObjectId(req.params.resultId)})
-            .populate("report")
+    app.get('/batch-results/:resultId', function(req, res) {
+        models.BatchResult.findOne({_id:new ObjectId(req.params.resultId)})
+            //.populate("batch")
             .exec()
             .then(send(res), sendErr(res))
     });
 
-    app.put('/report-results/:resultId', function(req, res) {
+    app.put('/batch-results/:resultId', function(req, res) {
         var id = new ObjectId(req.params.resultId);
         var repResult = req.body;
         delete repResult._id;
-        models.ReportResult.findOneAndUpdate({_id:id}, repResult,
+        models.BatchResult.findOneAndUpdate({_id:id}, repResult,
             function(err, result){
                 console.log(err);
                 res.send(result);
             })
     });
 
-    app.del('/report-results/:resultId', function(req, res) {
-        models.ReportResult.findOne({_id:new ObjectId(req.params.resultId)})
+    app.del('/batch-results/:resultId', function(req, res) {
+        models.BatchResult.findOne({_id:new ObjectId(req.params.resultId)})
             .remove(function(err, result){
                 console.log("Deleting:", result);
                 res.send({_id:req.params.resultId});
             });
     });
 
-    app.post('/reports/:reportId/results', function(req, res) {
-        console.log("Saving New Result on Report:", req.body);
-        var reportResult = new models.ReportResult(req.body);
-        reportResult.save(function(err){
+    app.post('/batches/:batchId/results', function(req, res) {
+        console.log("Saving New Result on Batch:", req.body);
+        var batchResult = new models.BatchResult(req.body);
+        batchResult.save(function(err){
 
-            models.Report.findOne({_id:new ObjectId(req.params.reportId)},
-                function(err, report){
-                    report.results.push(reportResult);
-                    report.save(function(err){
-                        res.send(reportResult);
+            models.Batch.findOne({_id:new ObjectId(req.params.batchId)},
+                function(err, batch){
+                    batch.results.push(batchResult);
+                    batch.save(function(err){
+                        res.send(batchResult);
                     })
                 })
         })

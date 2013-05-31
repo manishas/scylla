@@ -14,8 +14,8 @@
                     <img class="media-object bigThumb" ng-src="{{ getThumbnail(report) }}">
                 </a>
                 <div class="media-body">
-                    <h4 class="media-heading"><a ng-href="#/reports/{{report.id}}">{{report.name}}</a>
-                        <a data-toggle="modal" data-target="#deleteReport" ng-click="removeReport(report.id)" class="clickable"><i class="icon-trash" title="Delete Report"></i></a></h4>
+                    <h4 class="media-heading"><a ng-href="#/reports/{{report._id}}">{{report.name}}</a>
+                        <a data-toggle="modal" data-target="#deleteReport" ng-click="removeReport(report._id)" class="clickable"><i class="icon-trash" title="Delete Report"></i></a></h4>
                     <span>Stats</span>
                 </div>
             </div>
@@ -24,12 +24,12 @@
             <h3>Results</h3>
             <div class="media" ng-repeat="result in batch.results">
                 <div class="media-body">
-                    <h4 class="media-heading"><a href="#/batches/{{batch.id}}/results/{{result.id}}" class="clickable">{{dateFormat(result.end)}}</a></h4>
+                    <h4 class="media-heading"><a href="#/batches/{{batch._id}}/results/{{result._id}}" class="clickable">{{dateFormat(result.end)}}</a></h4>
                     <ol>
                         <li ng-repeat="reportResult in result.reportResultSummaries" class="reportResult">
                             <span class="">{{reportResult.name}}</span>
                             (<span class="{{getReportResultClass(reportResult)}}">{{reportResult.diff}}</span>)
-                            <span class="viewDiff"><a href="#/batches/{{batch.id}}/results/{{result.id}}?diffId={{reportResult.diffId}}" class="clickable"><i class="icon-eye-open" title="View Diff"></i></a></span>
+                            <span class="viewDiff"><a href="#/batches/{{batch._id}}/results/{{result._id}}?diffId={{reportResult.diffId}}" class="clickable"><i class="icon-eye-open" title="View Diff"></i></a></span>
                         </li>
                     </ol>
                 </div>
