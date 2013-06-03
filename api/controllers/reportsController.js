@@ -23,6 +23,8 @@ module.exports = function(app, models){
         var id = new ObjectId(req.params.reportId);
         var report = req.body;
         delete report._id;
+        delete report.results;
+        delete report.masterResult;
         models.Report.findOneAndUpdate({_id:id}, report,
             handleQueryResult(res));
     });
