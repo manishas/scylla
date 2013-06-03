@@ -1,9 +1,11 @@
 define([
     "scyllaApp",
-    "moment"
+    "moment",
+    "toastr"
 ], function(
     scyllaApp,
-    moment
+    moment,
+    toastr
     ){
     return scyllaApp.controller("BatchController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("batchesNav");

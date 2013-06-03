@@ -53,25 +53,7 @@ module.exports = function(app, models){
             diffSrc.reportResultA = new ObjectId(diffSrc.reportResultA._id);
             diffSrc.reportResultB = new ObjectId(diffSrc.reportResultB._id);
         var diff = new models.Diff(diffSrc);
-        diff.save(function(err, result){
-            if(!err) {
-                console.log("Diff:", diff);
-                console.log("Result:", result);
-                models.ReportResult.findOne({_id:diffSrc.reportResultA},
-                    function(err, resultA){
-                        console.log("Err", err, "Result A", resultA);
-                        resultA.diffs.push(diff);
-                        resultA.save();
-                    });
-                models.ReportResult.findOne({_id:diffSrc.reportResultB},
-                    function(err, resultB){
-                        console.log("Err", err, "Result B", resultB);
-                        resultB.diffs.push(diff);
-                        resultB.save();
-                    });
-            }
-            handleQueryResult(res)(err, result);
-        });
+        diff.save(handleQueryResult(res));
     });
 
 }

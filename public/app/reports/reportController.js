@@ -56,16 +56,10 @@ define([
         $scope.confirmDeleteReport = function confirmDeleteReport(report){
             console.log("Deleting Report", report);
             var diffBeingDeleted = {};//Hash Map to ensure we only try to delete diffs once
-            $http.get("/reports/" + report._id, {params:{include:"results"}})
+            $http.get("/reports/" + report._id, {params:{includeResults:true}})
                 .success(function(report){
                     if(report.results){
                         report.results.forEach(function(result){
-                            result.diffs.forEach(function(diff){
-                                if(!diffBeingDeleted[diff._id]){
-                                    $scope.deleteDiff(diff._id);
-                                    diffBeingDeleted[diff._id] = true;
-                                }
-                            });
                             $scope.deleteResult(result._id);
                         });
                     }

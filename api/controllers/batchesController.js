@@ -13,9 +13,21 @@ module.exports = function(app, models){
         var query = models.Batch.findOne({_id:new ObjectId(req.params.batchId)});
         console.log("Params", req.params);
         if(req.query.includeReports)
-            query = query.populate("reports");
+            query = query.populate("reports masterResult");
+        if(req.query.includeResults)
+            query = query.populate("results");
 
-        query.exec(handleQueryResult(res));
+        query.exec(function(err, batch){
+            if(err || !req.query.includeReports){
+                handleQueryResult(res)(err, batch);
+            } else {
+                models.Report.populate(batch.reports, "masterResult",
+                    function(err, reports){
+                        batch.reports = reports;
+                        handleQueryResult(res)(err, batch);
+                    });
+            }
+        });
     });
 
     app.put('/batches/:batchId', function(req, res) {

@@ -24,11 +24,20 @@ module.exports = function(app, models){
     });
 
     app.del('/report-results/:resultId', function(req, res) {
-        models.ReportResult.findOne({_id:new ObjectId(req.params.resultId)})
+        var resultId = new ObjectId(req.params.resultId);
+        models.ReportResult.findOne({_id:resultId})
             .remove(function(err, result){
                 console.log("Deleting:", result);
                 res.send({_id:req.params.resultId});
             });
+        models.Diff.find(
+            {$or:[
+                {reportResultA:resultId},
+                {reportResultB:resultId}
+            ]})
+            .remove(function(err, result){
+                console.log("Deleted Diffs: ", result);
+            })
     });
 
     app.post('/reports/:reportId/results', function(req, res) {
