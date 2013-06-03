@@ -47,7 +47,7 @@ define([
         };
 
         $scope.getBatchResult = function(id){
-            $http.get("/batch-results/" + id, {params:{includeResults:"false", includeReports:"true"}})
+            $http.get("/batch-results/" + id, {params:{includeResults:false, includeReports:true}})
                 .success(function(batchResult){
                     $scope.batchResult = batchResult
                     if(!$routeParams.diffId){
@@ -64,7 +64,7 @@ define([
         };
 
         $scope.getDiff = function(id){
-            $http.get("/diffs/" + id, {params:{include:"all"}})
+            $http.get("/diffs/" + id, {params:{includeResults:true, includeReports:true}})
                 .success(function(diff){
                     $scope.currentDiff = diff;
                 })

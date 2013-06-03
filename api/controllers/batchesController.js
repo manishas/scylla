@@ -1,6 +1,8 @@
 module.exports = function(app, models){
     var ObjectId = require('mongoose').Types.ObjectId;
-    var handleQueryResult = require('./commonController')().handleQueryResult;
+    var commonController = require('./commonController')(ObjectId);
+    var handleQueryResult = commonController.handleQueryResult;
+    var toObjectIdArray = commonController.toObjectIdArray;
 
 
 
@@ -34,6 +36,8 @@ module.exports = function(app, models){
         var id = new ObjectId(req.params.batchId);
         var batch = req.body;
         delete batch._id;
+        delete batch.reports;
+        delete batch.results;
         models.Batch.findOneAndUpdate({_id:id}, batch,
             handleQueryResult(res))
     });
@@ -50,6 +54,18 @@ module.exports = function(app, models){
         console.log("Saving Batch", req.body);
         var batch = new models.Batch(req.body);
         batch.save(handleQueryResult(res));
+    });
+
+    app.post('/batches/:batchId/reports', function (req, res) {
+        console.log("Adding Report to Batch:", req.body);
+        models.Batch.findOne({_id: new ObjectId(req.params.batchId)},
+            function (err, batch) {
+                console.log("Reports in Batch", batch.reports);
+                batch.reports.addToSet(toObjectIdArray(req.body));
+                batch.save(handleQueryResult(res));
+            });
+
+
     });
 
 }

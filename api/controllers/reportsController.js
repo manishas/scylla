@@ -1,6 +1,8 @@
 module.exports = function(app, models){
     var ObjectId = require('mongoose').Types.ObjectId;
-    var handleQueryResult = require('./commonController')().handleQueryResult;
+    var commonController = require('./commonController')(ObjectId);
+    var handleQueryResult = commonController.handleQueryResult;
+    var toObjectIdArray = commonController.toObjectIdArray;
 
 
     app.get('/reports', function(req, res) {

@@ -49,11 +49,17 @@ define([
 
         $scope.addReports = function(reportsToAdd){
             $scope.batch.reports = $scope.batch.reports.concat(reportsToAdd);
-            $scope.saveBatch($scope.batch)
-                .success(function(){
+            $http.post("/batches/" + $scope.batch._id + "/reports", reportsToAdd)
+                .success(function(batch){
                     $scope.showAddReport = false;
+                    $scope.getBatch(batch._id);
+                    toastr.success("Batch Saved: " + batch.name);
+                })
+                .error(function(err){
+                    alert(err);
                 });
         };
+
         $scope.removeReport = function(reportToRemove){
             var reportIndex = $scope.batch.reports.indexOf(reportToRemove);
             if(reportIndex > -1){
@@ -61,12 +67,14 @@ define([
                 $scope.saveBatch($scope.batch);
             }
         };
+
         $scope.editBatch = function(batch){
             $scope.saveBatch(batch)
                 .success(function(batch){
                     $scope.showEditBatch = false;
                 })
         };
+
         $scope.saveBatch = function(batch){
             return $http.put("/batches/" + batch._id, batch)
                 .success(function(batch){
@@ -108,7 +116,7 @@ define([
         }
 
         $scope.getBatch = function(id){
-            $http.get("/batches/" + id, {params:{includeResults:"true", includeReports:"true"}})
+            $http.get("/batches/" + id, {params:{includeResults:true, includeReports:true}})
                 .success(function(batch){
                     if(batch.results)
                         batch.results.sort(function(a,b) { return a.end < b.end; } );

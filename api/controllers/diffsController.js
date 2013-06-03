@@ -1,6 +1,6 @@
 module.exports = function(app, models){
     var ObjectId = require('mongoose').Types.ObjectId;
-    var handleQueryResult = require('./commonController')().handleQueryResult;
+    var handleQueryResult = require('./commonController')(ObjectId).handleQueryResult;
 
 
     app.get('/diffs', function(req, res) {

@@ -1,4 +1,4 @@
-module.exports = function(){
+module.exports = function(ObjectId){
     var handleQueryResult = function(res){
         return function(err, result){
             if(err){
@@ -10,9 +10,14 @@ module.exports = function(){
                 res.send(result);
             }
         }
-    }
+    };
+
+    var toObjectIdArray = function toObjectIdArray(values){
+        return values.map(function(val){ return new ObjectId(val._id || val)});
+    };
 
     return {
-        handleQueryResult:handleQueryResult
+        handleQueryResult:handleQueryResult,
+        toObjectIdArray:toObjectIdArray
     };
 }
