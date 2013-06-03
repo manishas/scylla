@@ -25,14 +25,16 @@ var models = {
     ReportResult: require('./api/models/reportResult')(mongoose),
     Report      : require('./api/models/report')(mongoose),
     BatchResult : require('./api/models/batchResult')(mongoose),
-    Batch       : require('./api/models/batch')(mongoose)
+    Batch       : require('./api/models/batch')(mongoose),
+    Diff        : require('./api/models/diff')(mongoose)
 }
 var controllers = {
     account      : require('./api/controllers/accountController')(app, models),
     reports      : require('./api/controllers/reportsController')(app, models),
     reportResults: require('./api/controllers/reportResultsController')(app, models),
     batches      : require('./api/controllers/batchesController')(app, models),
-    batchResults : require('./api/controllers/batchResultsController')(app, models)
+    batchResults : require('./api/controllers/batchResultsController')(app, models),
+    diffs        : require('./api/controllers/diffsController')(app, models)
 }
 
 

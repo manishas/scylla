@@ -22,8 +22,13 @@ define([
             $http.get("/reports/" + id, {params:{includeResults:true}})
                 .success(function(report){
                              $scope.loaded = true;
-                             if(report.results)
+                             if(report.results){
                                  report.results.sort(resultSort);
+                                 for(var i in report.results){
+                                     $scope.loadDiffs(report.results[i]);
+                                 }
+                             }
+
                              $scope.report = report
                          })
                 .error(function(err){
@@ -31,6 +36,16 @@ define([
                        });
         }
         $scope.getReport($routeParams.id);
+
+        $scope.loadDiffs = function(result){
+            $http.get("/report-results/" + result._id + "/diffs")
+                .success(function(diffs){
+                    result.diffs = diffs;
+                })
+                .error(function(err){
+                    alert(err)
+                });
+        }
 
         $scope.dateFormat = function(isoString) {
             return moment(isoString).format("MMMM Do, h:mm A");

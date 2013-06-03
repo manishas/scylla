@@ -1,5 +1,5 @@
 module.exports = function(host, port){
-    var http = require("q-io/http");
+    var http = {}//require("q-io/http");
 
     var newRequest = function (method, path, body) {
         return {

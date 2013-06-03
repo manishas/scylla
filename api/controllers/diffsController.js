@@ -1,29 +1,33 @@
 module.exports = function(app, models){
     var ObjectId = require('mongoose').Types.ObjectId;
+    var handleQueryResult = require('./commonController')().handleQueryResult;
 
-    var send = function generateSend(res){
-        return function sendResponse(body){
-            console.log("Sending Response: ", body.length);
-            res.send(body);
-        }
-    }
-
-    var sendErr = function generateErr(res){
-        return function sendError(err){
-            res.send(500, body);
-        }
-    }
 
     app.get('/diffs', function(req, res) {
         models.Diff.find()
-            .exec()
-            .then(send(res), sendErr(res))
+            .exec(handleQueryResult(res))
+    });
+
+    app.get('/report-results/:resultId/diffs', function(req, res) {
+        var resultId = new ObjectId(req.params.resultId);
+        models.Diff.find(
+            {$or:[
+                {reportResultA:resultId},
+                {reportResultB:resultId}
+            ]})
+            .exec(handleQueryResult(res))
     });
 
     app.get('/diffs/:diffId', function(req, res) {
-        var query = models.Diff.findOne({_id:new ObjectId(req.params.diffId)})
-            .exec()
-            .then(send(res), sendErr(res))
+        var query = models.Diff.findOne({_id:new ObjectId(req.params.diffId)});
+        if(req.query.includeResults){
+            query = query.populate("reportResultA reportResultB");
+        }
+        if(req.query.includeReport){
+            console.log("Including Report")
+            query = query.populate("report");
+        }
+        query.exec(handleQueryResult(res))
     });
 
     app.put('/diffs/:diffId', function(req, res) {
@@ -31,25 +35,42 @@ module.exports = function(app, models){
         var diff = req.body;
         delete diff._id;
         models.Diff.findOneAndUpdate({_id:id}, diff,
-            function(err, result){
-                if(err) console.log(err);
-                res.send(result);
-            })
+            handleQueryResult(res))
     });
 
     app.del('/diffs/:diffId', function(req, res) {
         models.Diff.findOne({_id:new ObjectId(req.params.batchId)})
             .remove(function(err, result){
                 console.log("Deleting:", result);
-                res.send({_id:req.params.batchId});
+                handleQueryResult(res)(err, {_id:req.params.batchId});
             });
     });
 
     app.post('/diffs', function(req, res) {
         console.log("Saving Diff", req.body);
-        var diff = new models.Diff(req.body);
+        var diffSrc = req.body;
+            diffSrc.report = new ObjectId(diffSrc.report._id);
+            diffSrc.reportResultA = new ObjectId(diffSrc.reportResultA._id);
+            diffSrc.reportResultB = new ObjectId(diffSrc.reportResultB._id);
+        var diff = new models.Diff(diffSrc);
         diff.save(function(err, result){
-            res.send(result);
+            if(!err) {
+                console.log("Diff:", diff);
+                console.log("Result:", result);
+                models.ReportResult.findOne({_id:diffSrc.reportResultA},
+                    function(err, resultA){
+                        console.log("Err", err, "Result A", resultA);
+                        resultA.diffs.push(diff);
+                        resultA.save();
+                    });
+                models.ReportResult.findOne({_id:diffSrc.reportResultB},
+                    function(err, resultB){
+                        console.log("Err", err, "Result B", resultB);
+                        resultB.diffs.push(diff);
+                        resultB.save();
+                    });
+            }
+            handleQueryResult(res)(err, result);
         });
     });
 

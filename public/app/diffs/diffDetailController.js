@@ -16,7 +16,7 @@ define([
 
         $scope.getDiff = function(diffId){
 
-            $http.get("/diffs/" + diffId, {params:{include:"all"}})
+            $http.get("/diffs/" + diffId, {params:{includeResults:true, includeReport:true}})
                 .success(function(diff){
                     $scope.diff = diff
                 })
