@@ -31,7 +31,7 @@ var models = {
     Diff        : require('./api/models/diff')(mongoose)
 }
 var schedController = require('./api/controllers/scheduleController')(app);
-var executeBatch = function(batchId){return function(){charybdis.execute(batchId);};}
+var executeBatch = function(batchId){return function(){charybdis.execute(batchId.toString());};}
 var controllers = {
     account      : require('./api/controllers/accountController')(app, models),
     reports      : require('./api/controllers/reportsController')(app, models),
@@ -51,7 +51,7 @@ models.Batch.find(function(err, batches){
     if(err) throw "Problem loading Batches";
     if(typeof batches.length === "undefined") batches = [batches];
     batches.forEach(function(batch){
-        controllers.schedule.addBatchToSchedule(batch, executeBatch("51ad103f82aa1a0231000001"))
+        controllers.schedule.addBatchToSchedule(batch, executeBatch(batch._id))
     })
 });
 

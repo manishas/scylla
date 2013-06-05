@@ -14,7 +14,7 @@ module.exports = function(app) {
     var addBatchToSchedule = function (batch, func) {
         removeBatchFromSchedule(batch._id);
 
-        console.log(batch.schedule);
+        console.log(batch._id, batch.schedule);
         if(isUndef(batch.schedule) ||
            isUndef(batch.schedule.days) ||
            isUndef(batch.schedule.hour) ||
@@ -24,10 +24,13 @@ module.exports = function(app) {
         rule.dayOfWeek  = batch.schedule.days;
         rule.hour       = batch.schedule.hour;
         rule.minute     = batch.schedule.minute;
-        //jobs[batch._id] = schedule.scheduleJob(rule, func);
+        jobs[batch._id] = schedule.scheduleJob(rule, func);
+        /*
+        //For debugging, we just set the schedule for 5 seconds in the future.
         var d = new Date();
         d.setSeconds(d.getSeconds() + 5);
         jobs[batch._id] = schedule.scheduleJob(d, func);
+        */
 
     }
 
