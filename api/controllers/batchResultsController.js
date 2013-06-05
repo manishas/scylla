@@ -48,7 +48,7 @@ module.exports = function(app, models){
     });
 
     app.post('/batches/:batchId/results', function(req, res) {
-        console.log("Saving New Result on Batch:", req.body);
+        //console.log("Saving New Result on Batch:", req.body);
         var batchResult = new models.BatchResult(req.body);
         batchResult.save(function(err){
 

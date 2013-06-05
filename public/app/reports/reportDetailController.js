@@ -58,9 +58,13 @@ define([
         };
         $scope.getDiffClass = function(diff){
             var classes = [];
-            if($scope.report.masterResult && diff.reportResultA == $scope.report.masterResult) {
+            if($scope.report.masterResult &&
+            //Initially we have just the IDs, but later we'll have the entire object...
+            // so our comparison has to take both into account.
+               (diff.reportResultA._id || diff.reportResultA) == $scope.report.masterResult._id) {
                 classes.push( "resultAIsMaster");
-            } else if($scope.report.masterResult && diff.reportResultB == $scope.report.masterResult) {
+            } else if($scope.report.masterResult &&
+               (diff.reportResultB._id || diff.reportResultB) == $scope.report.masterResult._id) {
                 classes.push( "resultBIsMaster");
             }
             classes.push (diff.distortion > 0 ? "fail" : "pass");

@@ -1,4 +1,9 @@
 module.exports = function(ObjectId){
+    /**
+     * Creates a error/result callback that will send a result with either an error or success error code.
+     * @param res express result object
+     * @return callback function
+     */
     var handleQueryResult = function(res){
         return function(err, result){
             if(err){

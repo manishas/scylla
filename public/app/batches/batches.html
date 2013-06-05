@@ -9,7 +9,7 @@
             <h4 class="media-heading"><a href="#/batches/{{batch._id}}">{{batch.name}}</a></h4>
             <ol>
                 <li ng-repeat="result in batch.results">
-                    <a href="#/batchresult/{{result._id}}">{{dateFormat(result.end)}}</a>
+                    <a href="#/batches/{{batch._id}}/results/{{result._id}}">{{dateFormat(result.end)}}</a>
                     <span class="pass">{{result.pass}}</span>/<span class="fail">{{result.fail}}</span>/<span class="exception">{{result.exception}}</span>
                 </li>
             </ol>

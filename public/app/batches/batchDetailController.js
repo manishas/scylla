@@ -13,6 +13,18 @@ define([
         $scope.batch = {};
 
         $scope.showEditBatch = false;
+        $scope.batchScheduleEnabled = false;
+        $scope.batchScheduleTime = "";
+        var dayList =["sun", "mon", "tues", "wed","thurs","fri","sat"];
+        $scope.days = {
+            sun: false,
+            mon: true,
+            tues: true,
+            wed: true,
+            thurs: true,
+            fri:true,
+            sat:false
+        };
         $scope.showAddReport = false;
 
         $scope.selectedReportsToAdd = [];
@@ -47,6 +59,21 @@ define([
                 });
         };
 
+        $scope.showEditBatchModal = function(){
+            $scope.showEditBatch = true;
+            $scope.batchScheduleEnabled = $scope.batch.scheduleEnabled;
+            var sch = $scope.batch.schedule;
+            for(var i in dayList){
+                $scope.days[dayList[i]] = (sch.days.indexOf(parseInt(i)) != -1);
+            }
+            $scope.batchScheduleTime =
+                ((sch.hour<10) ? "0" + sch.hour : sch.hour) +
+                     ":" +
+                ((sch.minute<10) ? "0" + sch.minute : sch.minute);
+            console.log($scope.days);
+            console.log($scope.batchScheduleTime);
+        }
+
         $scope.addReports = function(reportsToAdd){
             $scope.batch.reports = $scope.batch.reports.concat(reportsToAdd);
             $http.post("/batches/" + $scope.batch._id + "/reports", reportsToAdd)
@@ -69,6 +96,14 @@ define([
         };
 
         $scope.editBatch = function(batch){
+            batch.scheduleEnabled = $scope.batchScheduleEnabled
+            batch.schedule.days = [];
+            for(var i=0; i < dayList.length; i++){
+                if($scope.days[dayList[i]]) batch.schedule.days.push(i);
+            }
+            var time = $scope.batchScheduleTime.split(":");
+            batch.schedule.hour = time[0];
+            batch.schedule.minute = time[1];
             $scope.saveBatch(batch)
                 .success(function(batch){
                     $scope.showEditBatch = false;

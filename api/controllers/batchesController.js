@@ -1,4 +1,4 @@
-module.exports = function(app, models){
+module.exports = function(app, models, schedController, executeBatch){
     var ObjectId = require('mongoose').Types.ObjectId;
     var commonController = require('./commonController')(ObjectId);
     var handleQueryResult = commonController.handleQueryResult;
@@ -7,8 +7,11 @@ module.exports = function(app, models){
 
 
     app.get('/batches', function(req, res) {
-        models.Batch.find()
-            .exec(handleQueryResult(res));
+        var query = models.Batch.find();
+        if(req.query.includeResults)
+            query = query.populate({path:"results", options:{sort:{end:-1}}});
+
+        query.exec(handleQueryResult(res));
     });
 
     app.get('/batches/:batchId', function(req, res) {
@@ -17,7 +20,7 @@ module.exports = function(app, models){
         if(req.query.includeReports)
             query = query.populate("reports masterResult");
         if(req.query.includeResults)
-            query = query.populate("results");
+            query = query.populate({path:"results", options:{sort:{end:-1}}});
 
         query.exec(function(err, batch){
             if(err || !req.query.includeReports){
@@ -39,25 +42,33 @@ module.exports = function(app, models){
         delete batch.reports;
         delete batch.results;
         models.Batch.findOneAndUpdate({_id:id}, batch,
-            handleQueryResult(res))
+            function(err, result){
+                if(!err && result) schedController.addBatchToSchedule(result, executeBatch(result._id));
+                handleQueryResult(res)(err, result);
+            });
+
     });
 
     app.del('/batches/:batchId', function(req, res) {
         models.Batch.findOne({_id:new ObjectId(req.params.batchId)})
             .remove(function(err, result){
                 console.log("Deleting:", result);
+                schedController.removeBatchFromSchedule(req.params.batchId);
                 res.send({_id:req.params.batchId});
             });
     });
 
     app.post('/batches', function(req, res) {
-        console.log("Saving Batch", req.body);
+        //console.log("Saving Batch", req.body);
         var batch = new models.Batch(req.body);
-        batch.save(handleQueryResult(res));
+        batch.save(function(err, result){
+            if(!err && result) schedController.addBatchToSchedule(result, executeBatch(result._id));
+            handleQueryResult(res)(err, result);
+        });
     });
 
     app.post('/batches/:batchId/reports', function (req, res) {
-        console.log("Adding Report to Batch:", req.body);
+        //console.log("Adding Report to Batch:", req.body);
         models.Batch.findOne({_id: new ObjectId(req.params.batchId)},
             function (err, batch) {
                 console.log("Reports in Batch", batch.reports);
