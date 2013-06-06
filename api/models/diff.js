@@ -7,6 +7,7 @@ module.exports = function(mongoose){
         reportResultBName:{type:String},
 
         distortion:{type:Number, default:0},
+        error:{},
         image:{type:String},
 
         meta:{}

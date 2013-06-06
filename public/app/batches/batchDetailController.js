@@ -153,9 +153,7 @@ define([
         $scope.getBatch = function(id){
             $http.get("/batches/" + id, {params:{includeResults:true, includeReports:true}})
                 .success(function(batch){
-                    if(batch.results)
-                        batch.results.sort(function(a,b) { return a.end < b.end; } );
-                    $scope.batch = batch
+                     $scope.batch = batch
                 })
                 .error(function(err){
                     alert(err)
