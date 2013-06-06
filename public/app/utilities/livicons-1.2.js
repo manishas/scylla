@@ -12312,110 +12312,113 @@ Raphael.fn.createLivicon = function (iconid, iconname, size, color, hovercolor, 
   $.fn.extend({ //creating jQuery plugin with three methods
     
     addLivicon: function(options) {
-      
-      if (!this.attr("id")) { //adding unique ID if not defined yet
-        var k = uniqueNum();
-        this.attr("id", "livicon-"+k);
-      };
+      return this.each(function(){
+        var $this = $(this);
+        if (!$this.attr("id")) { //adding unique ID if not defined yet
+            var k = uniqueNum();
+            $this.attr("id", "livicon-"+k);
+        };
 
-      var customattr = this.data();
-      //If We've already rendered an icon here, remove it first
-      if(customattr.liviconRendered) this.removeLivicon();
-      customattr = fullNames(customattr);
-      if (options) {
-        options = fullNames(options);  
-      };
-      customattr =  $.extend(customattr, options);
+        var customattr = $this.data();
+        //If We've already rendered an icon here, remove it first
+        if(customattr.liviconRendered) $this.removeLivicon();
+        customattr = fullNames(customattr);
+        if (options) {
+            options = fullNames(options);
+        };
+        customattr =  $.extend(customattr, options);
 
-      var iconid = this.attr("id"),
-          parent = this.parent(),
-          iconname = customattr.name ? customattr.name : defname,
-          size = customattr.size ? customattr.size : defsize,      
-          eventtype = customattr.eventtype ? customattr.eventtype : defeventtype,
-          scalefactor = size/32;
-      this.css({"width":size,"height":size});
+        var iconid = $this.attr("id"),
+            parent = $this.parent(),
+            iconname = customattr.name ? customattr.name : defname,
+            size = customattr.size ? customattr.size : defsize,
+            eventtype = customattr.eventtype ? customattr.eventtype : defeventtype,
+            scalefactor = size/32;
+        $this.css({"width":size,"height":size});
 
-      if (iconname in liviconsdata) {
-        var icondata = liviconsdata[iconname];
-      } else {
-        var icondata = liviconsdata[defname];
-      };
-
-      if (this.hasClass(activeclass) || parent.hasClass(activeparentclass)) {
-        var color = defactivecolor;
-      } else {
-        if (customattr.color == "original") {
-        var color = "original";
-        } else if (customattr.color) {
-          var color = customattr.color;
+        if (iconname in liviconsdata) {
+            var icondata = liviconsdata[iconname];
         } else {
-          var color = defcolor;
+            var icondata = liviconsdata[defname];
         };
-      };
-      
-      if (defanimated) {
-        var animate = customattr.animate == false ? customattr.animate : defanimated;
-      } else {
-        var animate = customattr.animate == true ? customattr.animate : defanimated;
-      };
 
-      if (deflooped) {
-        var looped = customattr.loop == false ? false : Infinity;
-      } else {
-        var looped = customattr.loop == true ? Infinity : false;
-      };
-
-      if (customattr.iteration) {
-        if (Math.round(customattr.iteration)>0) {
-          var iteration = Math.round(customattr.iteration);
+        if ($this.hasClass(activeclass) || parent.hasClass(activeparentclass)) {
+            var color = defactivecolor;
         } else {
-          var iteration = false;
+            if (customattr.color == "original") {
+                var color = "original";
+            } else if (customattr.color) {
+                var color = customattr.color;
+            } else {
+                var color = defcolor;
+            };
         };
-      } else {
-        var iteration = false;
-      };
 
-      if (customattr.duration) {
-        if (Math.round(customattr.duration)>0) {
-          var customduration = Math.round(customattr.duration);
+        if (defanimated) {
+            var animate = customattr.animate == false ? customattr.animate : defanimated;
         } else {
-          var customduration = false;
+            var animate = customattr.animate == true ? customattr.animate : defanimated;
         };
-      } else {
-        var customduration = false;
-      };
-      
-      if (defchangecoloronhover) {
-        var hovercolor = defhovercolor;
-        if (customattr.hovercolor === false || customattr.hovercolor === 0) {
-          hovercolor = false;
-        } else if (customattr.hovercolor === true || customattr.hovercolor === 1) {
-          hovercolor = defhovercolor;
-        } else if (customattr.hovercolor) {
-          hovercolor = customattr.hovercolor;
-        };
-      } else {
-        var hovercolor = false;
-        if (customattr.hovercolor === false || customattr.hovercolor === 0) {
-          hovercolor = false;
-        } else if (customattr.hovercolor === true || customattr.hovercolor === 1) {
-          hovercolor = defhovercolor;
-        } else if (customattr.hovercolor) {
-          hovercolor = customattr.hovercolor;
-        };
-      };
 
-      if (defonparent) {
-        var onparent = customattr.onparent == false ? false : parent;
-      } else {
-        var onparent = customattr.onparent == true ? parent : false;
-      };
+        if (deflooped) {
+            var looped = customattr.loop == false ? false : Infinity;
+        } else {
+            var looped = customattr.loop == true ? Infinity : false;
+        };
 
-      //And now we call Raphael function for create and animate every icon on a page
-      Raphael(iconid, size, size).createLivicon(iconid, iconname, size, color, hovercolor, animate, looped, iteration, customduration, eventtype, icondata, scalefactor, onparent);
-      //Make sure we set the flag to show this has been rendered.
-      this.data("liviconRendered", true);
-      return this;
+        if (customattr.iteration) {
+            if (Math.round(customattr.iteration)>0) {
+                var iteration = Math.round(customattr.iteration);
+            } else {
+                var iteration = false;
+            };
+        } else {
+            var iteration = false;
+        };
+
+        if (customattr.duration) {
+            if (Math.round(customattr.duration)>0) {
+                var customduration = Math.round(customattr.duration);
+            } else {
+                var customduration = false;
+            };
+        } else {
+            var customduration = false;
+        };
+
+        if (defchangecoloronhover) {
+            var hovercolor = defhovercolor;
+            if (customattr.hovercolor === false || customattr.hovercolor === 0) {
+                hovercolor = false;
+            } else if (customattr.hovercolor === true || customattr.hovercolor === 1) {
+                hovercolor = defhovercolor;
+            } else if (customattr.hovercolor) {
+                hovercolor = customattr.hovercolor;
+            };
+        } else {
+            var hovercolor = false;
+            if (customattr.hovercolor === false || customattr.hovercolor === 0) {
+                hovercolor = false;
+            } else if (customattr.hovercolor === true || customattr.hovercolor === 1) {
+                hovercolor = defhovercolor;
+            } else if (customattr.hovercolor) {
+                hovercolor = customattr.hovercolor;
+            };
+        };
+
+        if (defonparent) {
+            var onparent = customattr.onparent == false ? false : parent;
+        } else {
+            var onparent = customattr.onparent == true ? parent : false;
+        };
+
+        //And now we call Raphael function for create and animate every icon on a page
+        Raphael(iconid, size, size).createLivicon(iconid, iconname, size, color, hovercolor, animate, looped, iteration, customduration, eventtype, icondata, scalefactor, onparent);
+        //Make sure we set the flag to show $this has been rendered.
+        $this.data("liviconRendered", true);
+        return this;
+
+      });
     },
     
     removeLivicon: function(option) {
