@@ -12319,6 +12319,8 @@ Raphael.fn.createLivicon = function (iconid, iconname, size, color, hovercolor, 
       };
 
       var customattr = this.data();
+      //If We've already rendered an icon here, remove it first
+      if(customattr.liviconRendered) this.removeLivicon();
       customattr = fullNames(customattr);
       if (options) {
         options = fullNames(options);  
@@ -12411,11 +12413,13 @@ Raphael.fn.createLivicon = function (iconid, iconname, size, color, hovercolor, 
 
       //And now we call Raphael function for create and animate every icon on a page
       Raphael(iconid, size, size).createLivicon(iconid, iconname, size, color, hovercolor, animate, looped, iteration, customduration, eventtype, icondata, scalefactor, onparent);
+      //Make sure we set the flag to show this has been rendered.
+      this.data("liviconRendered", true);
       return this;
     },
     
     removeLivicon: function(option) {
-
+      this.data("liviconRendered", false);
       if (option==="total") {
         this.remove();
       } else {
