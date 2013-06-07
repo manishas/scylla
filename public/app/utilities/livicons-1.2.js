@@ -12422,14 +12422,18 @@ Raphael.fn.createLivicon = function (iconid, iconname, size, color, hovercolor, 
     },
 
     removeLivicon: function(option) {
-      this.data("liviconRendered", false);
-      if (option==="total") {
-        this.remove();
-      } else {
-        var iconid = this.attr("id");
-        $("#canvas-for-"+iconid).remove();
-        return this;
-      };
+      return this.each(function(){
+        var $this = $(this);
+        $this.data("liviconRendered", false);
+        if (option==="total") {
+            $this.remove();
+        } else {
+            var iconid = $this.attr("id");
+            $("#canvas-for-"+iconid).remove();
+            return $this;
+        };
+
+      });
     },
 
     updateLivicon: function(options) {
@@ -12439,9 +12443,7 @@ Raphael.fn.createLivicon = function (iconid, iconname, size, color, hovercolor, 
   });//end fn.extend
 
   //First init of all LivIcons into HTML elements (div, i, span, etc.) with class 'livicon' on a page through 'addLivicon' method
-  $(".livicon").each(function(){
-    $(this).addLivicon();
-  });
+  $(".livicon").addLivicon();
 
 })(jQuery);
 
