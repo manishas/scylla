@@ -109,3 +109,8 @@ input, label{
 #resultSelector .fail{
     color: #FF0000;
 }
+
+.gravatar80{
+    width: 80px;
+    height: 80px;
+}
