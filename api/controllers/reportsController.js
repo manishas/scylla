@@ -7,15 +7,16 @@ module.exports = function(app, models){
 
     app.get('/reports', function(req, res) {
         models.Report.find()
-            .populate("masterResult")
+            .populate({path:"masterResult", select:"-result"})
             .exec(handleQueryResult(res));
     });
 
 
     app.get('/reports/:reportId', function(req, res) {
         var q = models.Report.findOne({_id:new ObjectId(req.params.reportId)});
-        if(req.query.includeResults) q = q.populate("results");
-        q.populate("masterResult")
+        var select = (req.query.includeFullImage) ? "" : "-result";
+        if(req.query.includeResults) q = q.populate({path:"results",select:select});
+        q.populate({path:"masterResult", select:select})
             .exec(handleQueryResult(res));
     });
 

@@ -50,7 +50,9 @@ module.exports = function(app, models){
         console.log("Saving Diff", req.body);
         var diffSrc = req.body;
             diffSrc.report = new ObjectId(diffSrc.report._id);
+        if(diffSrc.reportResultA)
             diffSrc.reportResultA = new ObjectId(diffSrc.reportResultA._id);
+        if(diffSrc.reportResultB)
             diffSrc.reportResultB = new ObjectId(diffSrc.reportResultB._id);
         var diff = new models.Diff(diffSrc);
         diff.save(handleQueryResult(res));

@@ -7,6 +7,7 @@ define([
     ){
     return scyllaApp.controller("HomeController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("homeNav");
+        Page.liviconItUp();
 
     });
 

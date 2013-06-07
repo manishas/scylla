@@ -8,6 +8,9 @@ define([
 
     return scyllaApp.controller("ReportController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("reportsNav");
+        Page.liviconItUp();
+        $scope.$watch('reports', Page.liviconItUp );
+
         $scope.reports = [];
         $scope.reportToDelete = {};
 
@@ -16,7 +19,7 @@ define([
 
         $scope.getThumbnail = function getThumbnail(report){
             if(report && report.masterResult) {
-                return report.masterResult.result;
+                return report.masterResult.thumb;
             }
             return "images/reportHasNoMasterResult.png"
         };

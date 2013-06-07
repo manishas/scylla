@@ -1,16 +1,16 @@
 <div>
-    <h2>
-        {{report.name}}
-        <a class="clickable" ng-click="showEditModal = true;"><i class="icon-edit" title="Edit Report"></i></a>
-    </h2>
+    <div>
+        <h2 style="display:inline-block">{{report.name}}</h2>&nbsp;&nbsp;&nbsp;
+        <a class="clickable headerIcon" ng-click="showEditModal = true;"><i class="livicon shadowed" data-n="edit" data-s="24" data-c="#666" data-hc="#000" data-onparent="true" title="Edit Report"></i></a>
+    </div>
     <div class="media {{getResultClass(result)}}" ng-repeat="result in report.results">
         <a class="pull-left" href="#">
-            <img class="media-object bigThumb" ng-src="{{result.result}}">
+            <img class="media-object bigThumb" ng-src="{{result.thumb}}">
         </a>
         <div class="media-body">
             <h4 class="media-heading">{{formatResultHeader(result)}}
-                <i class="icon-star gold masterStar" title="Master"></i>
-                <a class="clickable notMasterStar" ng-click="setNewMaster(result)"><i class="icon-star-empty actionColor" title="Set as New Master"></i></a>
+                <i class="livicon masterStar" data-n="star-full" data-s="18" data-c="gold" data-hc="gold" data-onparent="true" title="Master"></i>
+                <a class="clickable notMasterStar" ng-click="setNewMaster(result)"><i class="livicon" data-n="star-empty" data-s="18" data-c="#666" data-hc="orange" data-onparent="true" title="Set as New Master"></i></a>
             </h4>
             <ol>
                 <li ng-repeat="diff in result.diffs" class="diff {{getDiffClass(diff)}}">
@@ -18,7 +18,7 @@
                     <i class="icon-arrow-right"></i>
                     <span class="resultB">{{dateFormat(diff.reportResultBName)}}</span>
                     <span class="distortion">{{diff.distortion}}</span>
-                    <span class="viewDiff"><a href="#/diffs/{{diff._id}}" class="clickable"><i class="icon-eye-open" title="View Diff"></i></a></span>
+                    <span class="viewDiff"><a href="#/diffs/{{diff._id}}" class="clickable"><i class="livicon shadowed" data-n="eye-open" data-s="18" data-c="#666" data-hc="#000" data-onparent="true" title="View Diff"></i></a></span>
                 </li>
             </ol>
         </div>

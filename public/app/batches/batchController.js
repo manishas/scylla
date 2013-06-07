@@ -9,12 +9,25 @@ define([
     ){
     return scyllaApp.controller("BatchController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("batchesNav");
+        Page.liviconItUp();
         $scope.batches = [];
 
         $scope.showNewBatch = false;
         $scope.availableReports = [];
         $scope.newBatchName = "";
         $scope.newBatchReportIds = [];
+        $scope.batchScheduleEnabled = false;
+        $scope.batchScheduleTime = "06:00";
+        var dayList =["sun", "mon", "tues", "wed","thurs","fri","sat"];
+        $scope.days = {
+            sun: false,
+            mon: true,
+            tues: true,
+            wed: true,
+            thurs: true,
+            fri:true,
+            sat:false
+        };
 
         $scope.showNewBatchWindow = function(){
             $scope.showNewBatch = true;
@@ -28,7 +41,16 @@ define([
         };
 
         $scope.addBatch = function(batchName, reportIds){
-            $scope.saveBatch({name:batchName, reports:reportIds})
+            var batch = {name:batchName, reports:reportIds};
+            batch.scheduleEnabled = $scope.batchScheduleEnabled;
+            batch.schedule = {days:[]}
+            for(var i=0; i < dayList.length; i++){
+                if($scope.days[dayList[i]]) batch.schedule.days.push(i);
+            }
+            var time = $scope.batchScheduleTime.split(":");
+            batch.schedule.hour = time[0];
+            batch.schedule.minute = time[1];
+            $scope.saveBatch(batch)
                 .success(function(batch){
                     $scope.showNewBatch = false;
                 })

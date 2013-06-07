@@ -1,6 +1,6 @@
 <div>
     <div class="pull-right">
-        <a class="btn btn-primary" ng-click="showNewReport = true"><i class="icon-plus-sign icon-white"></i> New</a>
+        <a class="btn btn-primary" ng-click="showNewReport = true"><i class="livicon shadowed" data-n="plus-alt" data-s="18" data-c="white" data-hc="0" data-onparent="true"></i> New</a>
     </div>
     <h1>Reports</h1>
     <div class="media" ng-repeat="report in reports">
@@ -9,7 +9,7 @@
         </a>
         <div class="media-body">
             <h4 class="media-heading"><a ng-href="#/reports/{{report._id}}">{{report.name}}</a>
-                <a ng-click="deleteReport(report);" class="clickable"><i class="icon-trash" title="Delete Report"></i></a></h4>
+                <a ng-click="deleteReport(report);" class="clickable"><i class="livicon shadowed" data-n="trash" data-s="24" data-c="#666" data-hc="#600" data-onparent="true" title="Delete Report"></i></a></h4>
             <span>Stats</span>
         </div>
     </div>

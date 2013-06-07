@@ -1,6 +1,7 @@
 <div>
     <div class="pull-right">
-        <a ng-click="showNewBatchWindow()" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> New Batch</a>
+        <a ng-click="showNewBatchWindow()" class="btn btn-primary"><span class="livicon shadowed" data-n="plus-alt" data-s="18" data-c="white" data-hc="0" data-onparent="true"></span>
+            New Batch</a>
     </div>
 
     <h1>Batches</h1>
@@ -31,6 +32,29 @@
                 <select multiple="multiple" ng-model="newBatchReportIds" class="input-xxlarge">
                     <option ng-repeat="report in availableReports" value="{{report._id}}">{{report.name}}</option>
                 </select>
+                <input id="batch-schedule-enabled" type="checkbox"
+                       ng-model="batchScheduleEnabled"/>
+                <label for="batch-schedule-enabled">Run at Scheduled Times:</label><br/>
+                <fieldset ng-disabled="!batchScheduleEnabled">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-mini" ng-class="{disabled:!batchScheduleEnabled}"
+                                ng-model="days.sun" btn-checkbox>Sun</button>
+                        <button type="button" class="btn btn-primary btn-mini" ng-class="{disabled:!batchScheduleEnabled}"
+                                ng-model="days.mon" btn-checkbox>Mon</button>
+                        <button type="button" class="btn btn-primary btn-mini" ng-class="{disabled:!batchScheduleEnabled}"
+                                ng-model="days.tues" btn-checkbox>Tues</button>
+                        <button type="button" class="btn btn-primary btn-mini" ng-class="{disabled:!batchScheduleEnabled}"
+                                ng-model="days.wed" btn-checkbox>Wed</button>
+                        <button type="button" class="btn btn-primary btn-mini" ng-class="{disabled:!batchScheduleEnabled}"
+                                ng-model="days.thurs" btn-checkbox>Thurs</button>
+                        <button type="button" class="btn btn-primary btn-mini" ng-class="{disabled:!batchScheduleEnabled}"
+                                ng-model="days.fri" btn-checkbox>Fri</button>
+                        <button type="button" class="btn btn-primary btn-mini" ng-class="{disabled:!batchScheduleEnabled}"
+                                ng-model="days.sat" btn-checkbox>Sat</button>
+                    </div>
+                    @
+                    <input type="time" class="input-small" style="margin-top: 8px;" ng-model="batchScheduleTime">
+
             </form>
         </div>
         <div class="modal-footer">

@@ -12,6 +12,8 @@ define([
 
     return scyllaApp.controller("BatchResultController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("batchesNav");
+        Page.liviconItUp();
+
         $scope.batch = {};
         $scope.batchResult = {};
         $scope.currentDiff = {};

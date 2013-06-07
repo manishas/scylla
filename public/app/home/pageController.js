@@ -1,11 +1,13 @@
 define([
     "scyllaApp",
-    "home/page"
+    "home/page",
+    "utilities/debounce"
 ], function(
     scyllaApp,
-    Page
+    Page,
+    dbnc
     ){
-    return scyllaApp.controller("PageController", function($scope, $http, Page) {
+    return scyllaApp.controller("PageController", function($scope, $http, Page, debounce) {
         $scope.Page = Page;
         $scope.pages = [
             {label:"Home", href:"#", id:"homeNav", active:false},
@@ -18,6 +20,17 @@ define([
         };
 
 
+        var run_livicon = function(){
+            console.log("Icons Added");
+            var $domPath = $("#mainView");
+            $domPath.find(".livicon").addLivicon();
+        };
+
+        /**
+         * Debounced call to add the icons.  Call it as much as you like, ANY time something might have changed, it won't have an adverse impact
+         * @type {*}
+         */
+        Page.liviconItUp = debounce(run_livicon, 20, false);
 
 
         $scope.showLoginModal = false;
