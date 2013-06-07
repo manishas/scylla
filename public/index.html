@@ -25,10 +25,10 @@
         <div class="container">
             <a class="brand" href="#">Scylla</a>
 
-            <div class="nav-collapse collapse">
+            <div ng-cloak>
                 <ul class="nav">
                     <li ng-repeat="page in pages" ng-id="{{page.id}}" ng-class="isActive(page)">
-                        <a ng-href="{{page.href}}">{{page.label}}</a>
+                        <a ng-href="{{page.href}}"><i class="livicon-deferred" data-n="{{page.icon}}" data-s="24" data-c="#666" data-hc="#000" data-onparent="true" title="Edit Batch"></i> {{page.label}}</a>
                     </li>
                 </ul>
             </div>
@@ -45,7 +45,7 @@
     <h1>Loading...</h1>
 </div>
 
-<div modal="showLoginModal" close="closeLogin()" options="loginWindowOptions">
+<div modal="showLoginModal" close="closeLogin()" options="loginWindowOptions" ng-cloak>
     <div class="modal-header">
         <h4>Login</h4>
     </div>
@@ -61,7 +61,7 @@
     </div>
 </div>
 
-<div modal="showRegisterModal" close="closeLogin()" options="loginWindowOptions">
+<div modal="showRegisterModal" close="closeLogin()" options="loginWindowOptions" ng-cloak>
     <div class="modal-header">
         <h4>Register</h4>
     </div>

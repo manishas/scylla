@@ -2,6 +2,20 @@ body{
     height: 100%;
     background: #EEEEEE url("../images/scylla.png") no-repeat fixed 100% 100%;
 }
+a{
+    color:#6485c3;
+}
+.navbar a.brand{
+    color:#6485c3;
+    font-size:30px;
+}
+.nav{
+    font-size:24px;
+}
+.nav i{
+    display:inline-block;
+    vertical-align: middle;
+}
 #mainView{
     margin-top:-20px;/* bootstrap navbar has a 20px navbar bottom */
     background:rgba(255, 255, 255, 0.7);
