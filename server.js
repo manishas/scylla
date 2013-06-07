@@ -2,8 +2,10 @@
 
 var express = require('express');
 var app = express();
-var nodemailer = require('nodemailer');
 var MemoryStore = require('connect').session.MemoryStore;
+var SendGrid = require('sendgrid').SendGrid;
+var mailConfig = require('./config/mail')
+var sendgrid = new SendGrid(mailConfig.user, mailConfig.key);
 
 var mongoose = require('mongoose');
 mongoose.set('debug', true);
@@ -23,15 +25,26 @@ var config = {
 }
 
 var models = {
-    Account     : require('./api/models/account')(config, mongoose, nodemailer),
+    Account     : require('./api/models/account')(config, mongoose, sendgrid),
     ReportResult: require('./api/models/reportResult')(mongoose),
     Report      : require('./api/models/report')(mongoose),
     BatchResult : require('./api/models/batchResult')(mongoose),
     Batch       : require('./api/models/batch')(mongoose),
     Diff        : require('./api/models/diff')(mongoose)
 }
+var executeBatch = function(batchId){
+    return function(){
+        charybdis.execute(batchId.toString())
+            .then(function(batchBundle){
+                emailController.sendBatchResultEmail(batchBundle.batch, batchBundle.batchResult);
+            },function(error){
+                console.log("Error running Charybdis on BatchId: ", batchId, error);
+            });
+    };
+};
+
 var schedController = require('./api/controllers/scheduleController')(app);
-var executeBatch = function(batchId){return function(){charybdis.execute(batchId.toString());};}
+var emailController = require('./api/controllers/emailController')(app, models, sendgrid);
 var controllers = {
     account      : require('./api/controllers/accountController')(app, models),
     reports      : require('./api/controllers/reportsController')(app, models),
@@ -40,7 +53,8 @@ var controllers = {
     batchResults : require('./api/controllers/batchResultsController')(app, models),
     diffs        : require('./api/controllers/diffsController')(app, models),
     charybdis    : require('./api/controllers/charybdisController')(app, charybdis),
-    schedule     : schedController
+    schedule     : schedController,
+    email        : emailController
 }
 
 app.listen(3000);

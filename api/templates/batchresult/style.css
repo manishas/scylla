@@ -1,0 +1,9 @@
+.passed{
+    color:#7cfc00;
+}
+.failed{
+    color:#ff4500;
+}
+.exception{
+    color:#8b0000;
+}

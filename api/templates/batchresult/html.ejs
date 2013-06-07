@@ -1,0 +1,25 @@
+<h1><%= batch.name %> Results</h1>
+<div class="summary">
+    <span>Batch executed at: <%= formatDate(batchresult.end) %></span><br/>
+    <span class="passed"><%= batchresult.pass %> passed.</span> |
+    <span class="failed"><%= batchresult.fail %> failed.</span> |
+    <span class="exception"><%= batchresult.exception %> had an exception.</span>
+
+</div>
+<div class="details">
+    <ul>
+        <% for(var reportresult in batchresult.reportResultSummaries) { %>
+        <% var summary = batchresult.reportResultSummaries[reportresult]; %>
+            <li>
+                <a href="<%= getDiffUrl(batch._id, batchresult._id, summary.diffId) %>"><%= summary.name %></a>
+                <% if(summary.diff == 0){ %>
+                    <span class="passed">Passed!</span>
+                <% } else if(summary.diff == -1) { %>
+                    <span class="exception">Exception: </span>
+                <% } else { %>
+                    <span class="failed">Failed with difference: <%= summary.diff %></span>
+                <% } %>
+            </li>
+        <% } %>
+    </ul>
+</div>

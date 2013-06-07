@@ -5,12 +5,14 @@
   "dependencies": {
     "express": "3.x",
     "mongoose": "~3.6.11",
-    "nodemailer": "~0.4.4",
     "connect": "~2.7.10",
     "q-io": "~1.6.6",
     "winston": "~0.7.1",
     "node-schedule": "~0.1.8",
-    "q": "~0.9.4"
+    "q": "~0.9.4",
+    "sendgrid": "~0.2.7",
+    "email-templates": "~0.1.0",
+    "moment": "~2.0.0"
   },
   "devDependencies": {
     "chai": "*",
