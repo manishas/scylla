@@ -13,6 +13,7 @@ define([
     return scyllaApp.controller("DiffDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("reportsNav");
         Page.liviconItUp();
+        $scope.$watch('diff', Page.liviconItUp );
 
 
         $scope.getDiff = function(diffId){
