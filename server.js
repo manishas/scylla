@@ -25,6 +25,7 @@ var config = {
 }
 
 var models = {
+    ObjectId    : mongoose.Types.ObjectId,
     Account     : require('./api/models/account')(config, mongoose, sendgrid),
     ReportResult: require('./api/models/reportResult')(mongoose),
     Report      : require('./api/models/report')(mongoose),
@@ -55,6 +56,9 @@ var controllers = {
     charybdis    : require('./api/controllers/charybdisController')(app, charybdis),
     schedule     : schedController,
     email        : emailController
+}
+var routes = {
+    account: require('./api/routes/accountRoutes')(app, models, controllers)
 }
 
 app.listen(3000);

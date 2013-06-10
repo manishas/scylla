@@ -12,7 +12,10 @@
     "q": "~0.9.4",
     "sendgrid": "~0.2.7",
     "email-templates": "~0.1.0",
-    "moment": "~2.0.0"
+    "moment": "~2.0.0",
+    "supertest": "~0.7.0",
+    "sinon": "~1.7.2",
+    "glob": "~3.2.1"
   },
   "devDependencies": {
     "chai": "*",

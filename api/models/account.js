@@ -1,4 +1,5 @@
 module.exports = function (config, mongoose, nodemailer) {
+    var Q = require('q');
 
     var AccountSchema = new mongoose.Schema({
         email    : { type: String, unique: true },
@@ -8,7 +9,8 @@ module.exports = function (config, mongoose, nodemailer) {
     });
 
     var Account = mongoose.model('Account', AccountSchema);
-
+    Account.qFind = Q.nfbind(Account.find.bind(Account));
+    Account.qFindOne = Q.nfbind(Account.findOne.bind(Account));
     return Account;
 
 }

@@ -1,24 +1,22 @@
 module.exports = function(app, models){
-
+    var Q = require("q");
     var crypto = require('crypto');
-    var ObjectId = require('mongoose').Types.ObjectId;
     var Account = models.Account;
 
-    var registerCallback = function (err) {
-        if (err) {
-            return console.log(err);
-        }
-        return console.log('Account was created');
-    };
-
+    /*
     var changePassword = function (accountId, newpassword) {
+        var deferred = Q.defer();
         var shaSum = crypto.createHash('sha256');
         shaSum.update(newpassword);
         var hashedPassword = shaSum.digest('hex');
         Account.update({_id: accountId}, {$set: {password: hashedPassword}}, {upsert: false},
             function changePasswordCallback(err) {
-                console.log('Change password done for account ' + accountId);
+                if(err)
+                    deferred.reject(err);
+                else
+                    deferred.resolve({account:accountId, success:true});
             });
+        return deferred.promise;
     };
 
     var forgotPassword = function (email, resetPasswordUrl, callback) {
@@ -44,18 +42,23 @@ module.exports = function(app, models){
             }
         });
     };
+    */
 
-    var findById = function(accountId, callback) {
-        Account.findOne({_id:new ObjectId(accountId)}, {password:0}, function(err,doc) {
-            callback(doc);
-        });
+    var findById = function(accountId) {
+        return Account.qFindOne({_id:new models.ObjectId(accountId)}, {password:0})
+            .then(function(account){
+                //console.log("Found Account");
+                return account;
+            });
     };
 
     var login = function (email, password, callback) {
         var shaSum = crypto.createHash('sha256');
         shaSum.update(password);
-        Account.findOne({email: email, password: shaSum.digest('hex')}, {password:0}, function (err, doc) {
-            callback(doc);
+        return Account.qFindOne({email: email, password: shaSum.digest('hex')}, {password:0})
+            .then(function (account) {
+                //console.log("User Logged In", account);
+                return account;
         });
     };
 
@@ -63,72 +66,23 @@ module.exports = function(app, models){
         var shaSum = crypto.createHash('sha256');
         shaSum.update(password);
 
-        console.log('Registering ' + email);
+        //console.log('Registering ' + email);
         var user = new Account({
             email   : email,
             name    : name,
             password: shaSum.digest('hex')
         });
-        user.save(registerCallback);
-        console.log('Save command was sent');
+
+        user.qSave = Q.nfbind(user.save.bind(user));
+        return user.qSave()
+            .then(function(acct){
+                return findById(acct[0]._id.toString());
+            });
     }
 
-
-    /** Routes **/
-    app.get('/accounts/:id', function(req, res) {
-        var accountId = req.params.id == 'me'
-            ? req.session.accountId
-            : req.params.id;
-        console.log("Looking for", accountId);
-        findById(accountId, function(account){
-            console.log("Found Account", account);
-            res.send(account);
-        });
-    });
-
-    app.get('/account/authenticated', function(req, res) {
-        if ( req.session.loggedIn ) {
-            res.send(200);
-        } else {
-            res.send(401);
-        }
-    });
-
-    app.post('/account/register', function(req, res) {
-        var name = req.body.name;
-        var email = req.body.email;
-        var password = req.body.password;
-        console.log("Registering");
-
-        if ( null == email || null == password ) {
-            res.send(400);
-            return;
-        }
-
-        register(email, password, name);
-        res.send(200);
-    });
-
-    app.post('/account/login', function(req, res) {
-        console.log('login request');
-        var email = req.body.email
-        var password = req.body.password
-
-        if ( null == email || email.length < 1
-                 || null == password || password.length < 1 ) {
-            res.send(400);
-            return;
-        }
-
-        login(email, password, function(account) {
-            if ( !account ) {
-                res.send(401);
-                return;
-            }
-            console.log('login was successful', account);
-            req.session.loggedIn = true;
-            req.session.accountId = account._id;
-            res.send(account);
-        });
-    });
+    return {
+        findById:findById,
+        login:login,
+        register:register
+    }
 }
