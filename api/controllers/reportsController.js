@@ -1,63 +1,83 @@
 module.exports = function(app, models){
+    var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;
     var commonController = require('./commonController')(ObjectId);
-    var handleQueryResult = commonController.handleQueryResult;
-    var toObjectIdArray = commonController.toObjectIdArray;
 
+    var execDeferredBridge = commonController.execDeferredBridge;
+    var execDeferredDeleteBridge = commonController.execDeferredDeleteBridge;
 
-    app.get('/reports', function(req, res) {
+    var find = function find(){
+        var deferred = Q.defer();
         models.Report.find()
             .populate({path:"masterResult", select:"-result"})
-            .exec(handleQueryResult(res));
-    });
+            .exec(execDeferredBridge(deferred));
+        return deferred.promise;
+    };
 
-
-    app.get('/reports/:reportId', function(req, res) {
-        var q = models.Report.findOne({_id:new ObjectId(req.params.reportId)});
-        var select = (req.query.includeFullImage) ? "" : "-result";
-        if(req.query.includeResults) q = q.populate({path:"results",select:select});
+    var findById = function findById(id, includeFullImage, includeResults){
+        var deferred = Q.defer();
+        var q = models.Report.findOne({_id:new models.ObjectId(id)});
+        var select = (includeFullImage) ? "" : "-result";
+        if(includeResults) q = q.populate({path:"results",select:select});
         q.populate({path:"masterResult", select:select})
-            .exec(handleQueryResult(res));
-    });
+            .exec(execDeferredBridge(deferred));
+        return deferred.promise;
+    };
 
-    app.put('/reports/:reportId', function(req, res) {
-        var id = new ObjectId(req.params.reportId);
-        var report = req.body;
+    var update = function update(reportId, report){
+        var deferred = Q.defer();
+        var id = new models.ObjectId(reportId);
         delete report._id;
         delete report.results;
         delete report.masterResult;
         models.Report.findOneAndUpdate({_id:id}, report,
-            handleQueryResult(res));
-    });
+            execDeferredBridge(deferred));
+        return deferred.promise;
+    };
 
-    app.del('/reports/:reportId', function(req, res) {
-        models.Report.findOne({_id:new ObjectId(req.params.reportId)})
-            .remove(function(err, result){
-                console.log("Deleting:", result);
-                res.send({_id:req.params.reportId});
-            });
-    });
+    var remove = function remove(reportId){
+        var deferred = Q.defer();
+        models.Report.findOne({_id:new models.ObjectId(reportId)})
+            .remove(execDeferredDeleteBridge(deferred));
+        return deferred.promise;
+    };
 
-    app.post('/reports', function(req, res) {
-        console.log("Saving Report", req.body);
-        var report = new models.Report(req.body);
-        report.save(handleQueryResult(res));
-    });
+    var createNew = function createNew(reportJSON){
+        var report = new models.Report(reportJSON);
+        report.qSave = Q.nfbind(report.save.bind(report));
+        return report.qSave()
+            .then(commonController.first);
+    };
 
-
-    app.put('/reports/:reportId/masterResult', function (req, res) {
-        console.log("Saving Master Result on Report:", req.body);
-
-        models.Report.findOne({_id: new ObjectId(req.params.reportId)},
+    var updateReportMaster = function(reportId, resultId){
+        return models.Report.qFindOne({_id: new models.ObjectId(reportId)},
             function (err, report) {
-                report.masterResult = new ObjectId(req.body._id);
-                report.save(function (err) {
-                    res.send({success:!err});
-                })
+                if(err) throw err;
+                report.masterResult = new models.ObjectId(resultId);
+                report.qSave = Q.nfbind(report.save.bind(report));
+                return report.qSave();
             })
+    };
+    var addResultToReport = function(reportId, result){
+        return models.Report.qFindOne({_id: new models.ObjectId(reportId)})
+            .then(function (report) {
+                console.log("AddResultToReport", report);
+                report.results.push(result);
+                report.qSave = Q.nfbind(report.save.bind(report));
+                return report.qSave()
+                    .then(commonController.first);
+            });
+    };
 
 
-    });
-
+    return {
+        find:find,
+        findById:findById,
+        update:update,
+        remove:remove,
+        createNew:createNew,
+        updateReportMaster:updateReportMaster,
+        addResultToReport:addResultToReport
+    };
 
 }

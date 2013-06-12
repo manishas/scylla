@@ -1,10 +1,9 @@
 var expect = require('chai').expect;
 var assert = require('assert');
 var Mocha = require('mocha');
-require("mocha-as-promised")();
 
 var host = "localhost";
-var port = "3000";
+var port = "3001";
 
 var h = require('../util/asyncHelpers.js')(host, port);
 
@@ -68,7 +67,7 @@ describe("Reports", function(){
             .then(function(deletedReport){
                 return h.getJsonObject(h.getRequest("/reports/" + deletedReport._id))
                     .then(function(ohNo){
-                        expect(ohNo).to.equal(undefined);
+                        assert(false, "Should have returned a 404");
                         return;
                     }, function(error){
                         expect(error.message).to.equal("404");

@@ -12,7 +12,8 @@ define([
         $scope.pages = [
             {label:"Home", href:"#", id:"homeNav", icon:"home", active:false},
             {label:"Reports", href:"#/reports", id:"reportsNav", icon:"notebook", active:false},
-            {label:"Batches", href:"#/batches", id:"batchesNav", icon:"sitemap", active:false}
+            {label:"Batches", href:"#/batches", id:"batchesNav", icon:"sitemap", active:false},
+            {label:"AB Compare", href:"#/compare", id:"compareNav", icon:"balance", active:false}
         ];
         $scope.isActive = function(item){
             //console.log(item.id, Page.firstLevelNavId());

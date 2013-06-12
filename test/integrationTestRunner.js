@@ -1,6 +1,8 @@
-var Mocha = require('mocha'),
-    path = require('path'),
-    fs = require('fs');
+var Mocha = require('mocha');
+var mochaAsPromised = require("mocha-as-promised");
+    mochaAsPromised(Mocha);
+var path = require('path');
+var fs = require('fs');
 var glob = require("glob");
 
 var mocha = new Mocha({
@@ -9,7 +11,7 @@ var mocha = new Mocha({
     timeout: 500
 });
 
-var testDir = './test/unit/**/*Test.js';
+var testDir = './test/api/**/*Test.js';
 glob(testDir, function (err, files) {
     if (err) {
         console.log(err);

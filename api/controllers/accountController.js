@@ -1,7 +1,6 @@
 module.exports = function(app, models){
     var Q = require("q");
     var crypto = require('crypto');
-    var Account = models.Account;
 
     /*
     var changePassword = function (accountId, newpassword) {
@@ -9,7 +8,7 @@ module.exports = function(app, models){
         var shaSum = crypto.createHash('sha256');
         shaSum.update(newpassword);
         var hashedPassword = shaSum.digest('hex');
-        Account.update({_id: accountId}, {$set: {password: hashedPassword}}, {upsert: false},
+        models.Account.update({_id: accountId}, {$set: {password: hashedPassword}}, {upsert: false},
             function changePasswordCallback(err) {
                 if(err)
                     deferred.reject(err);
@@ -20,7 +19,7 @@ module.exports = function(app, models){
     };
 
     var forgotPassword = function (email, resetPasswordUrl, callback) {
-        var user = Account.findOne({email: email}, function findAccount(err, doc) {
+        var user = models.Account.findOne({email: email}, function findAccount(err, doc) {
             if (err) {
                 // Email address is not a valid user
                 callback(false);
@@ -45,17 +44,16 @@ module.exports = function(app, models){
     */
 
     var findById = function(accountId) {
-        return Account.qFindOne({_id:new models.ObjectId(accountId)}, {password:0})
+        return models.Account.qFindOne({_id:new models.ObjectId(accountId)}, {password:0})
             .then(function(account){
-                //console.log("Found Account");
                 return account;
             });
     };
 
-    var login = function (email, password, callback) {
+    var login = function (email, password) {
         var shaSum = crypto.createHash('sha256');
         shaSum.update(password);
-        return Account.qFindOne({email: email, password: shaSum.digest('hex')}, {password:0})
+        return models.Account.qFindOne({email: email, password: shaSum.digest('hex')}, {password:0})
             .then(function (account) {
                 //console.log("User Logged In", account);
                 return account;
@@ -67,7 +65,7 @@ module.exports = function(app, models){
         shaSum.update(password);
 
         //console.log('Registering ' + email);
-        var user = new Account({
+        var user = new models.Account({
             email   : email,
             name    : name,
             password: shaSum.digest('hex')
@@ -76,6 +74,7 @@ module.exports = function(app, models){
         user.qSave = Q.nfbind(user.save.bind(user));
         return user.qSave()
             .then(function(acct){
+                console.log("Finding By Id")
                 return findById(acct[0]._id.toString());
             });
     }

@@ -11,7 +11,7 @@ module.exports = (function(){
     };
     var normalFail = function(res){
         return function(error){
-            console.log("Error: ", error);
+            console.error("\nError: ", error);
             res.send(500, error);
         }
     }

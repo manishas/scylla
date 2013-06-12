@@ -1,59 +1,56 @@
 module.exports = function(app, models){
+    var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;
-    var handleQueryResult = require('./commonController')().handleQueryResult;
+    var commonController = require('./commonController')(ObjectId);
 
+    var execDeferredBridge = commonController.execDeferredBridge;
+    var execDeferredDeleteBridge = commonController.execDeferredDeleteBridge;
 
-    app.get('/report-results', function(req, res) {
+    var find = function find(){
+        var deferred = Q.defer();
         models.ReportResult.find()
             .populate("report")
-            .exec(handleQueryResult(res));
-    });
+            .exec(execDeferredBridge(deferred));
+        return deferred.promise;
+    };
 
-    app.get('/report-results/:resultId', function(req, res) {
-        models.ReportResult.findOne({_id:new ObjectId(req.params.resultId)})
+    var findById = function findById(resultId){
+        var deferred = Q.defer();
+        models.ReportResult.findOne({_id:new ObjectId(resultId)})
             .populate("report")
-            .exec(handleQueryResult(res));
-    });
+            .exec(execDeferredBridge(deferred));
+        return deferred.promise;
+    };
 
-    app.put('/report-results/:resultId', function(req, res) {
-        var id = new ObjectId(req.params.resultId);
-        var repResult = req.body;
-        delete repResult._id;
-        models.ReportResult.findOneAndUpdate({_id:id}, repResult,
-            handleQueryResult(res))
-    });
+    var update = function update(resultId, result){
+        var deferred = Q.defer();
+        var id = new ObjectId(resultId);
+        delete result._id;
+        models.ReportResult.findOneAndUpdate({_id:id}, result,
+            execDeferredBridge(deferred));
+        return deferred.promise;
+    };
 
-    app.del('/report-results/:resultId', function(req, res) {
-        var resultId = new ObjectId(req.params.resultId);
-        models.ReportResult.findOne({_id:resultId})
-            .remove(function(err, result){
-                console.log("Deleting:", result);
-                res.send({_id:req.params.resultId});
-            });
-        models.Diff.find(
-            {$or:[
-                {reportResultA:resultId},
-                {reportResultB:resultId}
-            ]})
-            .remove(function(err, result){
-                console.log("Deleted Diffs: ", result);
-            })
-    });
+    var remove = function remove(resultId){
+        var deferred = Q.defer();
+        models.ReportResult.findOne({_id:new models.ObjectId(resultId)})
+            .remove(execDeferredDeleteBridge(deferred));
+        return deferred.promise;
 
-    app.post('/reports/:reportId/results', function(req, res) {
-        console.log("Saving New Result on Report:", req.body);
-        var reportResult = new models.ReportResult(req.body);
-        reportResult.save(function(err){
+    };
 
-            models.Report.findOne({_id:new ObjectId(req.params.reportId)},
-                function(err, report){
-                    report.results.push(reportResult);
-                    report.save(function(err){
-                        res.send(reportResult);
-                    })
-                })
-        })
+    var createNew = function createNew(resultJSON){
+        var result = new models.ReportResult(resultJSON);
+        result.qSave = Q.nfbind(result.save.bind(result));
+        return result.qSave()
+            .then(commonController.first);
+    };
 
-
-    });
+    return {
+        find:find,
+        findById:findById,
+        update:update,
+        remove:remove,
+        createNew:createNew
+    };
 }

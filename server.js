@@ -4,11 +4,11 @@ var express = require('express');
 var app = express();
 var MemoryStore = require('connect').session.MemoryStore;
 var SendGrid = require('sendgrid').SendGrid;
-var mailConfig = require('./config/mail')
+var mailConfig = require('./config/mail');
 var sendgrid = new SendGrid(mailConfig.user, mailConfig.key);
 
 var mongoose = require('mongoose');
-mongoose.set('debug', true);
+//mongoose.set('debug', true);
 
 var charybdis = require("../charybdis/src/charybdis")("localhost", 3001);
 
@@ -25,20 +25,22 @@ var config = {
 }
 
 var models = {
-    ObjectId    : mongoose.Types.ObjectId,
-    Account     : require('./api/models/account')(config, mongoose, sendgrid),
-    ReportResult: require('./api/models/reportResult')(mongoose),
-    Report      : require('./api/models/report')(mongoose),
-    BatchResult : require('./api/models/batchResult')(mongoose),
-    Batch       : require('./api/models/batch')(mongoose),
-    Diff        : require('./api/models/diff')(mongoose)
+    ObjectId       : mongoose.Types.ObjectId,
+    AbCompare      : require('./api/models/abCompare')(mongoose),
+    AbCompareResult: require('./api/models/abCompareResult')(mongoose),
+    Account        : require('./api/models/account')(mongoose),
+    ReportResult   : require('./api/models/reportResult')(mongoose),
+    Report         : require('./api/models/report')(mongoose),
+    BatchResult    : require('./api/models/batchResult')(mongoose),
+    Batch          : require('./api/models/batch')(mongoose),
+    Diff           : require('./api/models/diff')(mongoose)
 }
-var executeBatch = function(batchId){
-    return function(){
-        charybdis.execute(batchId.toString())
-            .then(function(batchBundle){
+var executeBatch = function (batchId) {
+    return function () {
+        charybdis.executeOnBatch(batchId.toString())
+            .then(function (batchBundle) {
                 emailController.sendBatchResultEmail(batchBundle.batch, batchBundle.batchResult);
-            },function(error){
+            }, function (error) {
                 console.log("Error running Charybdis on BatchId: ", batchId, error);
             });
     };
@@ -46,7 +48,9 @@ var executeBatch = function(batchId){
 
 var schedController = require('./api/controllers/scheduleController')(app);
 var emailController = require('./api/controllers/emailController')(app, models, sendgrid);
+
 var controllers = {
+    abCompares   : require('./api/controllers/abComparesController')(app, models),
     account      : require('./api/controllers/accountController')(app, models),
     reports      : require('./api/controllers/reportsController')(app, models),
     reportResults: require('./api/controllers/reportResultsController')(app, models),
@@ -58,17 +62,20 @@ var controllers = {
     email        : emailController
 }
 var routes = {
-    account: require('./api/routes/accountRoutes')(app, models, controllers)
+    abcompares   : require('./api/routes/abComparesRoutes')(app, models, controllers),
+    account      : require('./api/routes/accountRoutes')(app, models, controllers),
+    reports      : require('./api/routes/reportsRoutes')(app, models, controllers),
+    reportResults: require('./api/routes/reportResultsRoutes')(app, models, controllers)
 }
 
 app.listen(3000);
 
 //Initialize the schedule
 
-models.Batch.find(function(err, batches){
-    if(err) throw "Problem loading Batches";
-    if(typeof batches.length === "undefined") batches = [batches];
-    batches.forEach(function(batch){
+models.Batch.find(function (err, batches) {
+    if (err) throw "Problem loading Batches";
+    if (typeof batches.length === "undefined") batches = [batches];
+    batches.forEach(function (batch) {
         controllers.schedule.addBatchToSchedule(batch, executeBatch(batch._id))
     })
 });

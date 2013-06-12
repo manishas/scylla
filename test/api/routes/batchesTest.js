@@ -1,7 +1,6 @@
 var expect = require('chai').expect;
 var assert = require('assert');
 var Mocha = require('mocha');
-require("mocha-as-promised")();
 
 var host = "localhost";
 var port = "3000";

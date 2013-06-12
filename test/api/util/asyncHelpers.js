@@ -1,5 +1,5 @@
 module.exports = function(host, port){
-    var http = {}//require("q-io/http");
+    var http = require("q-io/http");
 
     var newRequest = function (method, path, body) {
         return {
@@ -35,6 +35,12 @@ module.exports = function(host, port){
                             return JSON.parse(body.toString());
                         });
                 } else {
+                    if(response.status != 404){
+                        console.error("\nError with URL: ",requestObject.method, requestObject.path);
+                        console.error("Status: " + response.status);
+                        response.body.read()
+                            .then(function(body){console.error(body.toString())});
+                    }
                     throw new Error(response.status);
                 }
             });

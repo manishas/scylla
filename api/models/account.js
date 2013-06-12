@@ -1,4 +1,4 @@
-module.exports = function (config, mongoose, nodemailer) {
+module.exports = function (mongoose) {
     var Q = require('q');
 
     var AccountSchema = new mongoose.Schema({

@@ -1,4 +1,6 @@
 module.exports = function(mongoose){
+    var Q = require('q');
+
     var ReportSchema = new mongoose.Schema({
         url:{type:String},
         name:{type:String},
@@ -7,6 +9,8 @@ module.exports = function(mongoose){
     });
 
     var Report = mongoose.model('reports', ReportSchema);
+    Report.qFind = Q.nfbind(Report.find.bind(Report));
+    Report.qFindOne = Q.nfbind(Report.findOne.bind(Report));
 
     return Report;
 }

@@ -18,6 +18,7 @@ require([
     'home/homeController',
     'reports/reportController',
     'reports/reportDetailController',
+    'compares/comparesController',
     'batches/batchController',
     'batches/batchDetailController',
     'batches/batchResultController'
@@ -29,6 +30,7 @@ require([
     HomeController,
     ReportController,
     ReportDetailController,
+    ComparesController,
     BatchController,
     BatchDetailController,
     BatchResultController
@@ -47,6 +49,12 @@ require([
             .when('/reports/:id',
                   {templateUrl:'app/reports/reportDetail.html',
                       controller:"ReportDetailController"})
+            .when('/compare',
+                  {templateUrl:'app/compares/compares.html',
+                      controller:"ComparesController"})
+            .when('/compare/:id',
+                  {templateUrl:'app/compares/compareDetail.html',
+                      controller:"CompareDetailController"})
             .when('/diffs/:id',
                   {templateUrl:'app/diffs/diffDetail.html',
                       controller:"DiffDetailController"})
