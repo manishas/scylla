@@ -43,7 +43,18 @@ module.exports = function(app, models){
         var abCompare = new models.AbCompare(abCompareJSON);
         abCompare.qSave = Q.nfbind(abCompare.save.bind(abCompare));
         return abCompare.qSave();
-    }
+    };
+
+    var addResultToCompare = function addResultToCompare(abCompareId, result) {
+        models.AbCompare.qFindOne({_id: new models.ObjectId(abCompareId)})
+            .then(function(abCompare){
+                abCompare.results.push(result);
+                abCompare.qSave = Q.nfbind(abCompare.save.bind(abCompare));
+                return abCompare.qSave()
+                    .then(commonController.first);
+            })
+
+    };
 
 
     return {
@@ -51,7 +62,8 @@ module.exports = function(app, models){
         findById:findById,
         update:update,
         remove:remove,
-        createNew:createNew
+        createNew:createNew,
+        addResultToCompare:addResultToCompare
     }
 
 }

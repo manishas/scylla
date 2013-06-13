@@ -50,22 +50,24 @@ var schedController = require('./api/controllers/scheduleController')(app);
 var emailController = require('./api/controllers/emailController')(app, models, sendgrid);
 
 var controllers = {
-    abCompares   : require('./api/controllers/abComparesController')(app, models),
-    account      : require('./api/controllers/accountController')(app, models),
-    reports      : require('./api/controllers/reportsController')(app, models),
-    reportResults: require('./api/controllers/reportResultsController')(app, models),
-    batches      : require('./api/controllers/batchesController')(app, models, schedController, executeBatch),
-    batchResults : require('./api/controllers/batchResultsController')(app, models),
-    diffs        : require('./api/controllers/diffsController')(app, models),
-    charybdis    : require('./api/controllers/charybdisController')(app, charybdis),
-    schedule     : schedController,
-    email        : emailController
+    abCompares      : require('./api/controllers/abComparesController')(app, models),
+    abCompareResults: require('./api/controllers/abCompareResultsController')(app, models),
+    account         : require('./api/controllers/accountController')(app, models),
+    reports         : require('./api/controllers/reportsController')(app, models),
+    reportResults   : require('./api/controllers/reportResultsController')(app, models),
+    batches         : require('./api/controllers/batchesController')(app, models, schedController, executeBatch),
+    batchResults    : require('./api/controllers/batchResultsController')(app, models),
+    diffs           : require('./api/controllers/diffsController')(app, models),
+    charybdis       : require('./api/controllers/charybdisController')(app, charybdis),
+    schedule        : schedController,
+    email           : emailController
 }
 var routes = {
-    abcompares   : require('./api/routes/abComparesRoutes')(app, models, controllers),
-    account      : require('./api/routes/accountRoutes')(app, models, controllers),
-    reports      : require('./api/routes/reportsRoutes')(app, models, controllers),
-    reportResults: require('./api/routes/reportResultsRoutes')(app, models, controllers)
+    abcompares      : require('./api/routes/abComparesRoutes')(app, models, controllers),
+    abcompareresults: require('./api/routes/abCompareResultsRoutes')(app, models, controllers),
+    account         : require('./api/routes/accountRoutes')(app, models, controllers),
+    reports         : require('./api/routes/reportsRoutes')(app, models, controllers),
+    reportResults   : require('./api/routes/reportResultsRoutes')(app, models, controllers)
 }
 
 app.listen(3000);
