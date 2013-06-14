@@ -18,24 +18,47 @@ module.exports = function(app, models, controllers){
             .then(utils.success(res), utils.fail(res))
     });
 
-    app.put('/abcompares/:abCompareId', function(req, res) {
-        controllers.abCompares
-            .update(req.params.abCompareId, req.body)
-            .then(utils.success(res), utils.fail(res));
-    });
 
     app.del('/abcompares/:abCompareId', function(req, res) {
         controllers.abCompares
             .remove(req.params.abCompareId)
+            .then(function(deleteResults){
+                if(deleteResults.records == 0) throw new Error("No Record Deleted");
+                return { _id:req.params.abCompareId };
+            })
             .then(utils.success(res), utils.fail(res));
     });
+
+    var abValidators = {
+        name:utils.v.required,
+        urlA:utils.v.required,
+        urlB:utils.v.required
+    }
 
     app.post('/abcompares', function(req, res) {
         console.log("Saving AB Compare", req.body);
-        controllers.abCompares
-            .createNew(req.body)
-            .then(utils.success(res), utils.fail(res));
+        utils.validateInputs(req.body, abValidators)
+            .then(function(body){
+                controllers.abCompares
+                    .createNew(body)
+                    .then(utils.success(res), utils.fail(res));
+
+            }, function(message){
+                res.send(400, message);
+            })
     });
 
+    app.put('/abcompares/:abCompareId', function(req, res) {
+        console.log("Updating:", req.body);
+        utils.validateInputs(req.body, abValidators)
+            .then(function(body){
+                controllers.abCompares
+                    .update(req.params.abCompareId, req.body)
+                    .then(utils.success(res), utils.fail(res));
+
+            }, function(message){
+                res.send(400, message)
+            })
+    });
 
 }
