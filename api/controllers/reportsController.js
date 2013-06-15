@@ -50,9 +50,8 @@ module.exports = function(app, models){
     };
 
     var updateReportMaster = function(reportId, resultId){
-        return models.Report.qFindOne({_id: new models.ObjectId(reportId)},
-            function (err, report) {
-                if(err) throw err;
+        return models.Report.qFindOne({_id: new models.ObjectId(reportId)})
+            .then(function (report) {
                 report.masterResult = new models.ObjectId(resultId);
                 report.qSave = Q.nfbind(report.save.bind(report));
                 return report.qSave();
