@@ -76,8 +76,8 @@ define([
 
         $scope.runBatch = function(){
             $http.get("/batches/" + $scope.batch._id + "/run")
-                .success(function(batchResult){
-                    $scope.batch.results.unshift(batchResult);
+                .success(function(batchRunResult){
+                    $scope.batch.results.unshift(batchRunResult.batchResult);
                     Page.liviconItUp();
                 })
                 .error(function(err){

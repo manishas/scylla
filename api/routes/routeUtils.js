@@ -11,8 +11,8 @@ module.exports = (function(){
     };
     var normalFail = function(res){
         return function(error){
-            console.error("\nError: ", error);
-            res.send(500, error);
+            console.error("\nError: ", error.toString());
+            res.send(500, {message:error.toString()});
         }
     }
     var validateInputs = function(body, rules){

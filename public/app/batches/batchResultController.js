@@ -78,7 +78,7 @@ define([
         $scope.getBatch($routeParams.batchId);
         $scope.getBatchResult($routeParams.resultId);
         if($routeParams.diffId){
-            $scope.getDiff($routeParams.diffId);
+            $scope.getResultDiff($routeParams.diffId);
         }
     });
 });

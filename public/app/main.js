@@ -13,7 +13,7 @@ require.config({
 require([
     'angular',
     'scyllaApp',
-    'resultDiffs/diffDetailController',
+    'resultDiffs/resultDiffDetailController',
     'home/pageController',
     'home/homeController',
     'reports/reportController',

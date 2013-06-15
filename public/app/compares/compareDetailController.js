@@ -43,8 +43,8 @@ define([
 
         $scope.runCompare = function(){
             $http.get("/abcompares/" + $scope.compare._id + "/run")
-                .success(function(compareResult){
-                    $scope.compare.results.unshift(compareResult);
+                .success(function(compareRunResult){
+                    $scope.compare.results.unshift(compareRunResult.abCompareResult);
                     Page.liviconItUp();
                 })
                 .error(function(err){
