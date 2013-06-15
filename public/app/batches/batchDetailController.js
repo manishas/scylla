@@ -178,9 +178,9 @@ define([
         };
 
         $scope.getReportResultClass = function(reportResult) {
-            if(reportResult.diff == -1) {
+            if(reportResult.distortion == -1) {
                 return "exception";
-            } else if(reportResult.diff == 0) {
+            } else if(reportResult.distortion == 0) {
                 return "pass";
             } else {
                 return "fail";

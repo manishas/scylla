@@ -28,7 +28,7 @@ define([
                              if(report.results){
                                  report.results.sort(resultSort);
                                  for(var i in report.results){
-                                     $scope.loadDiffs(report.results[i]);
+                                     $scope.loadResultDiffs(report.results[i]);
                                  }
                              }
 
@@ -40,10 +40,10 @@ define([
         }
         $scope.getReport($routeParams.id);
 
-        $scope.loadDiffs = function(result){
+        $scope.loadResultDiffs = function(result){
             $http.get("/report-results/" + result._id + "/diffs")
-                .success(function(diffs){
-                    result.diffs = diffs;
+                .success(function(resultDiffs){
+                    result.resultDiffs = resultDiffs;
                     Page.liviconItUp();
                 })
                 .error(function(err){
@@ -60,18 +60,18 @@ define([
             }
             return "notMasterResult";
         };
-        $scope.getDiffClass = function(diff){
+        $scope.getResultDiffClass = function(resultDiff){
             var classes = [];
             if($scope.report.masterResult &&
             //Initially we have just the IDs, but later we'll have the entire object...
             // so our comparison has to take both into account.
-               (diff.reportResultA._id || diff.reportResultA) == $scope.report.masterResult._id) {
+               (resultDiff.reportResultA._id || resultDiff.reportResultA) == $scope.report.masterResult._id) {
                 classes.push( "resultAIsMaster");
             } else if($scope.report.masterResult &&
-               (diff.reportResultB._id || diff.reportResultB) == $scope.report.masterResult._id) {
+               (resultDiff.reportResultB._id || resultDiff.reportResultB) == $scope.report.masterResult._id) {
                 classes.push( "resultBIsMaster");
             }
-            classes.push (diff.distortion > 0 ? "fail" : "pass");
+            classes.push (resultDiff.distortion > 0 ? "fail" : "pass");
 
             return classes.join(" ");
         }

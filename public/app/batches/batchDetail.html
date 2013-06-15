@@ -31,8 +31,8 @@
                     <ol>
                         <li ng-repeat="reportResult in result.reportResultSummaries" class="reportResult">
                             <span class="">{{reportResult.name}}</span>
-                            (<span class="{{getReportResultClass(reportResult)}}">{{reportResult.diff}}</span>)
-                            <span class="viewDiff"><a href="#/batches/{{batch._id}}/results/{{result._id}}?diffId={{reportResult.diffId}}" class="clickable"><i class="livicon shadowed" data-n="eye-open" data-s="18" data-c="#666" data-hc="#000" data-onparent="true" title="View Diff"></i></a></span>
+                            (<span class="{{getReportResultClass(reportResult)}}">{{reportResult.distortion}}</span>)
+                            <span class="viewDiff"><a href="#/batches/{{batch._id}}/results/{{result._id}}?diffId={{reportResult.resultDiffId}}" class="clickable"><i class="livicon shadowed" data-n="eye-open" data-s="18" data-c="#666" data-hc="#000" data-onparent="true" title="View Diff"></i></a></span>
                         </li>
                     </ol>
                 </div>

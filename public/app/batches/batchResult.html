@@ -1,10 +1,10 @@
 
-<div diff="currentDiff">
-    <select id="resultSelector" ng-model="selectedSummary" ng-change="selectDiff(selectedSummary)">
+<div diff="currentResultDiff">
+    <select id="resultSelector" ng-model="selectedSummary" ng-change="selectResultDiff(selectedSummary)">
         <option ng-repeat="summary in batchResult.reportResultSummaries"
-                ng-class="{pass:summary.diff == 0, fail:summary.diff != 0}"
-                ng-selected="summary.diffId == currentDiff.id"
-                value="{{summary.diffId}}"
+                ng-class="{pass:summary.distortion == 0, fail:summary.distortion != 0}"
+                ng-selected="summary.resultDiffId == currentResultDiff.id"
+                value="{{summary.resultDiffId}}"
                 >{{summary.name}}</option>
     </select>
     <a class="clickable" id="goPrevLink"><i class="livicon" data-n="angle-double-left" data-s="18" data-c="#666" data-hc="#000" data-onparent="true"></i></a>

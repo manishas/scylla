@@ -31,7 +31,7 @@ var models = {
     Report         : require('./api/models/report')(mongoose),
     BatchResult    : require('./api/models/batchResult')(mongoose),
     Batch          : require('./api/models/batch')(mongoose),
-    Diff           : require('./api/models/diff')(mongoose)
+    ResultDiff     : require('./api/models/resultDiff')(mongoose)
 }
 var executeBatch = function (batchId) {
     return function () {
@@ -55,7 +55,7 @@ var controllers = {
     reportResults   : require('./api/controllers/reportResultsController')(app, models),
     batches         : require('./api/controllers/batchesController')(app, models, schedController, executeBatch),
     batchResults    : require('./api/controllers/batchResultsController')(app, models),
-    diffs           : require('./api/controllers/diffsController')(app, models),
+    resultDiffs     : require('./api/controllers/resultDiffsController')(app, models),
     charybdis       : require('./api/controllers/charybdisController')(app, "localhost", 3001),
     schedule        : schedController,
     email           : emailController

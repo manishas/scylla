@@ -16,7 +16,7 @@ define([
 
         $scope.batch = {};
         $scope.batchResult = {};
-        $scope.currentDiff = {};
+        $scope.currentResultDiff = {};
 
         /*
         dpd.batchresults.on("create", function(batchResult){
@@ -27,8 +27,8 @@ define([
         });
         */
 
-        $scope.selectDiff = function(diffId){
-            $scope.getDiff(diffId);
+        $scope.selectResultDiff = function(diffId){
+            $scope.getResultDiff(diffId);
         }
 
         $scope.dateFormat = function(isoString) {
@@ -54,7 +54,7 @@ define([
                     $scope.batchResult = batchResult
                     if(!$routeParams.diffId){
                         for(var id in batchResult.reportResultSummaries){
-                            $scope.getDiff(batchResult.reportResultSummaries[id].diffId);
+                            $scope.getResultDiff(batchResult.reportResultSummaries[id].resultDiffId);
                             break;
                         }
                     }
@@ -65,10 +65,10 @@ define([
                 });
         };
 
-        $scope.getDiff = function(id){
-            $http.get("/diffs/" + id, {params:{includeResults:true, includeReports:true}})
+        $scope.getResultDiff = function(id){
+            $http.get("/result-diffs/" + id, {params:{includeResults:true, includeReports:true}})
                 .success(function(diff){
-                    $scope.currentDiff = diff;
+                    $scope.currentResultDiff = diff;
                 })
                 .error(function(err){
                     alert(err)

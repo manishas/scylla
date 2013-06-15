@@ -13,7 +13,7 @@ require.config({
 require([
     'angular',
     'scyllaApp',
-    'diffs/diffDetailController',
+    'resultDiffs/diffDetailController',
     'home/pageController',
     'home/homeController',
     'reports/reportController',
@@ -57,7 +57,7 @@ require([
             .when('/compares/:id',
                   {templateUrl:'app/compares/compareDetail.html',
                       controller:"CompareDetailController"})
-            .when('/diffs/:id',
+            .when('/result-diffs/:id',
                   {templateUrl:'app/diffs/diffDetail.html',
                       controller:"DiffDetailController"})
             .when('/batches',

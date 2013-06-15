@@ -13,12 +13,12 @@
                 <a class="clickable notMasterStar" ng-click="setNewMaster(result)"><i class="livicon" data-n="star-empty" data-s="18" data-c="#666" data-hc="orange" data-onparent="true" title="Set as New Master"></i></a>
             </h4>
             <ol>
-                <li ng-repeat="diff in result.diffs" class="diff {{getDiffClass(diff)}}">
+                <li ng-repeat="resultDiff in result.resultDiffs" class="diff {{getResultDiffClass(resultDiff)}}">
                     <span class="resultA">{{dateFormat(diff.reportResultAName)}}</span>
                     <i class="icon-arrow-right"></i>
                     <span class="resultB">{{dateFormat(diff.reportResultBName)}}</span>
-                    <span class="distortion">{{diff.distortion}}</span>
-                    <span class="viewDiff"><a href="#/diffs/{{diff._id}}" class="clickable"><i class="livicon shadowed" data-n="eye-open" data-s="18" data-c="#666" data-hc="#000" data-onparent="true" title="View Diff"></i></a></span>
+                    <span class="distortion">{{resultDiff.distortion}}</span>
+                    <span class="viewDiff"><a href="#/result-diffs/{{resultDiff._id}}" class="clickable"><i class="livicon shadowed" data-n="eye-open" data-s="18" data-c="#666" data-hc="#000" data-onparent="true" title="View Diff"></i></a></span>
                 </li>
             </ol>
         </div>

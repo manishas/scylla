@@ -43,12 +43,6 @@ define([
             console.log("Report to Delete", report);
         };
 
-        $scope.deleteDiff = function deleteDiff(diffId){
-            $http.delete("/diffs/" + diffId)
-                .error(function(error){
-                    console.error("Error Deleting Diff", diffId, error);
-                });
-        };
         $scope.deleteResult = function deleteResult(resultId){
             $http.delete("/report-results/" + resultId)
                 .error(function(error){
@@ -58,7 +52,6 @@ define([
 
         $scope.confirmDeleteReport = function confirmDeleteReport(report){
             console.log("Deleting Report", report);
-            var diffBeingDeleted = {};//Hash Map to ensure we only try to delete diffs once
             $http.get("/reports/" + report._id, {params:{includeResults:true}})
                 .success(function(report){
                     if(report.results){
