@@ -10,8 +10,6 @@ var sendgrid = new SendGrid(mailConfig.user, mailConfig.key);
 var mongoose = require('mongoose');
 //mongoose.set('debug', true);
 
-var charybdis = require("../charybdis/src/charybdis")("localhost", 3001);
-
 app.configure(function () {
     app.use(express.static(__dirname + '/public'));
     app.use(express.bodyParser());
@@ -58,7 +56,7 @@ var controllers = {
     batches         : require('./api/controllers/batchesController')(app, models, schedController, executeBatch),
     batchResults    : require('./api/controllers/batchResultsController')(app, models),
     diffs           : require('./api/controllers/diffsController')(app, models),
-    charybdis       : require('./api/controllers/charybdisController')(app, charybdis),
+    charybdis       : require('./api/controllers/charybdisController')(app, "localhost", 3001),
     schedule        : schedController,
     email           : emailController
 }

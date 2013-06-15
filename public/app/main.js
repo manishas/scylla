@@ -19,9 +19,10 @@ require([
     'reports/reportController',
     'reports/reportDetailController',
     'compares/comparesController',
+    'compares/compareDetailController',
     'batches/batchController',
     'batches/batchDetailController',
-    'batches/batchResultController'
+    'batches/batchResultController',
 ], function (
     angular,
     scyllaApp,
@@ -31,6 +32,7 @@ require([
     ReportController,
     ReportDetailController,
     ComparesController,
+    CompareDetailController,
     BatchController,
     BatchDetailController,
     BatchResultController
@@ -49,10 +51,10 @@ require([
             .when('/reports/:id',
                   {templateUrl:'app/reports/reportDetail.html',
                       controller:"ReportDetailController"})
-            .when('/compare',
+            .when('/compares',
                   {templateUrl:'app/compares/compares.html',
                       controller:"ComparesController"})
-            .when('/compare/:id',
+            .when('/compares/:id',
                   {templateUrl:'app/compares/compareDetail.html',
                       controller:"CompareDetailController"})
             .when('/diffs/:id',

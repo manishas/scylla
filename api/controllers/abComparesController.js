@@ -46,9 +46,11 @@ module.exports = function(app, models){
     };
 
     var addResultToCompare = function addResultToCompare(abCompareId, result) {
-        models.AbCompare.qFindOne({_id: new models.ObjectId(abCompareId)})
+        return models.AbCompare.qFindOne({_id: new models.ObjectId(abCompareId)})
             .then(function(abCompare){
                 abCompare.results.push(result);
+                abCompare.thumbA = result.thumbA;
+                abCompare.thumbB = result.thumbB;
                 abCompare.qSave = Q.nfbind(abCompare.save.bind(abCompare));
                 return abCompare.qSave()
                     .then(commonController.first);
