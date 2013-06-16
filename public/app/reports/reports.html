@@ -32,7 +32,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn" ng-click="showNewReport = false;" aria-hidden="true">Close</button>
                 <button class="btn btn-primary" ng-click="addReport(newReportTitle, newReportUrl)">Add Report</button>
             </div>
     </div>
@@ -46,7 +46,7 @@
             {{reportToDelete.results.length}} Results and all associated diffs will be deleted as well.
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn" ng-click="showDeleteReport = false;" aria-hidden="true">Close</button>
             <button class="btn btn-primary" ng-click="confirmDeleteReport(reportToDelete)">Delete Report</button>
         </div>
     </div>
