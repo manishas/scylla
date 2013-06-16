@@ -5,11 +5,14 @@
         <a class="clickable headerIcon" ng-click="runCompare()"><i class="livicon shadowed" data-n="rocket" data-s="24" data-c="#666" data-hc="#000" data-onparent="true" title="Run AB Compare Now"></i></a>
     </div>
     <div class="media {{getResultClass(result)}}" ng-repeat="result in compare.results">
-        <a class="media-object pull-left" href="#">
+        <a class="media-object pull-left" href="#/compares/{{compare._id}}/results/{{result._id}}">
             <img class="bigThumb" ng-src="{{result.thumbA}}"><img class="bigThumb" ng-src="{{result.thumbB}}">
         </a>
         <div class="media-body">
-            <h4 class="media-heading">{{formatResultHeader(result)}}</h4>
+            <h4 class="media-heading">
+                {{formatResultHeader(result)}}
+                <span class="viewDiff"><a href="#/compares/{{compare._id}}/results/{{result._id}}" class="clickable"><i class="livicon shadowed" data-n="eye-open" data-s="18" data-c="#666" data-hc="#000" data-onparent="true" title="View Diff"></i></a></span>
+            </h4>
             <div class=>Diff: <span class="{{getDistortionClass(result)}}">{{result.distortion}}</span></div>
             <div>{{result.warning}}</div>
         </div>
@@ -30,7 +33,7 @@
                 <input id="compare-urlA" type="text" ng-model="compare.urlA"
                        placeholder="http://app.simplymeasured.com/report/idA" required
                        class="input-xxlarge" />
-                <input id="compare-urlB" type="text" ng-model="compare.urlA"
+                <input id="compare-urlB" type="text" ng-model="compare.urlB"
                        placeholder="http://staging.simplymeasured.com/report/idB" required
                        class="input-xxlarge" />
             </form>
