@@ -1,4 +1,63 @@
-<h1>Home</h1>
-        <a href="#/reports">Reports</a>
-        <br />
-        <a href="#/batches">Batches</a>
+<h1>Welcome to Scylla</h1>
+<div class="row-fluid">
+    <div class="span12">
+        Scylla is a tool designed to help you monitor and track changes to URLs.
+        There are two ways we help you manage change:
+        <div class="row-fluid">
+            <div class="span6">
+                <h3>Single URL Reports</h3>
+                <p> <i class="livicon" data-n="notebook" data-s="18" data-c="#666" data-hc="#000"></i>
+                    With Single URL <strong>Report</strong>s, we take a screenshot of a specific URL and allow you to
+                    compare the current state with a known <strong>master</strong> (i.e. what you expect it to look like).
+                </p>
+                <p> <i class="livicon" data-n="sitemap" data-s="18" data-c="#666" data-hc="#000"></i>
+                    These reports can be collected into a <strong>Batch</strong> of reports, which can be launched by
+                    clicking on the Rocket. You may also choose to schedule a batch to run at a specific time. After a
+                    batch is run on a schedule, it will email the <strong>watchers</strong> with a short summary of the
+                    results, a great way to be greeted every morning when you come in to work.
+                </p>
+            </div>
+            <div class="span6">
+                <h3>AB Comparisons</h3>
+                <p> <i class="livicon" data-n="balance" data-s="18" data-c="#666" data-hc="#000"></i>
+                    With <strong>AB Compare</strong>, we take a screenshot of two separate URLs and compare them to each
+                    other. This tends to be a great tool to use while in active development or refactoring.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <h2>Visual Differences</h2>
+        Our Visual Diff tool is available to inspect differences, regardless of which path you choose. The tool has two
+        modes to help you identify and analyze differences:
+        <div class="row-fluid">
+            <div class="span6">
+                <h3>Swipe</h3>
+                <p>
+                    In this mode, the slider bar will let you swipe between the <strong>Master / Current</strong> or
+                    <strong>Url A / Url B</strong>.  By sliding, you will be able to see a seam where the image changes,
+                    helping you identify exactly what the differences are. You'll be able to count the pixels an element
+                    moved, or see two colors side-by-side.<br/>
+                    <video src="\images\swipe.m4v" autoplay loop controls>
+                        Your browser does not support the <code>video</code> element.
+                    </video>
+                </p>
+            </div>
+            <div class="span6">
+                <h3>Diff Overlay</h3>
+                <p>
+                    In this mode, the slider bar will adjust the visibility of a map of changed pixels.  This map shows
+                    each and every pixel that changed in bright red, with the rest of the image muted. By reducing the
+                    transparency, you will be able to see the original image more strongly.<br/>
+                    <video src="\images\overlay.m4v" autoplay loop controls>
+                        Your browser does not support the <code>video</code> element.
+                    </video>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>

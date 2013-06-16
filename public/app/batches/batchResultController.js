@@ -2,12 +2,14 @@ define([
     "scyllaApp",
     "toastr",
     "moment",
-    "directives/diff/diff"
+    "directives/diff/diff",
+    "directives/diff/diffAdapter"
 ], function(
     scyllaApp,
     toastr,
     moment,
-    diffDirective
+    diffDirective,
+    diffAdapter
     ){
 
     return scyllaApp.controller("BatchResultController", function($scope, $route, $routeParams, $http, Page) {
@@ -16,7 +18,7 @@ define([
 
         $scope.batch = {};
         $scope.batchResult = {};
-        $scope.currentResultDiff = {};
+        $scope.diff = {};
 
         /*
         dpd.batchresults.on("create", function(batchResult){
@@ -67,8 +69,9 @@ define([
 
         $scope.getResultDiff = function(id){
             $http.get("/result-diffs/" + id, {params:{includeResults:true, includeReports:true}})
-                .success(function(diff){
-                    $scope.currentResultDiff = diff;
+                .success(function(resultDiff){
+                    $scope.currentResultDiff = resultDiff;
+                    $scope.diff = diffAdapter.reportResultToDiff(resultDiff);
                 })
                 .error(function(err){
                     alert(err)

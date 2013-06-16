@@ -1,5 +1,5 @@
 
-<div diff="currentResultDiff">
+<div diff="diff">
     <select id="resultSelector" ng-model="selectedSummary" ng-change="selectResultDiff(selectedSummary)">
         <option ng-repeat="summary in batchResult.reportResultSummaries"
                 ng-class="{pass:summary.distortion == 0, fail:summary.distortion != 0}"
@@ -7,6 +7,9 @@
                 value="{{summary.resultDiffId}}"
                 >{{summary.name}}</option>
     </select>
+    &nbsp;&nbsp;
+    <a href="{{resultDiff.report.url}}" target="_blank"><i class="livicon shadowed" data-n="external-link" data-s="18" data-c="#666" data-hc="#000" data-onparent="true" title="View Url"></i></a>
+    &nbsp;&nbsp;
     <a class="clickable" id="goPrevLink"><i class="livicon" data-n="angle-double-left" data-s="18" data-c="#666" data-hc="#000" data-onparent="true"></i></a>
     <a class="clickable" id="goNextLink"><i class="livicon" data-n="angle-double-right" data-s="18" data-c="#666" data-hc="#000" data-onparent="true"></i></a>
     <script>
@@ -25,4 +28,5 @@
             $("#goPrevLink").click();
         });
     </script>
+
 </div>
