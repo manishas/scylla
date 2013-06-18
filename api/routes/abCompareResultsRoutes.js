@@ -35,7 +35,7 @@ module.exports = function(app, models, controllers){
         controllers.abCompareResults
             .createNew(req.body)
             .then(function(result){
-                console.log("Saving Result ", result._id, " on ", req.params.compareId);
+                //console.log("Saving Result ", result._id, " on ", req.params.compareId);
                 return controllers.abCompares
                     .addResultToCompare(req.params.compareId, result)
                     .then(function(){

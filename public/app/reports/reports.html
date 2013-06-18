@@ -4,7 +4,7 @@
     </div>
     <h1>Reports</h1>
     <div class="media" ng-repeat="report in reports">
-        <a class="pull-left" href="#">
+        <a class="pull-left" ng-href="#/reports/{{report._id}}">
             <img class="media-object bigThumb" ng-src="{{ getThumbnail(report) }}">
         </a>
         <div class="media-body">

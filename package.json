@@ -15,7 +15,8 @@
     "moment": "~2.0.0",
     "supertest": "~0.7.0",
     "sinon": "~1.7.2",
-    "glob": "~3.2.1"
+    "glob": "~3.2.1",
+    "cli": "~0.4.4-2"
   },
   "devDependencies": {
     "chai": "*",

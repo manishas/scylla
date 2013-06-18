@@ -36,7 +36,7 @@ module.exports = function(app, models, controllers){
     }
 
     app.post('/abcompares', function(req, res) {
-        console.log("Saving AB Compare", req.body);
+        //console.log("Saving AB Compare", req.body);
         utils.validateInputs(req.body, abValidators)
             .then(function(body){
                 controllers.abCompares
@@ -49,7 +49,7 @@ module.exports = function(app, models, controllers){
     });
 
     app.put('/abcompares/:abCompareId', function(req, res) {
-        console.log("Updating:", req.body);
+        //console.log("Updating:", req.body);
         utils.validateInputs(req.body, abValidators)
             .then(function(body){
                 controllers.abCompares
