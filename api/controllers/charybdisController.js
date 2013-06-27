@@ -1,5 +1,5 @@
 module.exports = function(app, host, port){
-    var charybdis = require("../../../charybdis/src/charybdis")();
+    var charybdis = require("charybdis")();
 
     var executeOnBatch = function executeOnBatch(batchId){
         return charybdis.executeOnBatch(host, port, batchId);

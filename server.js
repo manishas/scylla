@@ -74,7 +74,8 @@ cli.main(function(args, options) {
         account         : require('./api/routes/accountRoutes')(app, models, controllers),
         reports         : require('./api/routes/reportsRoutes')(app, models, controllers),
         reportResults   : require('./api/routes/reportResultsRoutes')(app, models, controllers),
-        charybdis       : require('./api/routes/charybdisRoutes')(app, models, controllers)
+        charybdis       : require('./api/routes/charybdisRoutes')(app, models, controllers),
+        monitoring      : require('./api/routes/monitoringRoutes')(app, models, controllers)
     };
 
     app.listen(options.port);
