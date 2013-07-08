@@ -47,7 +47,7 @@ module.exports = function(app, models){
     });
 
     app.post('/result-diffs', function(req, res) {
-        console.log("Saving Result Diff", req.body);
+        //console.log("Saving Result Diff", req.body);
         var resultDiffSrc = req.body;
             resultDiffSrc.report = new ObjectId(resultDiffSrc.report._id);
         if(resultDiffSrc.reportResultA)
