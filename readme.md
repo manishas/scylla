@@ -4,7 +4,12 @@ Scylla - Keeping Mariners on their toes for 10,000 years
 
 A tool for recording, managing and comparing snapshots of urls...
 
+Setup / Install
+---------------
+Scylla comes with a vagrant file and init script. Install vagrant (http://vagrantup.com) and run 'vagrant up'.
+You can now interact with Scylla at http://localhost:8090/
 
+If you don't want to run it in vagrant, check out the vagrantBootstrap.sh, which serves as documentation of installation.
 
 
 

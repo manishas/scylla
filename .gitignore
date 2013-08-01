@@ -1,5 +1,6 @@
 .idea
 *.iml
+.ssh
 config/mail.js
 node_modules
 public/components
