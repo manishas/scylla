@@ -46,6 +46,7 @@ then
     sudo add-apt-repository ppa:chris-lea/node.js
     sudo apt-get update
     sudo apt-get install -y nodejs
+    sudo npm install -g bower
     touch /var/log/3nodejssetup
 fi
 
@@ -57,7 +58,12 @@ then
     touch /var/log/4upstart
 fi
 
-if [ ! -f /var/run/scylla.pid ];
+if [ ! -f /vagrant/scylla/config/mail.js ];
+then
+    cp /vagrant/scylla/config/mail-example.js /vagrant/scylla/config/mail.js
+fi
+
+if [ -f /var/run/scylla.pid ];
 then
     stop scylla
 fi
@@ -65,5 +71,8 @@ fi
 echo -e "${yellow}Installing Scyalla NPM Deps${NC}"
 cd /vagrant
 npm install
+cd public
+bower install
+cd ..
 
 start scylla
