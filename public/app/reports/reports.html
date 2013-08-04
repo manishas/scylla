@@ -27,8 +27,18 @@
                            placeholder="Identifiable Report Name" required
                            class="input-xxlarge" />
                     <input id="report-url" type="text" ng-model="newReportUrl"
-                           placeholder="http://app.simplymeasured.com/report/id" required
+                           placeholder="http://test.com/" required
                            class="input-xxlarge" />
+                    <!--
+                    <label for="new-batch-name">Include this report in a new batch?</label>
+                    <input id="new-batch-name" type="text" ng-model="newBatchName"
+                           placeholder="Brand New Batch Name"
+                           class="input-xxlarge" />
+                    <label ng-if="{batches.length > 0}">Or an existing ones?</label>
+                    <select ng-if="{batches.length > 0}" multiple="multiple" ng-model="newReportBatchIds" class="input-xxlarge">
+                        <option ng-repeat="batch in batches" value="{{batch._id}}">{{batch.name}}</option>
+                    </select>
+                    -->
                 </form>
             </div>
             <div class="modal-footer">

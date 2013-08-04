@@ -80,6 +80,7 @@ cli.main(function(args, options) {
 
     app.listen(options.port);
 
+    console.log("Listening on local port: " + options.port);
 //Initialize the schedule
 
     models.Batch.find(function (err, batches) {

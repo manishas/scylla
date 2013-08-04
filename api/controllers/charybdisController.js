@@ -1,6 +1,10 @@
 module.exports = function(app, host, port){
     var charybdis = require("charybdis")();
 
+    var executeOnReport = function executeOnReport(reportId){
+        return charybdis.executeOnReport(host, port, reportId);
+    };
+
     var executeOnBatch = function executeOnBatch(batchId){
         return charybdis.executeOnBatch(host, port, batchId);
     };
@@ -10,6 +14,7 @@ module.exports = function(app, host, port){
     };
 
     return {
+        executeOnReport:executeOnReport,
         executeOnBatch:executeOnBatch,
         executeABCompare:executeABCompare
     }

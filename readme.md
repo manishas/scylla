@@ -7,6 +7,10 @@ A tool for recording, managing and comparing snapshots of urls...
 Setup / Install
 ---------------
 Scylla comes with a vagrant file and init script. Install vagrant (http://vagrantup.com) and run 'vagrant up'.
+
+The one bit you'll need to configure is your mail credentials.
+Copy mail-example.js to mail.js and add your sendgrid credentials.
+
 You can now interact with Scylla at http://localhost:8090/
 
 If you don't want to run it in vagrant, check out the vagrantBootstrap.sh, which serves as documentation of installation.

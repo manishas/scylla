@@ -12,6 +12,7 @@ define([
         $scope.$watch('reports', Page.liviconItUp );
 
         $scope.reports = [];
+        $scope.batches = [];
         $scope.reportToDelete = {};
 
         $scope.showDeleteReport = false;
@@ -37,6 +38,17 @@ define([
         };
         $scope.getAllReports();
 
+        $scope.getAllBatches = function(){
+            $http.get("/batches", {params:{includeResults:"false"}})
+                .success(function(batches){
+                    $scope.batches = batches
+                })
+                .error(function(err){
+                    alert(err)
+                });
+        };
+        $scope.getAllBatches();
+
         $scope.deleteReport = function deleteReport(report){
             $scope.showDeleteReport = true
             $scope.reportToDelete = report;
@@ -48,7 +60,7 @@ define([
                 .error(function(error){
                     console.error("Error Deleting Result", resultId, error);
                 })
-        }
+        };
 
         $scope.confirmDeleteReport = function confirmDeleteReport(report){
             console.log("Deleting Report", report);
@@ -77,7 +89,13 @@ define([
             $http.post("/reports", {name:name,url:url})
                 .success(function(report){
                     $scope.showNewReport = false;
-                    toastr.success("New Report Created: " + report.name);
+                    toastr.success("New Report Created: " + report.name + "<br>Now capturing first screenshot.");
+                    $http.get("/reports/" + report._id + "/newMaster" )
+                        .success(function(report){
+                            toastr.success("Captured Screen for Report: " + report.name);
+                            //Or, just replace the report
+                            $scope.getAllReports();
+                        });
                     $scope.getAllReports();
                  })
                 .error(function(error){
