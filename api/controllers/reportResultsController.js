@@ -40,10 +40,16 @@ module.exports = function(app, models){
     };
 
     var createNew = function createNew(resultJSON){
-        var result = new models.ReportResult(resultJSON);
-        result.qSave = Q.nfbind(result.save.bind(result));
-        return result.qSave()
-            .then(commonController.first);
+        console.log(require('util').inspect(resultJSON));
+        return models.Report.qFindOne(resultJSON.report._id)
+            .then(function(report){
+                resultJSON.report = report;
+                var result = new models.ReportResult(resultJSON);
+                result.qSave = Q.nfbind(result.save.bind(result));
+                return result.qSave()
+                    .then(commonController.first);
+
+            })
     };
 
     return {
