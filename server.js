@@ -14,6 +14,9 @@ cli.main(function(args, options) {
     var SendGrid = require('sendgrid').SendGrid;
     var mailConfig = require('./config/mail');
 
+    var Q = require('q');
+    Q.longStackSupport = true;
+
     var sendgrid = new SendGrid(mailConfig.user, mailConfig.key);
 
     var mongoose = require('mongoose');

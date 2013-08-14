@@ -22,7 +22,7 @@
     "devDependencies": {
         "chai"             : "*",
         "mocha"            : "~1.10.0",
-        "mocha-as-promised": "~1.3.0"
+        "mocha-as-promised": "~1.4.0"
     },
     "main"           : "server.js",
     "scripts"        : {

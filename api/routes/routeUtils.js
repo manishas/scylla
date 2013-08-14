@@ -1,5 +1,6 @@
 module.exports = (function(){
     var Q = require('q');
+    var util = require('util');
 
     var normalSuccess = function(res){
         return function(value){
@@ -9,12 +10,15 @@ module.exports = (function(){
                 res.send(404);
         }
     };
+
     var normalFail = function(res){
         return function(error){
-            console.error("\nError: ", error.toString());
-            res.send(500, {message:error.toString()});
+            console.error("\nRoute Failure: ", util.inspect(error));
+            console.log(error.stack);
+            res.send(500, {message:util.inspect(error)});
         }
-    }
+    };
+
     var validateInputs = function(body, rules){
         var deferred = Q.defer();
         if(typeof body === "undefined" || body == null){
