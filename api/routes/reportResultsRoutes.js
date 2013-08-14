@@ -37,7 +37,7 @@ module.exports = function(app, models, controllers){
                 {reportResultB:resultId}
             ]})
             .remove(function(err, result){
-                console.log("Deleted Diffs: ", result);
+                //console.log("Deleted Diffs: ", result);
             })
     });
 

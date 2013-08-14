@@ -60,7 +60,7 @@ module.exports = function(app, models){
     var addResultToReport = function(reportId, result){
         return models.Report.qFindOne({_id: new models.ObjectId(reportId)})
             .then(function (report) {
-                console.log("AddResultToReport", report);
+                //console.log("AddResultToReport", report);
                 report.results.push(result);
                 report.qSave = Q.nfbind(report.save.bind(report));
                 return report.qSave()

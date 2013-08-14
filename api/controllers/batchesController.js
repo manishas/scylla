@@ -16,7 +16,7 @@ module.exports = function(app, models, schedController, executeBatch){
 
     app.get('/batches/:batchId', function(req, res) {
         var query = models.Batch.findOne({_id:new ObjectId(req.params.batchId)});
-        console.log("Params", req.params);
+        //console.log("Params", req.params);
         if(req.query.includeReports)
             query = query.populate("reports masterResult");
         if(req.query.includeResults)
@@ -71,7 +71,7 @@ module.exports = function(app, models, schedController, executeBatch){
         //console.log("Adding Report to Batch:", req.body);
         models.Batch.findOne({_id: new ObjectId(req.params.batchId)},
             function (err, batch) {
-                console.log("Reports in Batch", batch.reports);
+                //console.log("Reports in Batch", batch.reports);
                 batch.reports.addToSet(toObjectIdArray(req.body));
                 batch.save(handleQueryResult(res));
             });

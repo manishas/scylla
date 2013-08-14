@@ -3,7 +3,7 @@ module.exports = function(app, models){
 
     var send = function generateSend(res){
         return function sendResponse(body){
-            console.log("Sending Response: ", body.length);
+            //console.log("Sending Response: ", body.length);
             res.send(body);
         }
     }
@@ -34,7 +34,7 @@ module.exports = function(app, models){
         delete repResult._id;
         models.BatchResult.findOneAndUpdate({_id:id}, repResult,
             function(err, result){
-                console.log(err);
+                console.error(err);
                 res.send(result);
             })
     });

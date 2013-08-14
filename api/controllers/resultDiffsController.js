@@ -41,7 +41,7 @@ module.exports = function(app, models){
     app.del('/result-diffs/:diffId', function(req, res) {
         models.ResultDiff.findOne({_id:new ObjectId(req.params.batchId)})
             .remove(function(err, result){
-                console.log("Deleting:", result);
+                //console.log("Deleting:", result);
                 handleQueryResult(res)(err, {_id:req.params.batchId});
             });
     });

@@ -74,7 +74,6 @@ module.exports = function(app, models){
         user.qSave = Q.nfbind(user.save.bind(user));
         return user.qSave()
             .then(function(acct){
-                console.log("Finding By Id")
                 return findById(acct[0]._id.toString());
             });
     }

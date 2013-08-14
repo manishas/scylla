@@ -37,7 +37,7 @@ module.exports = function(app, models, controllers){
     });
 
     app.post('/reports', function(req, res) {
-        console.log("Saving Report", req.body);
+        //console.log("Saving Report", req.body);
         controllers.reports
             .createNew(req.body)
             .then(utils.success(res), utils.fail(res));
