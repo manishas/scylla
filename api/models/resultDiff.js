@@ -1,9 +1,9 @@
 module.exports = function(mongoose){
     var ResultDiffSchema = new mongoose.Schema({
-        report:{type : mongoose.Types.ObjectId, ref : 'reports'},
-        reportResultA:{type : mongoose.Types.ObjectId, ref : 'report-results'},
+        report:{type : mongoose.Schema.ObjectId, ref : 'reports'},
+        reportResultA:{type : mongoose.Schema.ObjectId, ref : 'report-results'},
         reportResultAName:{type:String},
-        reportResultB:{type : mongoose.Types.ObjectId, ref : 'report-results'},
+        reportResultB:{type : mongoose.Schema.ObjectId, ref : 'report-results'},
         reportResultBName:{type:String},
 
         distortion:{type:Number, default:0},
