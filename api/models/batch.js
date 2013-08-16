@@ -1,4 +1,6 @@
 module.exports = function(mongoose){
+    var Q = require('q');
+
     var BatchSchema = new mongoose.Schema({
         name:{type:String},
         watchers:[{type:String}],
@@ -13,6 +15,8 @@ module.exports = function(mongoose){
     });
 
     var Batch = mongoose.model('batches', BatchSchema);
+    Batch.qFind = Q.nfbind(Batch.find.bind(Batch));
+    Batch.qFindOne = Q.nfbind(Batch.findOne.bind(Batch));
 
     return Batch;
 }

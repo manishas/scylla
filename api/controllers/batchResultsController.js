@@ -1,66 +1,80 @@
 module.exports = function(app, models){
+    var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;
+    var commonController = require('./commonController')(ObjectId);
 
-    var send = function generateSend(res){
-        return function sendResponse(body){
-            //console.log("Sending Response: ", body.length);
-            res.send(body);
-        }
-    }
+    var execDeferredBridge = commonController.execDeferredBridge;
+    var execDeferredDeleteBridge = commonController.execDeferredDeleteBridge;
 
-    var sendErr = function generateErr(res){
-        return function sendError(err){
-            res.send(500, body);
-        }
-    }
-
-    app.get('/batch-results', function(req, res) {
+    var find = function find(){
+        var deferred = Q.defer();
         models.BatchResult.find()
-            //.populate("batch")
-            .exec()
-            .then(send(res), sendErr(res))
-    });
+            .exec(execDeferredBridge(deferred));
+        return deferred.promise;
+    }
 
-    app.get('/batch-results/:resultId', function(req, res) {
-        models.BatchResult.findOne({_id:new ObjectId(req.params.resultId)})
-            //.populate("batch")
-            .exec()
-            .then(send(res), sendErr(res))
-    });
 
-    app.put('/batch-results/:resultId', function(req, res) {
-        var id = new ObjectId(req.params.resultId);
-        var repResult = req.body;
-        delete repResult._id;
-        models.BatchResult.findOneAndUpdate({_id:id}, repResult,
-            function(err, result){
-                console.error(err);
-                res.send(result);
+    var findById = function findById(resultId){
+        var deferred = Q.defer();
+        models.BatchResult.findOne({_id:new ObjectId(resultId)})
+            .exec(execDeferredBridge(deferred));
+        return deferred.promise;
+    }
+
+    var update = function update(resultId, result){
+        var deferred = Q.defer();
+        var id = new ObjectId(resultId);
+        delete result._id;
+        models.BatchResult.findOneAndUpdate({_id:id}, result,
+            execDeferredBridge(deferred));
+        return deferred.promise;
+    };
+
+    var remove = function remove(resultId){
+        var deferred = Q.defer();
+        models.BatchResult.findOne({_id:new models.ObjectId(resultId)})
+            .remove(execDeferredDeleteBridge(deferred));
+        return deferred.promise;
+
+    };
+
+
+    var createNew = function createNew(resultJSON){
+        //console.log(require('util').inspect(resultJSON));
+        console.log("Creating New Batch Result")
+        return models.Batch.qFindOne(resultJSON.batch._id)
+            .then(function(batch){
+                resultJSON.batch = batch;
+                console.log("Adding Result to Batch: " + batch._id);
+                var result = new models.BatchResult(resultJSON);
+                result.qSave = Q.nfbind(result.save.bind(result));
+                return result.qSave()
+                    .then(commonController.first);
+
             })
-    });
-
-    app.del('/batch-results/:resultId', function(req, res) {
-        models.BatchResult.findOne({_id:new ObjectId(req.params.resultId)})
-            .remove(function(err, result){
-                console.log("Deleting:", result);
-                res.send({_id:req.params.resultId});
+    };
+    var addResultToBatch = function(batchId, result){
+        return models.Batch.qFindOne({_id: new ObjectId(batchId)})
+            .then(function (batch) {
+                //console.log("AddResultToReport", report);
+                if(batch.results){
+                    batch.results.push(result);
+                }else{
+                    batch.results = [result];
+                }
+                batch.qSave = Q.nfbind(batch.save.bind(batch));
+                return batch.qSave()
+                    .then(commonController.first);
             });
-    });
-
-    app.post('/batches/:batchId/results', function(req, res) {
-        //console.log("Saving New Result on Batch:", req.body);
-        var batchResult = new models.BatchResult(req.body);
-        batchResult.save(function(err){
-
-            models.Batch.findOne({_id:new ObjectId(req.params.batchId)},
-                function(err, batch){
-                    batch.results.push(batchResult);
-                    batch.save(function(err){
-                        res.send(batchResult);
-                    })
-                })
-        })
+    };
 
 
-    });
+    return {
+        find:find,
+        findById:findById,
+        update:update,
+        remove:remove,
+        createNew:createNew,
+        addResultToBatch:addResultToBatch
+    };
 }

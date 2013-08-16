@@ -23,6 +23,10 @@ cli.main(function(args, options) {
     //mongoose.set('debug', true);
 
     app.configure(function () {
+        app.use(function(req, res, next){
+            console.log("-->" + req.path);
+            next();
+        });
         app.use(express.static(__dirname + '/public'));
         app.use(express.bodyParser());
         app.use(express.cookieParser());
@@ -77,9 +81,12 @@ cli.main(function(args, options) {
         account         : require('./api/routes/accountRoutes')(app, models, controllers),
         reports         : require('./api/routes/reportsRoutes')(app, models, controllers),
         reportResults   : require('./api/routes/reportResultsRoutes')(app, models, controllers),
+        batchResults    : require('./api/routes/batchResultsRoutes')(app, models, controllers),
         charybdis       : require('./api/routes/charybdisRoutes')(app, models, controllers),
         monitoring      : require('./api/routes/monitoringRoutes')(app, models, controllers)
     };
+
+
 
     app.listen(options.port);
 

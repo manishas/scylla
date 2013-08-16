@@ -40,7 +40,7 @@ module.exports = function(app, models){
     };
 
     var createNew = function createNew(resultJSON){
-        console.log(require('util').inspect(resultJSON));
+        //console.log(require('util').inspect(resultJSON));
         return models.Report.qFindOne(resultJSON.report._id)
             .then(function(report){
                 resultJSON.report = report;
