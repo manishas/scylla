@@ -20,9 +20,9 @@
             </span>
             <input id="slider" type="range" min="0" step="0.2" max="100" value="100" style="width:100%" />
         </div>
-        <img class="master" ng-src="{{diff.resultA}}"
-                /><img class="output" ng-src="{{diff.resultB}}"
-            /><img class="diff" ng-src="{{diff.image}}" />
+        <img class="output" ng-src="{{diff.resultB}}"
+                /><img class="master" ng-src="{{diff.resultA}}"
+                /><img class="diff" ng-src="{{diff.image}}" />
 
     </div>
     <script>
@@ -32,40 +32,42 @@
         //$(".diff").resize();
         $("#swipe").click(function(){
             $(".diff").hide();
-            $("#slider").unbind("change");
-            $("#slider").change(function(){
-                var $o = $(".output");
+            $("#slider").unbind("input");
+            $("#slider").on('input',function(){
+                var $o = $(".master");
                 var position = (this.value / 100) * $o.width();
                 $o.css("clip", "rect(0px, " + $o.width() + "px, " + $o.height() + "px, " + position +"px)");
             });
-            $("#slider").change();
+            $("#slider").trigger('input');
 
         });
         $("#onion").click(function(){
             $(".output").css("clip","auto");
             $(".diff").show();
-            $("#slider").unbind("change");
-            $("#slider").change(function(){
+            $("#slider").off("input");
+            $("#slider").on('input', function(){
                 $(".diff").css("opacity", this.value / 100);
             });
-            $("#slider").change();
+            $("#slider").trigger('input');
         });
-        $("#onion").click();
+        $("#onion").trigger('click');
         jwerty.key('s', function(){
-            $("#swipe").click();
+            $("#swipe").trigger('click');
         });
         jwerty.key('d', function(){
-            $("#onion").click();
+            $("#onion").trigger('click');
         });
         var slideTo = function slideTo(val){
+            console.log(val);
             $("#slider").val(val);
-            $("#slider").change();
+            $("#slider").trigger('input');
         }
-        jwerty.key('1', function(){
-            slideTo(10);
+        jwerty.key('[0-9]', function(event){
+            var amount = event.keyCode - 48;
+            slideTo(amount * 10);
         });
-        jwerty.key('2', function(){
-            slideTo(20);
+        jwerty.key('-', function(event){
+            slideTo(100);
         });
     </script>
 </div>

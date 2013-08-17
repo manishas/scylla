@@ -69,7 +69,7 @@ input, label{
 }
 .diffControl {
     min-height: 1000px;
-    position:absolute;
+    position:relative;
 }
 .diffControl .selectors{
     padding: 20px 30px;
