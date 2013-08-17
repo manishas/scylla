@@ -14,8 +14,6 @@ define([
 
     return scyllaApp.controller("CompareResultDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("comparesNav");
-        Page.liviconItUp();
-        $scope.$watch('resultDiff', Page.liviconItUp );
         $scope.resultDiff = {};
         $scope.diff = {};
 

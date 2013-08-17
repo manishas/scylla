@@ -1,19 +1,17 @@
 define([
     "scyllaApp",
-    "home/page",
-    "utilities/debounce"
+    "home/page"
 ], function(
     scyllaApp,
-    Page,
-    dbnc
+    Page
     ){
-    return scyllaApp.controller("PageController", function($scope, $http, Page, debounce) {
+    return scyllaApp.controller("PageController", function($scope, $http, Page) {
         $scope.Page = Page;
         $scope.pages = [
-            {label:"Home", href:"#", id:"homeNav", icon:"home", active:false},
-            {label:"Reports", href:"#/reports", id:"reportsNav", icon:"notebook", active:false},
-            {label:"Batches", href:"#/batches", id:"batchesNav", icon:"sitemap", active:false},
-            {label:"AB Compare", href:"#/compares", id:"comparesNav", icon:"balance", active:false}
+            {label:"Home", href:"#", id:"homeNav", icon:"icon-home", active:false},
+            {label:"Reports", href:"#/reports", id:"reportsNav", icon:"icon-th-list", active:false},
+            {label:"Batches", href:"#/batches", id:"batchesNav", icon:"icon-sitemap", active:false},
+            {label:"AB Compare", href:"#/compares", id:"comparesNav", icon:"icon-exchange", active:false}
         ];
         $scope.isActive = function(item){
             //console.log(item.id, Page.firstLevelNavId());
@@ -21,25 +19,6 @@ define([
         };
 
 
-        var run_livicon = function(){
-            console.log("Icons Added");
-            var $domPath = $("#mainView");
-            $domPath.find(".livicon").addLivicon();
-        };
-
-        setTimeout(function(){
-            $(".navbar").find(".livicon-deferred").each(function(){
-                console.log("Adding Livicon", this);
-                $(this).removeClass("livicon-deferred");
-                $(this).addLivicon();
-            });
-            },20);
-
-        /**
-         * Debounced call to add the icons.  Call it as much as you like, ANY time something might have changed, it won't have an adverse impact
-         * @type {*}
-         */
-        Page.liviconItUp = debounce(run_livicon, 20, false);
 
 
         $scope.showLoginModal = false;

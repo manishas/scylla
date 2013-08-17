@@ -8,10 +8,10 @@
                 >{{summary.name}}</option>
     </select>
     &nbsp;&nbsp;
-    <a href="{{resultDiff.report.url}}" target="_blank"><i class="livicon shadowed" data-n="external-link" data-s="18" data-c="#666" data-hc="#000" data-onparent="true" title="View Url"></i></a>
+    <a href="{{resultDiff.report.url}}" target="_blank"><i class="icon-external-link-sign" title="View Url"></i></a>
     &nbsp;&nbsp;
-    <a class="clickable" id="goPrevLink"><i class="livicon" data-n="angle-double-left" data-s="18" data-c="#666" data-hc="#000" data-onparent="true"></i></a>
-    <a class="clickable" id="goNextLink"><i class="livicon" data-n="angle-double-right" data-s="18" data-c="#666" data-hc="#000" data-onparent="true"></i></a>
+    <a class="clickable" id="goPrevLink"><i class="icon-double-angle-left" ></i></a>
+    <a class="clickable" id="goNextLink"><i class="icon-double-angle-right"></i></a>
     <script>
         $("#goPrevLink").click(function(){
             $("#resultSelector").prop("selectedIndex", $("#resultSelector").prop("selectedIndex")-1);

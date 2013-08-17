@@ -10,8 +10,6 @@ define([
 
     return scyllaApp.controller("CompareDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("comparesNav");
-        Page.liviconItUp();
-        $scope.$watch('compare.results', Page.liviconItUp );
 
         $scope.compare = {};
         $scope.showEditModal = false;
@@ -45,8 +43,7 @@ define([
             $http.get("/abcompares/" + $scope.compare._id + "/run")
                 .success(function(compareRunResult){
                     $scope.compare.results.unshift(compareRunResult.abCompareResult);
-                    Page.liviconItUp();
-                })
+                            })
                 .error(function(err){
                     alert(err);
                 });

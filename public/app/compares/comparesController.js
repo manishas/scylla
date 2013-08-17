@@ -8,8 +8,6 @@ define([
 
     return scyllaApp.controller("ComparesController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("comparesNav");
-        Page.liviconItUp();
-        $scope.$watch('compares', Page.liviconItUp );
 
         $scope.compares = [];
         $scope.compareToDelete = {};

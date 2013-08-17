@@ -8,8 +8,6 @@ define([
 
     return scyllaApp.controller("ReportController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("reportsNav");
-        Page.liviconItUp();
-        $scope.$watch('reports', Page.liviconItUp );
 
         $scope.reports = [];
         $scope.batches = [];

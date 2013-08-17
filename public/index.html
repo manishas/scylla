@@ -5,19 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="components/bootstrap/css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="styles/scylla.css" media="screen">
+    <link rel="stylesheet" href="styles/font-awesome.css">
     <link rel="stylesheet" href="components/toastr/toastr.css" media="screen">
     <script type="text/javascript" src="components/jquery/jquery.js"></script>
     <script type="text/javascript" src="components/raphael/raphael-min.js"></script>
-    <script type="text/javascript" src="app/utilities/livicons-1.2.js"></script>
     <script type="text/javascript" src="components/jwerty/jwerty.js"></script>
     <script type="text/javascript" src="components/angular/angular.js"></script>
-    <style>
-        .livicon {
-            display: inline-block;
-            line-height: inherit;
-            vertical-align: middle;
-        }
-    </style>
 </head>
 <body>
 <div class="navbar">
@@ -28,7 +21,7 @@
             <div ng-cloak>
                 <ul class="nav">
                     <li ng-repeat="page in pages" ng-id="{{page.id}}" ng-class="isActive(page)">
-                        <a ng-href="{{page.href}}"><i class="livicon-deferred" data-n="{{page.icon}}" data-s="24" data-c="#666" data-hc="#000" data-onparent="true" title="Edit Batch"></i> {{page.label}}</a>
+                        <a ng-href="{{page.href}}"><i class="{{page.icon}} icon-large"></i> {{page.label}}</a>
                     </li>
                 </ul>
             </div>

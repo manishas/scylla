@@ -9,7 +9,6 @@ define([
     ){
     return scyllaApp.controller("BatchController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("batchesNav");
-        Page.liviconItUp();
         $scope.batches = [];
 
         $scope.showNewBatch = false;

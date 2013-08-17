@@ -11,9 +11,6 @@ define([
     return scyllaApp.controller("BatchDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("batchesNav");
         $scope.batch = {};
-        Page.liviconItUp();
-        $scope.$watch('batch.reports', Page.liviconItUp );
-        $scope.$watch('batch.results', Page.liviconItUp );
 
         $scope.showEditBatch = false;
         $scope.batchScheduleEnabled = false;
@@ -78,8 +75,7 @@ define([
             $http.get("/batches/" + $scope.batch._id + "/run")
                 .success(function(batchRunResult){
                     $scope.batch.results.unshift(batchRunResult.batchResult);
-                    Page.liviconItUp();
-                })
+                            })
                 .error(function(err){
                     alert(err);
                 })

@@ -10,8 +10,6 @@ define([
 
     return scyllaApp.controller("ReportDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("reportsNav");
-        Page.liviconItUp();
-        $scope.$watch('report.results', Page.liviconItUp );
 
         $scope.report = {};
         $scope.showEditModal = false;
@@ -44,8 +42,7 @@ define([
             $http.get("/report-results/" + result._id + "/diffs")
                 .success(function(resultDiffs){
                     result.resultDiffs = resultDiffs;
-                    Page.liviconItUp();
-                })
+                            })
                 .error(function(err){
                     alert(err)
                 });
