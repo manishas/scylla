@@ -1,4 +1,9 @@
-// development.js
+/**
+ * Scylla Server
+ *
+ *
+ */
+
 var cli = require('cli');
 
 cli.parse({
@@ -20,7 +25,7 @@ cli.main(function(args, options) {
     var sendgrid = new SendGrid(mailConfig.user, mailConfig.key);
 
     var mongoose = require('mongoose');
-    //mongoose.set('debug', true);
+    mongoose.set('debug', true);
 
     app.configure(function () {
         app.use(function(req, res, next){
@@ -81,6 +86,7 @@ cli.main(function(args, options) {
         account         : require('./api/routes/accountRoutes')(app, models, controllers),
         reports         : require('./api/routes/reportsRoutes')(app, models, controllers),
         reportResults   : require('./api/routes/reportResultsRoutes')(app, models, controllers),
+        batches         : require('./api/routes/batchesRoutes')(app, models, controllers),
         batchResults    : require('./api/routes/batchResultsRoutes')(app, models, controllers),
         charybdis       : require('./api/routes/charybdisRoutes')(app, models, controllers),
         monitoring      : require('./api/routes/monitoringRoutes')(app, models, controllers)
