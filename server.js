@@ -88,6 +88,7 @@ cli.main(function(args, options) {
         reportResults   : require('./api/routes/reportResultsRoutes')(app, models, controllers),
         batches         : require('./api/routes/batchesRoutes')(app, models, controllers),
         batchResults    : require('./api/routes/batchResultsRoutes')(app, models, controllers),
+        resultDiffs     : require('./api/routes/resultDiffsRoutes')(app, models, controllers),
         charybdis       : require('./api/routes/charybdisRoutes')(app, models, controllers),
         monitoring      : require('./api/routes/monitoringRoutes')(app, models, controllers)
     };

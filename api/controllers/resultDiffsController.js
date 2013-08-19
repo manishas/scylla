@@ -1,61 +1,73 @@
 module.exports = function(app, models){
+    var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;
-    var handleQueryResult = require('./commonController')(ObjectId).handleQueryResult;
+    var commonController = require('./commonController')(ObjectId);
 
+    var execDeferredBridge = commonController.execDeferredBridge;
+    var execDeferredDeleteBridge = commonController.execDeferredDeleteBridge;
 
-    app.get('/result-diffs', function(req, res) {
+    var find = function find(){
+        var deferred = Q.defer();
         models.ResultDiff.find()
-            .exec(handleQueryResult(res))
-    });
+            .exec(execDeferredBridge(deferred));
+        return deferred.promise;
+    };
 
-    app.get('/report-results/:resultId/diffs', function(req, res) {
-        var resultId = new ObjectId(req.params.resultId);
-        models.ResultDiff.find(
-            {$or:[
+    var findForResult = function findForResult(resultId){
+        var deferred = Q.defer();
+        models.ResultDiff.find({$or:[
                 {reportResultA:resultId},
                 {reportResultB:resultId}
             ]})
-            .exec(handleQueryResult(res))
-    });
+            .exec(execDeferredBridge(deferred));
+        return deferred.promise;
+    };
 
-    app.get('/result-diffs/:diffId', function(req, res) {
-        var query = models.ResultDiff.findOne({_id:new ObjectId(req.params.diffId)});
-        if(req.query.includeResults){
-            query = query.populate("reportResultA reportResultB");
-        }
-        if(req.query.includeReport){
-            console.log("Including Report")
-            query = query.populate("report");
-        }
-        query.exec(handleQueryResult(res))
-    });
+    var findById = function findById(id, includeReport, includeResults){
+        var deferred = Q.defer();
+        var q = models.ResultDiff.findOne({_id:new models.ObjectId(id)});
+        if(includeReport) q = q.populate("report");
+        if(includeResults) q = q.populate("reportResultA reportResultB");
 
-    app.put('/result-diffs/:diffId', function(req, res) {
-        var id = new ObjectId(req.params.diffId);
-        var diff = req.body;
+        q.exec(execDeferredBridge(deferred));
+        return deferred.promise;
+    };
+
+    var update = function update(id, diff){
+        var deferred = Q.defer();
+        var id = new models.ObjectId(id);
         delete diff._id;
         models.ResultDiff.findOneAndUpdate({_id:id}, diff,
-            handleQueryResult(res))
-    });
+            execDeferredBridge(deferred));
+        return deferred.promise;
+    };
 
-    app.del('/result-diffs/:diffId', function(req, res) {
-        models.ResultDiff.findOne({_id:new ObjectId(req.params.batchId)})
-            .remove(function(err, result){
-                //console.log("Deleting:", result);
-                handleQueryResult(res)(err, {_id:req.params.batchId});
-            });
-    });
+    var remove = function remove(id){
+        var deferred = Q.defer();
+        models.ResultDiff.findOne({_id:new models.ObjectId(id)})
+            .remove(execDeferredDeleteBridge(deferred));
+        return deferred.promise;
+    };
 
-    app.post('/result-diffs', function(req, res) {
-        //console.log("Saving Result Diff", req.body);
-        var resultDiffSrc = req.body;
-            resultDiffSrc.report = new ObjectId(resultDiffSrc.report._id);
+    var createNew = function createNew(resultDiffSrc){
+        resultDiffSrc.report = new ObjectId(resultDiffSrc.report._id);
         if(resultDiffSrc.reportResultA)
             resultDiffSrc.reportResultA = new ObjectId(resultDiffSrc.reportResultA._id);
         if(resultDiffSrc.reportResultB)
             resultDiffSrc.reportResultB = new ObjectId(resultDiffSrc.reportResultB._id);
         var resultDiff = new models.ResultDiff(resultDiffSrc);
-        resultDiff.save(handleQueryResult(res));
-    });
+        resultDiff.qSave = Q.nfbind(resultDiff.save.bind(resultDiff));
+        return resultDiff.qSave()
+            .then(commonController.first);
+    };
 
-}
+    return {
+        find:find,
+        findForResult:findForResult,
+        findById:findById,
+        update:update,
+        remove:remove,
+        createNew:createNew
+    };
+
+};
