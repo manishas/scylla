@@ -25,7 +25,7 @@ cli.main(function(args, options) {
     var sendgrid = new SendGrid(mailConfig.user, mailConfig.key);
 
     var mongoose = require('mongoose');
-    mongoose.set('debug', true);
+    //mongoose.set('debug', true);
 
     app.configure(function () {
         app.use(function(req, res, next){

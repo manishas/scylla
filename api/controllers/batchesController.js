@@ -20,18 +20,29 @@ module.exports = function(app, models, schedController, executeBatch){
     var findById = function findById(id, includeReports, includeResults){
         var deferred = Q.defer();
         var q = models.Batch.findOne({_id:new models.ObjectId(id)});
-        if(includeReports) q = q.populate("reports masterResult");
+        if(includeReports) q = q.populate("reports");
         if(includeResults) q = q.populate({path:"results", options:{sort:{end:-1}}});
         q.exec(execDeferredBridge(deferred));
-        return deferred.promise/*
+        return deferred.promise
             .then(function(batch){
+                //If we have the reports, we probably want the MasterResult, as that has the thumbnail for the report
                 if(includeReports){
                     var deferredPop = Q.defer();
-                    return models.Report.populate(batch.reports, "masterResult")
-                        .exec(execDeferredBridge(deferredPop))
+                    //I really don't like this, but for some reason this populate call has to have a CB passed in, rather
+                    //Than using exec() like everything else.
+                    models.Report.populate(batch.reports, "masterResult",
+                        function(err, reports){
+                            if(err){
+                                deferredPop.reject(err);
+                            } else {
+                                batch.reports = reports;
+                                deferredPop.resolve(batch);
+                            }
+                        });
+                    return deferredPop.promise;
                 }
                 return batch;
-            })*/;
+            });
     };
 
     var update = function update(batchId, batch){
