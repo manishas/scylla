@@ -74,6 +74,7 @@ module.exports = function(app, models, schedController, executeBatch){
             .then(commonController.first)
             .then(function(batch){
                 if(batch) schedController.addBatchToSchedule(batch, executeBatch(batch._id));
+                return batch;
             });
     };
 
