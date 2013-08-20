@@ -8,13 +8,11 @@ define([
 
     return scyllaApp.controller("ReportController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("reportsNav");
-
+        $scope.isProcessing = false;
         $scope.reports = [];
         $scope.batches = [];
         $scope.reportToDelete = {};
 
-        $scope.showDeleteReport = false;
-        $scope.showNewReport = false;
 
         $scope.getThumbnail = function getThumbnail(report){
             if(report && report.masterResult) {
@@ -60,7 +58,7 @@ define([
                 })
         };
 
-        $scope.confirmDeleteReport = function confirmDeleteReport(report){
+        $scope.confirmDeleteReport = function confirmDeleteReport(report, uiScope){
             console.log("Deleting Report", report);
             $http.get("/reports/" + report._id, {params:{includeResults:true}})
                 .success(function(report){
@@ -73,7 +71,7 @@ define([
                         .success(function(deletedReport){
                             console.log("Deleted Report",deletedReport);
                             $scope.getAllReports();
-                            $scope.showDeleteReport = false;
+                            uiScope.showDeleteReport = false;
                         })
                         .error(function(err){
                             console.error(err);
@@ -82,23 +80,26 @@ define([
 
         };
 
-        $scope.addReport = function(name, url){
+        $scope.addReport = function(name, url, uiScope){
+            //$scope.isProcessing = true;
             console.log("New Report: ", name, url);
             $http.post("/reports", {name:name,url:url})
                 .success(function(report){
-                    $scope.showNewReport = false;
+                    uiScope.showNewReport = false;
+                    debugger;
                     toastr.success("New Report Created: " + report.name + "<br>Now capturing first screenshot.");
                     $http.get("/reports/" + report._id + "/newMaster" )
                         .success(function(report){
-                            toastr.success("Captured Screen for Report: " + report.name);
+                            toastr.success("Captured Screen for Report: " + name);
                             //Or, just replace the report
                             $scope.getAllReports();
+                            //$scope.isProcessing = false;
                         });
-                    $scope.getAllReports();
                  })
                 .error(function(error){
                     console.error("Error Saving Report: ", error);
                     $("#newReport .alert").show();
+                    $scope.isProcessing = false;
                     //TODO: Show Specific Failure Message
 
                 });

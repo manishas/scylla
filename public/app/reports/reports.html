@@ -1,4 +1,4 @@
-<div>
+<div processing-spinner="isProcessing">
     <div class="pull-right">
         <a class="btn btn-primary" ng-click="showNewReport = true"><i class="icon-plus-sign"></i> New</a>
     </div>
@@ -15,7 +15,7 @@
     </div>
     <div id="newReport" class="modal hide fade" tabindex="-1" modal="showNewReport" aria-hidden="true">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" ng-click="showNewReport = false;" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">Create a New Report</h3>
             </div>
             <div class="modal-body">
@@ -43,7 +43,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn" ng-click="showNewReport = false;" aria-hidden="true">Close</button>
-                <button class="btn btn-primary" ng-click="addReport(newReportTitle, newReportUrl)">Add Report</button>
+                <button class="btn btn-primary" ng-click="addReport(newReportTitle, newReportUrl, this);">Add Report</button>
             </div>
     </div>
     <div id="deleteReport" class="modal hide fade" tabindex="-1" modal="showDeleteReport" aria-hidden="true">
@@ -57,7 +57,7 @@
         </div>
         <div class="modal-footer">
             <button class="btn" ng-click="showDeleteReport = false;" aria-hidden="true">Close</button>
-            <button class="btn btn-primary" ng-click="confirmDeleteReport(reportToDelete)">Delete Report</button>
+            <button class="btn btn-primary" ng-click="confirmDeleteReport(reportToDelete, this)">Delete Report</button>
         </div>
     </div>
 </div>

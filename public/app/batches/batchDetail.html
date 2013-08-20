@@ -1,4 +1,4 @@
-<div>
+<div processing-spinner="isProcessing">
     <div class="pull-right">
         <a ng-click="showAddReportsModal()" class="btn btn-primary"><i class="icon-plus-sign"></i> Add Report</a>
         <a ng-click="showEditWatchersModal()" class="btn btn-primary"><i class="icon-edit" ></i> Edit Watchers</a>
@@ -48,7 +48,7 @@
     </div>
     <div id="addReport" class="modal hide fade" tabindex="-1" modal="showAddReport" aria-hidden="true">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" ng-click="showAddReport = false" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Add Report to Batch</h3>
         </div>
         <div class="modal-body">
@@ -64,12 +64,12 @@
         </div>
         <div class="modal-footer">
             <button class="btn" ng-click="showAddReport = false" aria-hidden="true">Close</button>
-            <button class="btn btn-primary" ng-click="addReports(selectedReportsToAdd)">Add Report</button>
+            <button class="btn btn-primary" ng-click="addReports(selectedReportsToAdd, this)">Add Report</button>
         </div>
     </div>
     <div id="editWatchers" class="modal hide fade" tabindex="-1" modal="showEditWatchers" aria-hidden="true">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" ng-click="showEditWatchers = false" aria-hidden="true">×</button>
             <h3 id="editWatchersModalLabel">Edit Watchers List</h3>
         </div>
         <div class="modal-body">
@@ -82,12 +82,12 @@
         </div>
         <div class="modal-footer">
             <button class="btn" ng-click="showEditWatchers = false;" aria-hidden="true">Close</button>
-            <button class="btn btn-primary" ng-click="saveWatchers(watchers)">Save Watchers</button>
+            <button class="btn btn-primary" ng-click="saveWatchers(watchers, this)">Save Watchers</button>
         </div>
     </div>
     <div id="editBatch" class="modal hide fade" tabindex="-1" modal="showEditBatch" aria-hidden="true">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" ng-click="showEditBatch = false;" aria-hidden="true">×</button>
             <h3 id="myEditBatchModalLabel">Edit Batch</h3>
         </div>
         <div class="modal-body">
@@ -127,7 +127,7 @@
         </div>
         <div class="modal-footer">
             <button class="btn" ng-click="showEditBatch = false;" aria-hidden="true">Close</button>
-            <button class="btn btn-primary" ng-click="editBatch(batch)">Save Batch</button>
+            <button class="btn btn-primary" ng-click="editBatch(batch, this)">Save Batch</button>
         </div>
     </div>
 

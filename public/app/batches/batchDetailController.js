@@ -1,16 +1,19 @@
 define([
     "scyllaApp",
     "toastr",
-    "moment"
+    "moment",
+    "directives/spin/processingSpinner"
 ], function(
     scyllaApp,
     toastr,
-    moment
+    moment,
+    processingSpinner
     ){
 
     return scyllaApp.controller("BatchDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("batchesNav");
         $scope.batch = {};
+        $scope.isProcessing = false;
 
         $scope.showEditBatch = false;
         $scope.batchScheduleEnabled = false;
@@ -72,14 +75,15 @@ define([
         }
 
         $scope.runBatch = function(){
+            $scope.isProcessing = true;
             $http.get("/batches/" + $scope.batch._id + "/run")
                 .success(function(batchRunResult){
-                    console.log("works", $scope.batch.results[0]);
-                    console.log("broken", batchRunResult.batchResult);
                     $scope.batch.results.unshift(batchRunResult.batchResult);
+                    $scope.isProcessing = false;
                 })
                 .error(function(err){
                     alert(err);
+                    $scope.isProcessing = false;
                 })
         }
 
@@ -109,11 +113,11 @@ define([
             console.log($scope.batchScheduleTime);
         }
 
-        $scope.addReports = function(reportsToAdd){
+        $scope.addReports = function(reportsToAdd, uiScope){
             $scope.batch.reports = $scope.batch.reports.concat(reportsToAdd);
             $http.post("/batches/" + $scope.batch._id + "/reports", reportsToAdd)
                 .success(function(batch){
-                    $scope.showAddReport = false;
+                    uiScope.showAddReport = false;
                     $scope.getBatch(batch._id);
                     toastr.success("Batch Saved: " + batch.name);
                 })
@@ -130,7 +134,7 @@ define([
             }
         };
 
-        $scope.editBatch = function(batch){
+        $scope.editBatch = function(batch, uiScope){
             batch.scheduleEnabled = $scope.batchScheduleEnabled
             batch.schedule.days = [];
             for(var i=0; i < dayList.length; i++){
@@ -141,7 +145,7 @@ define([
             batch.schedule.minute = time[1];
             $scope.saveBatch(batch)
                 .success(function(batch){
-                    $scope.showEditBatch = false;
+                    uiScope.showEditBatch = false;
                 })
         };
 
@@ -183,7 +187,7 @@ define([
             } else {
                 return "fail";
             }
-        }
+        };
 
         $scope.getBatch = function(id){
             $http.get("/batches/" + id, {params:{includeResults:true, includeReports:true}})

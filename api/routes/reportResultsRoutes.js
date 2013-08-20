@@ -31,7 +31,7 @@ module.exports = function(app, models, controllers){
             .then(utils.success(res), utils.fail(res));
         //TODO: Move to promises once diffsController is created
         var resultId = req.params.resultId;
-        models.Diff.find(
+        controllers.resultDiffs.find(
             {$or:[
                 {reportResultA:resultId},
                 {reportResultB:resultId}

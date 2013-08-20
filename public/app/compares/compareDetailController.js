@@ -10,7 +10,7 @@ define([
 
     return scyllaApp.controller("CompareDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("comparesNav");
-
+        $scope.isProcessing = false;
         $scope.compare = {};
         $scope.showEditModal = false;
 
@@ -40,12 +40,15 @@ define([
         };
 
         $scope.runCompare = function(){
+            $scope.isProcessing = true;
             $http.get("/abcompares/" + $scope.compare._id + "/run")
                 .success(function(compareRunResult){
                     $scope.compare.results.unshift(compareRunResult.abCompareResult);
-                            })
+                    $scope.isProcessing = false;
+                })
                 .error(function(err){
                     alert(err);
+                    $scope.isProcessing = false;
                 });
         }
 
