@@ -26,18 +26,19 @@
                 </ul>
             </div>
             <!--/.nav-collapse -->
+            <!--
             <div class="pull-right">
                 <a id="loginButton" ng-click="showLogin()">Login</a> /
                 <a id="registerButton" ng-click="showRegister()">Register</a>
             </div>
-
+            -->
         </div>
     </div>
 </div>
 <div id="mainView" ng-view>
     <h1>Loading...</h1>
 </div>
-
+<!--
 <div modal="showLoginModal" close="closeLogin()" options="loginWindowOptions" ng-cloak>
     <div class="modal-header">
         <h4>Login</h4>
@@ -70,7 +71,7 @@
         <button class="btn btn-primary" ng-click="register(name, email, password)">Login</button>
     </div>
 </div>
-
+-->
 <script data-main="app/main" src="components/requirejs/require.js"></script>
 </body>
 </html>
