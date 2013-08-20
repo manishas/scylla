@@ -74,8 +74,10 @@ define([
         $scope.runBatch = function(){
             $http.get("/batches/" + $scope.batch._id + "/run")
                 .success(function(batchRunResult){
+                    console.log("works", $scope.batch.results[0]);
+                    console.log("broken", batchRunResult.batchResult);
                     $scope.batch.results.unshift(batchRunResult.batchResult);
-                            })
+                })
                 .error(function(err){
                     alert(err);
                 })

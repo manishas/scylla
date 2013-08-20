@@ -34,9 +34,9 @@ module.exports = function(app, models, controllers){
             .createNew(req.body)
             .then(function(result){
                 return controllers.batchResults.addResultToBatch(req.params.batchId, result)
-                    .then(function(finalResult){
-                        console.log("Final Result: " + require('util').inspect(finalResult));
-                        return finalResult;
+                    .then(function(){
+                        //console.log("Final Result: " + require('util').inspect(finalResult));
+                        return result;
                     })
             })
             .then(utils.success(res), utils.fail(res));
