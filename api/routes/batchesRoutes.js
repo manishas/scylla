@@ -33,6 +33,12 @@ module.exports = function(app, models, controllers){
             .then(utils.success(res), utils.fail(res));
     });
 
+    app.del('/batches/:batchId/reports/:reportId', function(req, res) {
+        controllers.batches
+            .removeReportFromBatch(req.params.batchId, req.params.reportId)
+            .then(utils.success(res), utils.fail(res));
+    });
+
     app.post('/batches', function(req, res) {
         controllers.batches
             .createNew(req.body)

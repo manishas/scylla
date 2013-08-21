@@ -72,7 +72,7 @@ define([
                 .then(function(){
                     $scope.showEditWatchers = false;
                 })
-        }
+        };
 
         $scope.runBatch = function(){
             $scope.isProcessing = true;
@@ -85,7 +85,7 @@ define([
                     alert(err);
                     $scope.isProcessing = false;
                 })
-        }
+        };
 
         $scope.showAddReportsModal = function(){
             $scope.showAddReport = true;
@@ -126,12 +126,18 @@ define([
                 });
         };
 
-        $scope.removeReport = function(reportToRemove){
-            var reportIndex = $scope.batch.reports.indexOf(reportToRemove);
-            if(reportIndex > -1){
-                $scope.batch.reports.splice(reportIndex, 1);
-                $scope.saveBatch($scope.batch);
-            }
+        $scope.removeReport = function(reportIdToRemove){
+            $scope.isProcessing = true;
+            $http.delete("/batches/" + $scope.batch._id + "/reports/" + reportIdToRemove)
+                .success(function(batch){
+                    $scope.batch.reports = batch.reports
+                    $scope.isProcessing = false;
+                })
+                .error(function(err){
+                    console.error(err);
+                    alert(err);
+                    $scope.isProcessing = false;
+                });
         };
 
         $scope.editBatch = function(batch){

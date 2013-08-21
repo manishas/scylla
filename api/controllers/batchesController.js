@@ -67,6 +67,18 @@ module.exports = function(app, models, schedController, executeBatch){
             });
     };
 
+    var removeReportFromBatch = function removeReportFromBatch(batchId, reportId){
+        return findById(batchId)
+            .then(function(batch){
+                batch.reports.remove(new ObjectId(reportId));
+                batch.qSave = Q.nfbind(batch.save.bind(batch));
+                return batch.qSave()
+                    .then(function(saveResult){
+                        return findById(batchId, true, true);
+                    });
+            })
+    }
+
     var createNew = function createNew(reportJSON){
         var batch = new models.Batch(reportJSON);
         batch.qSave = Q.nfbind(batch.save.bind(batch));
@@ -94,7 +106,8 @@ module.exports = function(app, models, schedController, executeBatch){
         update:update,
         remove:remove,
         createNew:createNew,
-        addReportToBatch:addReportToBatch
+        addReportToBatch:addReportToBatch,
+        removeReportFromBatch:removeReportFromBatch
     };
 
 };
