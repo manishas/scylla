@@ -32,8 +32,9 @@ http://designrelated.com/portfolio/mjaldrich/entry/31056
 
 Without permission... :-(
 
-Icons
------------
-Livicons: http://codecanyon.net/item/livicons-303-truly-animated-vector-icons/4618985?ref=deethemes
 
-Not yet with permission.
+License
+-------
+See [LICENSE][]
+
+[LICENSE]: LICENSE.md
