@@ -113,11 +113,11 @@ define([
             console.log($scope.batchScheduleTime);
         }
 
-        $scope.addReports = function(reportsToAdd, uiScope){
+        $scope.addReports = function(reportsToAdd){
             $scope.batch.reports = $scope.batch.reports.concat(reportsToAdd);
             $http.post("/batches/" + $scope.batch._id + "/reports", reportsToAdd)
                 .success(function(batch){
-                    uiScope.showAddReport = false;
+                    $scope.showAddReport = false;
                     $scope.getBatch(batch._id);
                     toastr.success("Batch Saved: " + batch.name);
                 })
@@ -134,7 +134,7 @@ define([
             }
         };
 
-        $scope.editBatch = function(batch, uiScope){
+        $scope.editBatch = function(batch){
             batch.scheduleEnabled = $scope.batchScheduleEnabled
             batch.schedule.days = [];
             for(var i=0; i < dayList.length; i++){
@@ -145,7 +145,7 @@ define([
             batch.schedule.minute = time[1];
             $scope.saveBatch(batch)
                 .success(function(batch){
-                    uiScope.showEditBatch = false;
+                    $scope.showEditBatch = false;
                 })
         };
 

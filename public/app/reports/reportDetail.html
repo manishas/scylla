@@ -1,7 +1,9 @@
-<div processing-spinner="isProcessing">
+<div>
+    <processing show="isProcessing"></processing>
     <div>
         <h2 style="display:inline-block">{{report.name}}</h2>&nbsp;&nbsp;&nbsp;
-        <a class="clickable headerIcon" ng-click="showEditModal = true;"><i class="icon-edit" title="Edit Report"></i></a>
+        <a class="clickable headerIcon" ng-click="showEditModal = true;"><i class="icon-edit icon-2x" title="Edit Report"></i></a>
+        <a class="clickable headerIcon" ng-click="runReport()"><i class="icon-play-sign icon-2x" title="Run Report"></i></a>
     </div>
     <div class="media {{getResultClass(result)}}" ng-repeat="result in report.results">
         <a class="pull-left">
@@ -25,7 +27,7 @@
     </div>
     <div id="editReport" class="modal hide fade" tabindex="-1" modal="showEditModal" aria-hidden="true">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" ng-click="showEditModal = false;" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Edit Report</h3>
         </div>
         <div class="modal-body">

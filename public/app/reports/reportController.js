@@ -58,7 +58,8 @@ define([
                 })
         };
 
-        $scope.confirmDeleteReport = function confirmDeleteReport(report, uiScope){
+        $scope.confirmDeleteReport = function confirmDeleteReport(report){
+            $scope.isProcessing = true;
             console.log("Deleting Report", report);
             $http.get("/reports/" + report._id, {params:{includeResults:true}})
                 .success(function(report){
@@ -71,29 +72,29 @@ define([
                         .success(function(deletedReport){
                             console.log("Deleted Report",deletedReport);
                             $scope.getAllReports();
-                            uiScope.showDeleteReport = false;
+                            $scope.showDeleteReport = false;
+                            $scope.isProcessing = false;
                         })
                         .error(function(err){
                             console.error(err);
+                            $scope.isProcessing = false;
                         });
                 });
-
         };
 
-        $scope.addReport = function(name, url, uiScope){
-            //$scope.isProcessing = true;
+        $scope.addReport = function(name, url){
+            $scope.isProcessing = true;
             console.log("New Report: ", name, url);
             $http.post("/reports", {name:name,url:url})
                 .success(function(report){
-                    uiScope.showNewReport = false;
-                    debugger;
+                    $scope.showNewReport = false;
                     toastr.success("New Report Created: " + report.name + "<br>Now capturing first screenshot.");
                     $http.get("/reports/" + report._id + "/newMaster" )
                         .success(function(report){
                             toastr.success("Captured Screen for Report: " + name);
                             //Or, just replace the report
                             $scope.getAllReports();
-                            //$scope.isProcessing = false;
+                            $scope.isProcessing = false;
                         });
                  })
                 .error(function(error){

@@ -6,14 +6,14 @@ define([
 
 
     return scyllaApp
-        .directive('processingSpinner', function() {
+        .directive('processing', function() {
 
             return {
-                restrict: 'A',
-                replace: true,
-                transclude: true,
+                restrict:'E',
+                transclude: false,
                 scope: {
-                    processing: '=processingSpinner'
+                    show: '=show',
+                    message: '=message'
                 },
                 templateUrl: 'app/directives/spin/processing.html',
                 link: function(scope, element, attrs) {

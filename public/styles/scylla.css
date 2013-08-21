@@ -34,9 +34,9 @@ a{
     margin-left:50%;
     margin-top:10%;
 }
-.headerIcon{
-    display:inline-block;
-    vertical-align:text-bottom;
+
+.headerIcon i{
+    text-decoration: none;
 }
 
 .bigThumb{

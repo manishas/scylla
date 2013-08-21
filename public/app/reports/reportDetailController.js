@@ -10,7 +10,7 @@ define([
 
     return scyllaApp.controller("ReportDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("reportsNav");
-
+        $scope.isProcessing = false;
         $scope.report = {};
         $scope.showEditModal = false;
 
@@ -80,22 +80,57 @@ define([
         };
 
         $scope.setNewMaster = function setNewMaster(result){
+            $scope.isProcessing = true
             $scope.report.masterResult = result;
             $http.put("/reports/" + $scope.report._id + "/masterResult", result)
                 .success(function(){
                     toastr.success("Master Result Set");
+                    $scope.isProcessing = false;
                 })
                 .error(function(error){
                     console.error("Error Saving Master: ", error);
                     alert(error);
+                    $scope.isProcessing = false;
                 })
             //$scope.saveReport($scope.report);
         };
 
+        $scope.runReport = function runReport(){
+            $scope.isProcessing = true
+            $http.get("/reports/" + $scope.report._id + "/run")
+                .success(function(mishMash){
+                    var result = mishMash.result;
+                    var resultDiff = mishMash.resultDiff;
+                    result.resultDiffs = [resultDiff];
+                    $scope.report.results.unshift(result);
+                    if($scope.report.masterResult){
+                        var i = $scope.report.results.length;
+                        while(i-- > 0){
+                            if($scope.report.results[i]._id === $scope.report.masterResult._id){
+                                $scope.report.results[i].resultDiffs.unshift(resultDiff);
+                                i = 0;
+                            }
+                        }
+                    }
+                    toastr.success("Report Run");
+                    $scope.isProcessing = false;
+                })
+                .error(function(error){
+                    console.error("Error Running report: ", error);
+                    alert(error);
+                    $scope.isProcessing = false;
+                })
+        };
+
         $scope.editReport = function(report) {
+            $scope.isProcessing = true;
             $scope.saveReport(report)
                 .success(function(){
                     $scope.showEditModal = false;
+                    $scope.isProcessing = false;
+                })
+                .error(function(error){
+                    $scope.isProcessing = false;
                 });
         }
 
