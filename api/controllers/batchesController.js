@@ -93,7 +93,7 @@ module.exports = function(app, models, schedController, executeBatch){
     var addReportToBatch = function addReportToBatch(reports, batchId){
         return models.Batch.qFindOne({_id: new ObjectId(batchId)})
             .then(function(batch){
-                batch.reports.addToSet(toObjectIdArray(reports));
+                batch.reports.addToSet.apply(batch.reports, toObjectIdArray(reports));
                 batch.qSave = Q.nfbind(batch.save.bind(batch));
                 return batch.qSave()
                     .then(commonController.first);
