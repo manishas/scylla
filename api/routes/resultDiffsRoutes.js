@@ -8,7 +8,7 @@ module.exports = function(app, models, controllers){
     });
 
     app.get('/report-results/:resultId/diffs', function(req, res) {
-        controllers.resultDiffs.find(req.params.resultId)
+        controllers.resultDiffs.findForResult(req.params.resultId)
             .then(utils.success(res), utils.fail(res))
     });
 
