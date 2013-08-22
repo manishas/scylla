@@ -58,7 +58,7 @@ module.exports = function(app, models, schedController, executeBatch){
 
     var remove = function remove(batchId){
         var deferred = Q.defer();
-        models.Report.findOne({_id:new models.ObjectId(batchId)})
+        models.Batch.findOne({_id:new models.ObjectId(batchId)})
             .remove(execDeferredDeleteBridge(deferred));
         return deferred.promise
             .then(function(result){

@@ -10,6 +10,8 @@ define([
     return scyllaApp.controller("BatchController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("batchesNav");
         $scope.batches = [];
+        $scope.reportToDelete = {};
+        $scope.showDeleteBatch = false;
 
         $scope.showNewBatch = false;
         $scope.availableReports = [];
@@ -53,6 +55,23 @@ define([
                 .success(function(batch){
                     $scope.showNewBatch = false;
                 })
+        };
+        $scope.askToConfirmDelete = function(batch){
+            $scope.showDeleteBatch = true;
+            $scope.batchToDelete = batch;
+            console.log("Batch to Delete", batch);
+        };
+
+        $scope.deleteBatch = function(batch){
+            $scope.isProcessing = true
+            console.log("Deleting Batch", batch);
+            $http.delete("/batches/" + batch._id)
+                .success(function(deleteResult){
+                    toastr.success("Batch " + batch.name + " deleted");
+                    $scope.getAllBatches();
+                    $scope.showDeleteBatch = false;
+                    $scope.isProcessing = false;
+                });
         };
 
         $scope.saveBatch = function(batch){
