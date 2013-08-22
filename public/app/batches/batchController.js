@@ -1,11 +1,13 @@
 define([
     "scyllaApp",
     "moment",
-    "toastr"
+    "toastr",
+    "directives/spin/processingSpinner"
 ], function(
     scyllaApp,
     moment,
-    toastr
+    toastr,
+    processingSpinner
     ){
     return scyllaApp.controller("BatchController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("batchesNav");

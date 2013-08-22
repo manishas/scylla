@@ -1,11 +1,13 @@
 define([
     "scyllaApp",
     "toastr",
-    "moment"
+    "moment",
+    "directives/spin/processingSpinner"
 ], function(
     scyllaApp,
     toastr,
-    moment
+    moment,
+    processingSpinner
     ){
 
     return scyllaApp.controller("ReportDetailController", function($scope, $route, $routeParams, $http, Page) {
