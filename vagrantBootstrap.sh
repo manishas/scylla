@@ -28,17 +28,6 @@ if [ ! -f /var/log/2systemsetup ];
 then
     echo -e "${yellow}Installing system pre-reqs${NC}"
     sudo apt-get install -y git imagemagick
-    # Check for ssh keys
-    if [ ! -f /vagrant/.ssh ];
-    then
-        cp -R /vagrant/.ssh ~/
-        chown vagrant -R ~/.ssh
-        chgrp vagrant -R ~/.ssh
-        chmod 700 ~/.ssh
-        chmod 600 ~/.ssh/*
-    else
-        echo -e "${red}SSH keys not copied.${NC}"
-    fi
     touch /var/log/1systemsetup
 fi
 
@@ -67,6 +56,7 @@ fi
 
 if [ ! -f /vagrant/scylla/config/mail.js ];
 then
+    echo -e "${red}EXAMPLE MAIL FILE USED, EMAIL WILL NOT BE ABLE TO BE SENT${NC}"
     cp /vagrant/config/mail-example.js /vagrant/config/mail.js
 fi
 
