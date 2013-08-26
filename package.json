@@ -26,7 +26,7 @@
     },
     "main"           : "server.js",
     "scripts"        : {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "node test/unitTestRunner.js"
     },
     "repository"     : {
         "type": "git",
@@ -36,7 +36,6 @@
     "license"        : "none yet",
     "gitHead"        : "10fa9b5ef1faae5b4a94ac77df047bc09255d07c",
     "readmeFilename" : "readme.md",
-    "test": "node test/unitTestRunner.js",
     "bugs"           : {
         "url": "https://github.com/simplymeasured/scylla/issues"
     }
