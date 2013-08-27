@@ -20,8 +20,8 @@
             </span>
             <input id="slider" type="range" min="0" step="0.2" max="100" value="100" style="width:100%" />
         </div>
-        <img class="output" ng-src="{{diff.resultB}}"
-                /><img class="master" ng-src="{{diff.resultA}}"
+        <img class="master" ng-src="{{diff.resultA}}"
+                /><img class="output" ng-src="{{diff.resultB}}"
                 /><img class="diff" ng-src="{{diff.image}}" />
 
     </div>
@@ -34,7 +34,7 @@
             $(".diff").hide();
             $("#slider").unbind("input");
             $("#slider").on('input',function(){
-                var $o = $(".master");
+                var $o = $(".output");
                 var position = (this.value / 100) * $o.width();
                 $o.css("clip", "rect(0px, " + $o.width() + "px, " + $o.height() + "px, " + position +"px)");
             });
