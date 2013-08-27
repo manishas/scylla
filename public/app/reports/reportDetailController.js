@@ -51,6 +51,7 @@ define([
         }
 
         $scope.dateFormat = function(isoString) {
+            if(typeof isoString === "undefined") return "";
             return moment(isoString).format("MMMM Do, h:mm A");
         };
         $scope.getResultClass = function(result) {
