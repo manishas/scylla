@@ -1,71 +1,144 @@
 <!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Scylla by simplymeasured</title>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Scylla</h1>
-        <p></p>
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
 
-        <p class="view"><a href="https://github.com/simplymeasured/scylla">View the Project on GitHub <small>simplymeasured/scylla</small></a></p>
+  <title>Scylla</title>
+  <meta name="description" content="">
 
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-        <ul>
-          <li><a href="https://github.com/simplymeasured/scylla/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/simplymeasured/scylla/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/simplymeasured/scylla">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+</head>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<body>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Scylla</h1>
+    </header>
+    <div id="container">
+      <p class="tagline"></p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/simplymeasured/scylla/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/simplymeasured/scylla/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/simplymeasured/scylla" class="code">View Scylla on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>
+<a name="scylla" class="anchor" href="#scylla"><span class="octicon octicon-link"></span></a>Scylla</h1>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h2>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h2>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<p>Scylla detects visual changes in web pages by capturing screenshots of webpages, comparing them and then alerting the user to the specific changes. It displays the visual changes in an easy-to-explore manner, which makes it accessible to all levels of technical ability.
+Scylla can serve as the first line of testing. Run immediately after a change, Scylla will allow you to immediately ensure that things changed as planned.  Run after a refactor, it will allow you to be certain things remained the same.
+The built-in scheduling lets you capture screens first thing in the morning, and a summary email will let QA know if parts of the site require their attention.</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>Scylla has two ways that you can capture and compare screenshots.</p>
 
 <h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<a name="capturing-screenshots" class="anchor" href="#capturing-screenshots"><span class="octicon octicon-link"></span></a>Capturing Screenshots</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/simplymeasured">simplymeasured</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+<h4>
+<a name="reports" class="anchor" href="#reports"><span class="octicon octicon-link"></span></a>Reports</h4>
+
+<p>Reports allow you to track a single URL over time. After you create a report, Scylla will immediately capture a screenshot and set that initial screen as “Master.”  By pressing the “Run Report” icon next to the report name, Scylla will capture a new screenshot and compare it against the current master. Each screenshot is listed in the Report Details, and each comparison that includes the specific screenshot is listed next to it.  To set the new “Master,” click the star next to the date that screenshot was taken. The next screenshots will be compared against the current “Master.”</p>
+
+<h4>
+<a name="ab-compare" class="anchor" href="#ab-compare"><span class="octicon octicon-link"></span></a>AB Compare</h4>
+
+<p>Compare allows you to track the differences between two separate URLs. This is great when trying to compare a local version to a server version of a site.</p>
+
+<h3>
+<a name="automating-reports" class="anchor" href="#automating-reports"><span class="octicon octicon-link"></span></a>Automating Reports</h3>
+
+<p>The real value of Scylla is its ability to automate the visual testing. By setting up a batch of reports, you can run multiple reports at once, and even schedule the reports to run in the morning.  If you add your email address as a “Watcher” on a batch, you’ll get a summary email after each scheduled run, a handy piece of news to greet you first thing in the morning.</p>
+
+<h3>
+<a name="visual-diffs" class="anchor" href="#visual-diffs"><span class="octicon octicon-link"></span></a>Visual Diffs</h3>
+
+<p>Scylla’s visual diff viewer let you compare screens in two ways.</p>
+
+<h4>
+<a name="difference-overlay" class="anchor" href="#difference-overlay"><span class="octicon octicon-link"></span></a>Difference Overlay</h4>
+
+<p>Scylla generates an image with all pixels that have changed in red.  We overlay this image on top of the new screenshot so that you can quickly see exactly which pixels have changed.  By adjusting the slider on the top, you can change the intensity of the red change markers.</p>
+
+<h4>
+<a name="swipe" class="anchor" href="#swipe"><span class="octicon octicon-link"></span></a>Swipe</h4>
+
+<p>Once you’ve found where the screens have changed, you can switch to swipe mode to focus on the exact changes. In the slider view, the older, “Master” image is on the left, while the newer screenshot is on the right.  The slider will adjust a vertical seam between the images, and is a great way to see tiny adjustments in height or color that would be impossible to notice without such a tool.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Scylla comes with a vagrant script to make setting up a local server very simple.
+1) Download archive or clone git URL
+2) Install [Vagrant]
+3) Optional: Configure SendGrid for sending emails.
+    Copy mail-example.js to mail.js and add your sendgrid credentials.
+3) type ‘vagrant up’ in the scylla directory
+4) Done! Scylla is now running at: http://localhost:8090/</p>
+
+<h2>
+<a name="apis" class="anchor" href="#apis"><span class="octicon octicon-link"></span></a>APIs</h2>
+
+<p>Scylla is built on a REST API, which allows simple integration with scripts and other services. The user interface urls mimic the REST urls for GETing data, while you can run a report or batch by GETing the ./run url.</p>
+
+<h2>
+<a name="behind-the-curtain" class="anchor" href="#behind-the-curtain"><span class="octicon octicon-link"></span></a>Behind the Curtain</h2>
+
+<p>Scylla was developed by Simply Measured.</p>
+
+<h2>
+<a name="name" class="anchor" href="#name"><span class="octicon octicon-link"></span></a>Name</h2>
+
+<p>Scylla is a part of Greek Mythology, originally a beautiful daughter of a God, but turned into a sea monster.</p>
+
+<p>She has 12 tentacles and is known to sit high up on a cliff and wait for sailors to sail close enough so that she
+can snatch them up or throw boulders down on top of them. She works in tandem with Charybdis,</p>
+
+<p>[Vagrant][<a href="http://vagrantup.com">http://vagrantup.com</a>]</p>
+
+<h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>See <a href="LICENSE.md">LICENSE</a></p>
+        </article>
+      </div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/simplymeasured" class="avatar"><img src="https://0.gravatar.com/avatar/b1324f522d22beb2dd3e403cbf4c3092?d=https%3A%2F%2Fidenticons.github.com%2F9da80fb6ac0aeff4077ab49195660407.png&amp;s=30" width="48" height="48"/></a> <a href="https://github.com/simplymeasured">simplymeasured</a> maintains <a href="https://github.com/simplymeasured/scylla">Scylla</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/simplymeasured/scylla/tarball/master" class="tar">tar</a><a href="https://github.com/simplymeasured/scylla/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
 </html>
