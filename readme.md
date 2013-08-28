@@ -53,12 +53,12 @@ can snatch them up or throw boulders down on top of them. She works in tandem wi
 
 ## Links
 
-Home: http://getscylla.com
-Source: https://github.com/simplymeasured/scylla
-Builds: https://travis-ci.org/simplymeasured/scylla
-Issues: https://github.com/simplymeasured/scylla/issues
-Mailing List: https://groups.google.com/forum/#!forum/scylla-users
-Chat: irc:chat.freenode.net#scylla
+* Home: http://getscylla.com
+* Source: https://github.com/simplymeasured/scylla
+* Builds: https://travis-ci.org/simplymeasured/scylla
+* Issues: https://github.com/simplymeasured/scylla/issues
+* Mailing List: https://groups.google.com/forum/#!forum/scylla-users
+* Chat: irc:chat.freenode.net#scylla
 
 # License
 See [LICENSE][license].
