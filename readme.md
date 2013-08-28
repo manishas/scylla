@@ -1,4 +1,7 @@
-# Scylla
+# Scylla [![Build Status](https://travis-ci.org/simplymeasured/scylla.png?branch=master)](https://travis-ci.org/simplymeasured/scylla)
+
+![The Scylla Mascot](https://rawgithub.com/simplymeasured/scylla/master/public/images/scylla.svg)
+
 ## Introduction
 Scylla detects visual changes in web pages by capturing screenshots of webpages, comparing them and then alerting the user to the specific changes. It displays the visual changes in an easy-to-explore manner, which makes it accessible to all levels of technical ability.
 Scylla can serve as the first line of testing. Run immediately after a change, Scylla will allow you to immediately ensure that things changed as planned.  Run after a refactor, it will allow you to be certain things remained the same.
@@ -28,28 +31,38 @@ Once you’ve found where the screens have changed, you can switch to swipe mode
 
 ## Installation
 Scylla comes with a vagrant script to make setting up a local server very simple.
-1) Download archive or clone git URL
-2) Install [Vagrant]
-3) Optional: Configure SendGrid for sending emails.
+
+1. Download archive or clone git URL
+2. Install [Vagrant]
+3. Optional: Configure SendGrid for sending emails.
     Copy mail-example.js to mail.js and add your sendgrid credentials.
-3) type ‘vagrant up’ in the scylla directory
-4) Done! Scylla is now running at: http://localhost:8090/
+3. type ‘vagrant up’ in the scylla directory
+4. Done! Scylla is now running at: http://localhost:8090/
 
 ## APIs
 Scylla is built on a REST API, which allows simple integration with scripts and other services. The user interface urls mimic the REST urls for GETing data, while you can run a report or batch by GETing the ./run url.
 
 ## Behind the Curtain
-Scylla was developed by Simply Measured.
+Scylla was developed by [Simply Measured][sm].
 
 ## Name
 Scylla is a part of Greek Mythology, originally a beautiful daughter of a God, but turned into a sea monster.
 
 She has 12 tentacles and is known to sit high up on a cliff and wait for sailors to sail close enough so that she
-can snatch them up or throw boulders down on top of them. She works in tandem with Charybdis,
+can snatch them up or throw boulders down on top of them. She works in tandem with Charybdis.
 
-[Vagrant][http://vagrantup.com]
+## Links
+
+* Home: http://getscylla.com
+* Source: https://github.com/simplymeasured/scylla
+* Builds: https://travis-ci.org/simplymeasured/scylla
+* Issues: https://github.com/simplymeasured/scylla/issues
+* Mailing List: https://groups.google.com/forum/#!forum/scylla-users
+* Chat: irc:chat.freenode.net#scylla
 
 # License
-See [LICENSE][]
+See [LICENSE][license].
 
-[LICENSE]: LICENSE.md
+[sm]: http://simplymeasured.com
+[vagrant]: http://vagrantup.com
+[license]: https://github.com/simplymeasured/scylla/blob/master/LICENSE.md
