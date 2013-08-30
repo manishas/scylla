@@ -1,4 +1,5 @@
 module.exports = function(app, models){
+    'use strict';
     var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;
     var commonController = require('./commonController')(ObjectId);
@@ -26,8 +27,8 @@ module.exports = function(app, models){
     var findById = function findById(id, includeReport, includeResults){
         var deferred = Q.defer();
         var q = models.ResultDiff.findOne({_id:new models.ObjectId(id)});
-        if(includeReport) q = q.populate("report");
-        if(includeResults) q = q.populate("reportResultA reportResultB");
+        if(includeReport){ q = q.populate("report"); }
+        if(includeResults){ q = q.populate("reportResultA reportResultB"); }
 
         q.exec(execDeferredBridge(deferred));
         return deferred.promise;
@@ -35,9 +36,9 @@ module.exports = function(app, models){
 
     var update = function update(id, diff){
         var deferred = Q.defer();
-        var id = new models.ObjectId(id);
+        var oid = new models.ObjectId(id);
         delete diff._id;
-        models.ResultDiff.findOneAndUpdate({_id:id}, diff,
+        models.ResultDiff.findOneAndUpdate({_id:oid}, diff,
             execDeferredBridge(deferred));
         return deferred.promise;
     };
@@ -51,10 +52,12 @@ module.exports = function(app, models){
 
     var createNew = function createNew(resultDiffSrc){
         resultDiffSrc.report = new ObjectId(resultDiffSrc.report._id);
-        if(resultDiffSrc.reportResultA)
+        if(resultDiffSrc.reportResultA) {
             resultDiffSrc.reportResultA = new ObjectId(resultDiffSrc.reportResultA._id);
-        if(resultDiffSrc.reportResultB)
+        }
+        if(resultDiffSrc.reportResultB) {
             resultDiffSrc.reportResultB = new ObjectId(resultDiffSrc.reportResultB._id);
+        }
         var resultDiff = new models.ResultDiff(resultDiffSrc);
         resultDiff.qSave = Q.nfbind(resultDiff.save.bind(resultDiff));
         return resultDiff.qSave()

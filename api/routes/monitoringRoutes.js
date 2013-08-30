@@ -1,5 +1,5 @@
-module.exports = function(app, models, controllers){
-
+module.exports = function(app){
+    'use strict';
 
     app.get('/monitoring', function(req, res) {
         res.send({
@@ -7,4 +7,4 @@ module.exports = function(app, models, controllers){
         });
     });
 
-}
+};

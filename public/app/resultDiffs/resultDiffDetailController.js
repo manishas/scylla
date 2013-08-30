@@ -11,6 +11,7 @@ define([
     diffDirective,
     diffAdapter
     ){
+    'use strict';
 
     return scyllaApp.controller("ResultDiffDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("reportsNav");

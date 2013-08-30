@@ -1,4 +1,5 @@
 module.exports = function(app, models){
+    'use strict';
     var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;
     var commonController = require('./commonController')(ObjectId);
@@ -18,7 +19,7 @@ module.exports = function(app, models){
         var deferred = Q.defer();
         var q = models.Report.findOne({_id:new models.ObjectId(id)});
         var select = (includeFullImage) ? "" : "-result";
-        if(includeResults) q = q.populate({path:"results",select:select});
+        if(includeResults){ q = q.populate({path:"results",select:select}); }
         q.populate({path:"masterResult", select:select})
             .exec(execDeferredBridge(deferred));
         return deferred.promise;
@@ -55,7 +56,7 @@ module.exports = function(app, models){
                 report.masterResult = new models.ObjectId(resultId);
                 report.qSave = Q.nfbind(report.save.bind(report));
                 return report.qSave();
-            })
+            });
     };
     var addResultToReport = function(reportId, result){
         return models.Report.qFindOne({_id: new models.ObjectId(reportId)})
@@ -79,4 +80,4 @@ module.exports = function(app, models){
         addResultToReport:addResultToReport
     };
 
-}
+};

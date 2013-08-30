@@ -3,7 +3,7 @@ define([
 ], function(
     scyllaApp
     ){
-
+    'use strict';
 
     return scyllaApp
         .directive('processing', function() {

@@ -1,4 +1,5 @@
 module.exports = function(app, models, controllers){
+    'use strict';
     var utils = require('./routeUtils');
 
 
@@ -23,10 +24,10 @@ module.exports = function(app, models, controllers){
         controllers.reportResults
             .remove(req.params.resultId)
             .then(function(deleteResults){
-                if(deleteResults.records == 0) throw new Error("No Result Deleted");
+                if(deleteResults.records === 0){ throw new Error("No Result Deleted"); }
                 return {
                     _id:req.params.resultId
-                }
+                };
             })
             .then(utils.success(res), utils.fail(res));
         //TODO: Move to promises once diffsController is created
@@ -36,9 +37,9 @@ module.exports = function(app, models, controllers){
                 {reportResultA:resultId},
                 {reportResultB:resultId}
             ]})
-            .remove(function(err, result){
+            .remove(function(/*err, result*/){
                 //console.log("Deleted Diffs: ", result);
-            })
+            });
     });
 
     app.post('/reports/:reportId/results', function(req, res) {
@@ -50,9 +51,9 @@ module.exports = function(app, models, controllers){
                     .addResultToReport(req.params.reportId, result)
                     .then(function(){
                         return result;
-                    })
+                    });
             })
             .then(utils.success(res), utils.fail(res));
 
     });
-}
+};

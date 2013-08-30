@@ -1,4 +1,5 @@
 module.exports = function (mongoose) {
+    'use strict';
     var Q = require('q');
 
     var AccountSchema = new mongoose.Schema({
@@ -13,4 +14,4 @@ module.exports = function (mongoose) {
     Account.qFindOne = Q.nfbind(Account.findOne.bind(Account));
     return Account;
 
-}
+};

@@ -9,6 +9,7 @@ define([
     moment,
     processingSpinner
     ){
+    'use strict';
 
     return scyllaApp.controller("CompareDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("comparesNav");

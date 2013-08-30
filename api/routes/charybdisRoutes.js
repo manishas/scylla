@@ -1,12 +1,13 @@
 module.exports = function(app, models, controllers){
+    'use strict';
     var utils = require('./routeUtils');
 
     app.get('/reports/:reportId/newMaster', function(req,res){
         controllers.charybdis.captureReportSnapshot(req.params.reportId)
             .then(function(reportResult){
-                console.log(require('util').inspect(reportResult));
+                //console.log(require('util').inspect(reportResult));
                 console.log("Setting result " + reportResult._id + " as master for report: " + req.params.reportId);
-                return controllers.reports.updateReportMaster(req.params.reportId, reportResult._id)
+                return controllers.reports.updateReportMaster(req.params.reportId, reportResult._id);
             })
             .then(utils.success(res), utils.fail(res));
     });
@@ -25,4 +26,4 @@ module.exports = function(app, models, controllers){
         controllers.charybdis.executeABCompare(req.params.compareId)
             .then(utils.success(res), utils.fail(res));
     });
-}
+};

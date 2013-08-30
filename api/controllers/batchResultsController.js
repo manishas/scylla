@@ -1,4 +1,5 @@
 module.exports = function(app, models){
+    'use strict';
     var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;
     var commonController = require('./commonController')(ObjectId);
@@ -11,7 +12,7 @@ module.exports = function(app, models){
         models.BatchResult.find()
             .exec(execDeferredBridge(deferred));
         return deferred.promise;
-    }
+    };
 
 
     var findById = function findById(resultId){
@@ -19,7 +20,7 @@ module.exports = function(app, models){
         models.BatchResult.findOne({_id:new ObjectId(resultId)})
             .exec(execDeferredBridge(deferred));
         return deferred.promise;
-    }
+    };
 
     var update = function update(resultId, result){
         var deferred = Q.defer();
@@ -41,7 +42,7 @@ module.exports = function(app, models){
 
     var createNew = function createNew(resultJSON){
         //console.log(require('util').inspect(resultJSON));
-        console.log("Creating New Batch Result")
+        console.log("Creating New Batch Result");
         return models.Batch.qFindOne(resultJSON.batch._id)
             .then(function(batch){
                 resultJSON.batch = batch;
@@ -51,7 +52,7 @@ module.exports = function(app, models){
                 return result.qSave()
                     .then(commonController.first);
 
-            })
+            });
     };
     var addResultToBatch = function(batchId, result){
         return models.Batch.qFindOne({_id: new ObjectId(batchId)})
@@ -77,4 +78,4 @@ module.exports = function(app, models){
         createNew:createNew,
         addResultToBatch:addResultToBatch
     };
-}
+};

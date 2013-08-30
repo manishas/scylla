@@ -1,4 +1,5 @@
 module.exports = function(mongoose){
+    'use strict';
     var Q = require('q');
 
     var AbCompareSchema = new mongoose.Schema({
@@ -15,4 +16,4 @@ module.exports = function(mongoose){
     AbCompare.qFindOne = Q.nfbind(AbCompare.findOne.bind(AbCompare));
 
     return AbCompare;
-}
+};

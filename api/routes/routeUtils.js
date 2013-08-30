@@ -1,14 +1,16 @@
 module.exports = (function(){
+    'use strict';
     var Q = require('q');
     var util = require('util');
 
     var normalSuccess = function(res){
         return function(value){
-            if(value)
+            if(value){
                 res.send(value);
-            else
+            } else {
                 res.send(404);
-        }
+            }
+        };
     };
 
     var normalFail = function(res){
@@ -16,12 +18,12 @@ module.exports = (function(){
             console.error("\nRoute Failure: ", util.inspect(error));
             console.log(error.stack);
             res.send(500, {message:util.inspect(error)});
-        }
+        };
     };
 
     var validateInputs = function(body, rules){
         var deferred = Q.defer();
-        if(typeof body === "undefined" || body == null){
+        if(typeof body === "undefined" || body === null){
             deferred.reject({errors:{"body":"No Data Submitted"}});
         } else {
             var hasError = false;
@@ -46,8 +48,8 @@ module.exports = (function(){
 
     var simpleValidators = {
         required:function(value){
-            if(typeof value === "undefined" || value == null || value == ""){
-                return "is required."
+            if(typeof value === "undefined" || value === null || value === ""){
+                return "is required.";
             }
             return true;
         }
@@ -59,5 +61,5 @@ module.exports = (function(){
         fail:normalFail,
         validateInputs:validateInputs,
         v:simpleValidators
-    }
+    };
 })();

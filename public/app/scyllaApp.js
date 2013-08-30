@@ -7,6 +7,8 @@ define([
     aBootstrap,
     toastr
     ){
+    'use strict';
+
     var app = angular.module("scyllaApp",["ui.bootstrap"]);
 
     toastr.options = {

@@ -1,8 +1,9 @@
 module.exports = function(app, models){
+    'use strict';
     var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;
     var commonController = require('./commonController')(ObjectId);
-    var execDeferredBridge = commonController.execDeferredBridge
+    var execDeferredBridge = commonController.execDeferredBridge;
 
 
     var find = function find(){
@@ -17,7 +18,7 @@ module.exports = function(app, models){
         var deferred = Q.defer();
         var q = models.AbCompare.findOne({_id:new models.ObjectId(id)});
         var select = (includeFullImage) ? "" : "-resultA -resultB -image";
-        if(includeResults) q = q.populate({path:"results",select:select});
+        if(includeResults){ q = q.populate({path:"results",select:select}); }
         q.exec(execDeferredBridge(deferred));
         return deferred.promise;
     };
@@ -54,7 +55,7 @@ module.exports = function(app, models){
                 abCompare.qSave = Q.nfbind(abCompare.save.bind(abCompare));
                 return abCompare.qSave()
                     .then(commonController.first);
-            })
+            });
 
     };
 
@@ -66,6 +67,6 @@ module.exports = function(app, models){
         remove:remove,
         createNew:createNew,
         addResultToCompare:addResultToCompare
-    }
+    };
 
-}
+};

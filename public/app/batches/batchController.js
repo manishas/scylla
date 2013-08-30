@@ -9,6 +9,8 @@ define([
     toastr,
     processingSpinner
     ){
+    'use strict';
+
     return scyllaApp.controller("BatchController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("batchesNav");
         $scope.batches = [];

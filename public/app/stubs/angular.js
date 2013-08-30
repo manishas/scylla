@@ -1,2 +1,2 @@
 /*global angular:false*/
-define([], function(){ return angular; });
+define([], function(){     'use strict';    return angular; });

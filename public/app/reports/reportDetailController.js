@@ -9,6 +9,7 @@ define([
     moment,
     processingSpinner
     ){
+    'use strict';
 
     return scyllaApp.controller("ReportDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("reportsNav");

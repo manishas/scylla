@@ -1,6 +1,7 @@
 define([
 ], function(
     ){
+    'use strict';
 
     var reportResultToDiff = function(reportResultDiff){
         var diff = {

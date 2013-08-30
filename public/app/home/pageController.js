@@ -5,6 +5,8 @@ define([
     scyllaApp,
     Page
     ){
+    'use strict';
+
     return scyllaApp.controller("PageController", function($scope, $http, Page) {
         $scope.Page = Page;
         $scope.pages = [

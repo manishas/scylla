@@ -1,11 +1,11 @@
 module.exports = function(app, models, controllers){
+    'use strict';
     var utils = require('./routeUtils');
 
     /** Routes **/
     app.get('/accounts/:id', function(req, res) {
-        var accountId = req.params.id == 'me'
-            ? req.session.accountId
-            : req.params.id;
+        var accountId =
+            (req.params.id === 'me' ) ? req.session.accountId : req.params.id;
         controllers.account.findById(accountId)
             .then(utils.success(res), utils.fail(res));
     });
@@ -22,7 +22,7 @@ module.exports = function(app, models, controllers){
         name:utils.v.required,
         email:utils.v.required,
         password:utils.v.required
-    }
+    };
 
     app.post('/account/register', function(req, res) {
         utils.validateInputs(req.body, registeredValidators )
@@ -36,11 +36,10 @@ module.exports = function(app, models, controllers){
 
     app.post('/account/login', function(req, res) {
         //console.log('login request');
-        var email = req.body.email
-        var password = req.body.password
+        var email = req.body.email;
+        var password = req.body.password;
 
-        if ( null == email || email.length < 1
-                 || null == password || password.length < 1 ) {
+        if ( null === email || email.length < 1 || null === password || password.length < 1 ) {
             res.send(400);
             return;
         }
@@ -57,4 +56,4 @@ module.exports = function(app, models, controllers){
             res.send(account);
         });
     });
-}
+};

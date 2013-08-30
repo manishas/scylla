@@ -1,2 +1,2 @@
 /*global $:false,jQuery:false*/
-define([], function(){ return $ || jQuery; });
+define([], function(){     'use strict';    return $ || jQuery; });

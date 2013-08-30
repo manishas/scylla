@@ -1,4 +1,5 @@
 module.exports = function(app, models, schedController, executeBatch){
+    'use strict';
     var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;
     var commonController = require('./commonController')(ObjectId);
@@ -11,7 +12,7 @@ module.exports = function(app, models, schedController, executeBatch){
     var find = function find(includeResults){
         var deferred = Q.defer();
         var q = models.Batch.find();
-        if(includeResults) q = q.populate({path:"results", options:{sort:{end:-1}}});
+        if(includeResults){ q = q.populate({path:"results", options:{sort:{end:-1}}}); }
 
         q.exec(execDeferredBridge(deferred));
         return deferred.promise;
@@ -20,8 +21,8 @@ module.exports = function(app, models, schedController, executeBatch){
     var findById = function findById(id, includeReports, includeResults){
         var deferred = Q.defer();
         var q = models.Batch.findOne({_id:new models.ObjectId(id)});
-        if(includeReports) q = q.populate("reports");
-        if(includeResults) q = q.populate({path:"results", options:{sort:{end:-1}}});
+        if(includeReports){ q = q.populate("reports"); }
+        if(includeResults){ q = q.populate({path:"results", options:{sort:{end:-1}}}); }
         q.exec(execDeferredBridge(deferred));
         return deferred.promise
             .then(function(batch){
@@ -55,7 +56,7 @@ module.exports = function(app, models, schedController, executeBatch){
             execDeferredBridge(deferred));
         return deferred.promise
             .then(function(savedBatch){
-                if(savedBatch) schedController.addBatchToSchedule(savedBatch, executeBatch(savedBatch._id));
+                if(savedBatch){ schedController.addBatchToSchedule(savedBatch, executeBatch(savedBatch._id)); }
                 return savedBatch;
             });
     };
@@ -77,11 +78,11 @@ module.exports = function(app, models, schedController, executeBatch){
                 batch.reports.remove(new ObjectId(reportId));
                 batch.qSave = Q.nfbind(batch.save.bind(batch));
                 return batch.qSave()
-                    .then(function(saveResult){
+                    .then(function(){
                         return findById(batchId, true, true);
                     });
-            })
-    }
+            });
+    };
 
     var createNew = function createNew(reportJSON){
         var batch = new models.Batch(reportJSON);
@@ -89,7 +90,7 @@ module.exports = function(app, models, schedController, executeBatch){
         return batch.qSave()
             .then(commonController.first)
             .then(function(batch){
-                if(batch) schedController.addBatchToSchedule(batch, executeBatch(batch._id));
+                if(batch){ schedController.addBatchToSchedule(batch, executeBatch(batch._id)); }
                 return batch;
             });
     };

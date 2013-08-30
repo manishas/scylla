@@ -40,6 +40,7 @@ require([
     BatchResultController
     ) {
 
+    'use strict';
 
     scyllaApp.config(['$routeProvider',function($routeProvider){
         console.log("Configuring Routes");

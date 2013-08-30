@@ -1,4 +1,5 @@
 module.exports = function(app, host, port){
+    'use strict';
     var charybdis = require("charybdis")();
 
     var captureReportSnapshot = function captureReportSnapshot(reportId){
@@ -22,5 +23,5 @@ module.exports = function(app, host, port){
         captureReportSnapshot:captureReportSnapshot,
         executeOnBatch:executeOnBatch,
         executeABCompare:executeABCompare
-    }
-}
+    };
+};

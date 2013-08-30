@@ -7,6 +7,7 @@ define([
     toastr,
     processingSpinner
     ){
+    'use strict';
 
     return scyllaApp.controller("ReportController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("reportsNav");

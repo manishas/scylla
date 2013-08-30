@@ -1,4 +1,5 @@
 module.exports = function(app, models, sendgrid){
+    'use strict';
 
     var path = require("path");
     var templatesDir = path.join(__dirname, '..', 'templates');
@@ -28,11 +29,11 @@ module.exports = function(app, models, sendgrid){
                 batchresult:batchResult
             };
 
-            template('batchresult', locals, function(err, html, text){
+            template('batchresult', locals, function(err, html){
                 sendgrid.send({
                     to:batch.watchers,
                     from:'scylla@simplymeasured.com',
-                    subject:"[Batch] " + batch.name + ((batchResult.fail + batchResult.exception == 0) ? " Passed" : " Failed"),
+                    subject:"[Batch] " + batch.name + ((batchResult.fail + batchResult.exception === 0) ? " Passed" : " Failed"),
                     html:html
                 }, function(success, message){
                     if(success){
@@ -41,7 +42,7 @@ module.exports = function(app, models, sendgrid){
                         console.log("Email Failure: ", message);
                     }
 
-                })
+                });
             } );
         });
     };
@@ -49,4 +50,4 @@ module.exports = function(app, models, sendgrid){
     return {
         sendBatchResultEmail:sendBatchResultEmail
     };
-}
+};

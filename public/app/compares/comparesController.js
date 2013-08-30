@@ -5,6 +5,7 @@ define([
     scyllaApp,
     toastr
     ){
+    'use strict';
 
     return scyllaApp.controller("ComparesController", function($scope, $http, Page) {
         Page.setFirstLevelNavId("comparesNav");

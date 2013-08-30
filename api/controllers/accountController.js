@@ -1,4 +1,5 @@
 module.exports = function(app, models){
+    'use strict';
     var Q = require("q");
     var crypto = require('crypto');
 
@@ -76,11 +77,11 @@ module.exports = function(app, models){
             .then(function(acct){
                 return findById(acct[0]._id.toString());
             });
-    }
+    };
 
     return {
         findById:findById,
         login:login,
         register:register
-    }
-}
+    };
+};

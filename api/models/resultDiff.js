@@ -1,4 +1,5 @@
 module.exports = function(mongoose){
+    'use strict';
     var ResultDiffSchema = new mongoose.Schema({
         report:{type : mongoose.Schema.ObjectId, ref : 'reports'},
         reportResultA:{type : mongoose.Schema.ObjectId, ref : 'report-results'},
@@ -19,4 +20,4 @@ module.exports = function(mongoose){
     var ResultDiff = mongoose.model('result-diffs', ResultDiffSchema);
 
     return ResultDiff;
-}
+};

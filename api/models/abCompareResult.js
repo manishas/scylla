@@ -1,4 +1,5 @@
 module.exports = function(mongoose){
+    'use strict';
     var AbCompareResultSchema = new mongoose.Schema({
         timestamp:{type:String},
 
@@ -21,4 +22,4 @@ module.exports = function(mongoose){
     var AbCompareResult = mongoose.model('abcompare-results', AbCompareResultSchema);
 
     return AbCompareResult;
-}
+};

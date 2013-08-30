@@ -1,4 +1,5 @@
 module.exports = function(app, models, controllers){
+    'use strict';
     var utils = require('./routeUtils');
 
 
@@ -23,10 +24,10 @@ module.exports = function(app, models, controllers){
         controllers.abCompareResults
             .remove(req.params.resultId)
             .then(function(deleteResults){
-                if(deleteResults.records == 0) throw new Error("No Result Deleted");
+                if(deleteResults.records === 0){ throw new Error("No Result Deleted"); }
                 return {
                     _id:req.params.resultId
-                }
+                };
             })
             .then(utils.success(res), utils.fail(res));
     });
@@ -40,9 +41,9 @@ module.exports = function(app, models, controllers){
                     .addResultToCompare(req.params.compareId, result)
                     .then(function(){
                         return result;
-                    })
+                    });
             })
             .then(utils.success(res), utils.fail(res));
 
     });
-}
+};

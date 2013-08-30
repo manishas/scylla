@@ -9,6 +9,7 @@ define([
     moment,
     processingSpinner
     ){
+    'use strict';
 
     return scyllaApp.controller("BatchDetailController", function($scope, $route, $routeParams, $http, Page) {
         Page.setFirstLevelNavId("batchesNav");

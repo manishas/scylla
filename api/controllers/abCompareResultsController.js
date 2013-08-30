@@ -1,4 +1,5 @@
 module.exports = function(app, models){
+    'use strict';
     var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;
     var commonController = require('./commonController')(ObjectId);
@@ -53,4 +54,4 @@ module.exports = function(app, models){
         remove:remove,
         createNew:createNew
     };
-}
+};

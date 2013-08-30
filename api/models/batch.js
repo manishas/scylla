@@ -1,4 +1,5 @@
 module.exports = function(mongoose){
+    'use strict';
     var Q = require('q');
 
     var BatchSchema = new mongoose.Schema({
@@ -19,4 +20,4 @@ module.exports = function(mongoose){
     Batch.qFindOne = Q.nfbind(Batch.findOne.bind(Batch));
 
     return Batch;
-}
+};

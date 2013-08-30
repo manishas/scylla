@@ -1,11 +1,12 @@
 module.exports = function(app, models, controllers){
+    'use strict';
     var utils = require('./routeUtils');
 
 
 
     app.get('/reports', function(req, res) {
         controllers.reports.find()
-            .then(utils.success(res), utils.fail(res))
+            .then(utils.success(res), utils.fail(res));
 
     });
 
@@ -15,7 +16,7 @@ module.exports = function(app, models, controllers){
             .findById(req.params.reportId,
                       req.query.includeFullImage,
                       req.query.includeResults)
-            .then(utils.success(res), utils.fail(res))
+            .then(utils.success(res), utils.fail(res));
     });
 
     app.put('/reports/:reportId', function(req, res) {
@@ -28,10 +29,10 @@ module.exports = function(app, models, controllers){
         controllers.reports
             .remove(req.params.reportId)
             .then(function(deleteResults){
-                if(deleteResults.records == 0) throw new Error("No Record Deleted");
+                if(deleteResults.records === 0){ throw new Error("No Record Deleted"); }
                 return {
                     _id:req.params.reportId
-                }
+                };
             })
             .then(utils.success(res), utils.fail(res));
     });
@@ -49,5 +50,4 @@ module.exports = function(app, models, controllers){
             .then(utils.success(res), utils.fail(res));
     });
 
-
-}
+};

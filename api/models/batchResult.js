@@ -1,4 +1,5 @@
 module.exports = function(mongoose){
+    'use strict';
     var BatchResultSchema = new mongoose.Schema({
         batch:{type : mongoose.Schema.ObjectId, ref : 'batches'},
         start:{type:String},
@@ -14,4 +15,4 @@ module.exports = function(mongoose){
     var BatchResult = mongoose.model('batch-results', BatchResultSchema);
 
     return BatchResult;
-}
+};

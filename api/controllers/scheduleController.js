@@ -1,4 +1,5 @@
-module.exports = function(app) {
+module.exports = function() {
+    'use strict';
     var schedule = require('node-schedule');
     var jobs = {};
 
@@ -7,8 +8,9 @@ module.exports = function(app) {
     };
 
     var removeBatchFromSchedule = function(batchId) {
-        if(jobs[batchId])
+        if(jobs[batchId]){
             jobs[batchId].cancel();
+        }
     };
 
     var addBatchToSchedule = function (batch, func) {
@@ -20,7 +22,7 @@ module.exports = function(app) {
         if(isUndef(batch.schedule) ||
            isUndef(batch.schedule.days) ||
            isUndef(batch.schedule.hour) ||
-           isUndef(batch.schedule.minute)) return;
+           isUndef(batch.schedule.minute)){ return; }
 
         var rule        = new schedule.RecurrenceRule();
         rule.dayOfWeek  = batch.schedule.days;
@@ -35,10 +37,10 @@ module.exports = function(app) {
         jobs[batch._id] = schedule.scheduleJob(d, func);
         */
 
-    }
+    };
 
     return {
         removeBatchFromSchedule:removeBatchFromSchedule,
         addBatchToSchedule:addBatchToSchedule
-    }
-}
+    };
+};

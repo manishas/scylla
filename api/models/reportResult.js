@@ -1,4 +1,5 @@
 module.exports = function(mongoose){
+    'use strict';
     var ReportResultSchema = new mongoose.Schema({
         report:{type : mongoose.Schema.ObjectId, ref : 'reports'},
         timestamp:{type:String},
@@ -9,4 +10,4 @@ module.exports = function(mongoose){
     var ReportResult = mongoose.model('report-results', ReportResultSchema);
 
     return ReportResult;
-}
+};

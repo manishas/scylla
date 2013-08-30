@@ -1,10 +1,11 @@
 module.exports = function(app, models, controllers){
+    'use strict';
     var utils = require('./routeUtils');
 
 
     app.get('/batches', function(req, res) {
         controllers.batches.find(req.query.includeResults)
-            .then(utils.success(res), utils.fail(res))
+            .then(utils.success(res), utils.fail(res));
     });
 
     app.get('/batches/:batchId', function(req, res) {
@@ -25,10 +26,10 @@ module.exports = function(app, models, controllers){
         controllers.batches
             .remove(req.params.batchId)
             .then(function(deleteResults){
-                if(deleteResults.records == 0) throw new Error("No Record Deleted");
+                if(deleteResults.records === 0){ throw new Error("No Record Deleted"); }
                 return {
                     _id:req.params.batchId
-                }
+                };
             })
             .then(utils.success(res), utils.fail(res));
     });

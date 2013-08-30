@@ -3,6 +3,8 @@ define([
 ], function(
     scyllaApp
     ){
+    'use strict';
+
     return scyllaApp.factory('Page', function(){
         var firstLevelNavId = "";
         return {
