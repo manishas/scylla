@@ -1,1 +1,16 @@
 Initial Commit
+
+
+https://github.com/simplymeasured/scylla
+http://getscylla.com/
+
+
+
+
+DESIGN INSPIRATION
+-----------------------------------------
+http://startupsthisishowdesignworks.com/
+http://alexdunphy.github.io/refineslide/#installation
+http://thisisdallas.github.io/Simple-Grid/
+http://bundler.io/
+http://www.elasticsearch.org/
