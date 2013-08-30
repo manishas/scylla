@@ -105,10 +105,8 @@ define([
             for(var i in dayList){
                 $scope.days[dayList[i]] = (sch.days.indexOf(parseInt(i)) != -1);
             }
-            $scope.batchScheduleTime =
-                ((sch.hour<10) ? "0" + sch.hour : sch.hour) +
-                     ":" +
-                ((sch.minute<10) ? "0" + sch.minute : sch.minute);
+            var localTime = new moment().utc().hours(sch.hour).minutes(sch.minute);
+            $scope.batchScheduleTime = localTime.local().format("HH:mm");
             console.log($scope.days);
             console.log($scope.batchScheduleTime);
         }
@@ -147,8 +145,9 @@ define([
                 if($scope.days[dayList[i]]) batch.schedule.days.push(i);
             }
             var time = $scope.batchScheduleTime.split(":");
-            batch.schedule.hour = time[0];
-            batch.schedule.minute = time[1];
+            var d = new moment().hours(time[0]).minutes(time[1]).utc();
+            batch.schedule.hour = d.hours();
+            batch.schedule.minute = d.minutes();
             $scope.saveBatch(batch)
                 .success(function(batch){
                     $scope.showEditBatch = false;

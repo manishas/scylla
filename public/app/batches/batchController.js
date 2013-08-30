@@ -51,8 +51,9 @@ define([
                 if($scope.days[dayList[i]]) batch.schedule.days.push(i);
             }
             var time = $scope.batchScheduleTime.split(":");
-            batch.schedule.hour = time[0];
-            batch.schedule.minute = time[1];
+            var d = new moment().hours(time[0]).minutes(time[1]).utc();
+            batch.schedule.hour = d.hours();
+            batch.schedule.minute = d.minutes();
             $scope.saveBatch(batch)
                 .success(function(batch){
                     $scope.showNewBatch = false;

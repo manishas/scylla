@@ -4,7 +4,7 @@ module.exports = function(app) {
 
     var isUndef = function(something){
         return typeof something === "undefined";
-    }
+    };
 
     var removeBatchFromSchedule = function(batchId) {
         if(jobs[batchId])
@@ -14,7 +14,9 @@ module.exports = function(app) {
     var addBatchToSchedule = function (batch, func) {
         removeBatchFromSchedule(batch._id);
 
-        console.log(batch._id, batch.schedule);
+        if(!batch.scheduleEnabled){
+            return;
+        }
         if(isUndef(batch.schedule) ||
            isUndef(batch.schedule.days) ||
            isUndef(batch.schedule.hour) ||
@@ -25,6 +27,7 @@ module.exports = function(app) {
         rule.hour       = batch.schedule.hour;
         rule.minute     = batch.schedule.minute;
         jobs[batch._id] = schedule.scheduleJob(rule, func);
+        console.log("Batch In Schedule: ", batch._id, batch.schedule);
         /*
         //For debugging, we just set the schedule for 5 seconds in the future.
         var d = new Date();

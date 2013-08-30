@@ -53,7 +53,11 @@ module.exports = function(app, models, schedController, executeBatch){
         delete batch.results;
         models.Batch.findOneAndUpdate({_id:id}, batch,
             execDeferredBridge(deferred));
-        return deferred.promise;
+        return deferred.promise
+            .then(function(savedBatch){
+                if(savedBatch) schedController.addBatchToSchedule(savedBatch, executeBatch(savedBatch._id));
+                return savedBatch;
+            });
     };
 
     var remove = function remove(batchId){
