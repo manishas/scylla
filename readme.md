@@ -4,13 +4,23 @@
 
 ## Introduction
 Scylla detects visual changes in web pages by capturing screenshots of webpages, comparing them and then alerting the user to the specific changes. It displays the visual changes in an easy-to-explore manner, which makes it accessible to all levels of technical ability.
-Scylla can serve as the first line of testing. Run immediately after a change, Scylla will allow you to immediately ensure that things changed as planned.  Run after a refactor, it will allow you to be certain things remained the same.
-The built-in scheduling lets you capture screens first thing in the morning, and a summary email will let QA know if parts of the site require their attention.
+
+### Developers
+As a Developer, Scylla can serve as the first line of testing.
+* Run it immediately after a change, and Scylla will allow you to immediately ensure that things changed as planned.
+* Run after a refactor, it will allow you to be certain things remained the same.
+
+### Quality and Operations
+Quality and Ops’ focus on the end-user experience often means that they want to be notified immediately of anything that may negatively impact the user.
+* The built-in scheduling lets you capture screens independent of builds, ensuring that even out-of-process changes don’t go unnoticed. (like third-party CDNs, generated content, etc)
+* A simple API allows automated tools to generate new screenshots.
+
 
 ## Getting Started
-Scylla has two ways that you can capture and compare screenshots.
 
 ### Capturing Screenshots
+Scylla has two ways that you can capture and compare screenshots.
+
 #### Reports
 Reports allow you to track a single URL over time. After you create a report, Scylla will immediately capture a screenshot and set that initial screen as “Master.”  By pressing the “Run Report” icon next to the report name, Scylla will capture a new screenshot and compare it against the current master. Each screenshot is listed in the Report Details, and each comparison that includes the specific screenshot is listed next to it.  To set the new “Master,” click the star next to the date that screenshot was taken. The next screenshots will be compared against the current “Master.”
 
@@ -40,7 +50,7 @@ Scylla comes with a vagrant script to make setting up a local server very simple
 4. Done! Scylla is now running at: http://localhost:8090/
 
 ## APIs
-Scylla is built on a REST API, which allows simple integration with scripts and other services. The user interface urls mimic the REST urls for GETing data, while you can run a report or batch by GETing the ./run url.
+Scylla is built on a simple HTTP API, which allows simple integration with scripts and other services. We're still trying to figure out if this API is useful, feel free to comment and watch on the [Doc Bug](https://github.com/simplymeasured/scylla/issues/17).
 
 ## Behind the Curtain
 Scylla was developed by [Simply Measured][sm].
