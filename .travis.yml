@@ -1,3 +1,9 @@
 language: node_js
 node_js:
   - "0.10"
+
+# blacklist
+branches:
+  except:
+    - gh-pages
+    - project_website
