@@ -71,9 +71,9 @@ define([
 
         };
 
-        $scope.addCompare = function(name, urlA, urlB){
-            console.log("New Compare: ", name, urlA, urlB);
-            $http.post("/abcompares", {name:name,urlA:urlA, urlB:urlB})
+        $scope.addCompare = function(name, urlA, urlB, width, height){
+            console.log("New Compare: ", name, urlA, urlB, width, height);
+            $http.post("/abcompares", {name:name,urlA:urlA, urlB:urlB, width:width, height:height})
                 .success(function(compare){
                     $scope.showNewCompare = false;
                     toastr.success("New AB Compare Created: " + compare.name);

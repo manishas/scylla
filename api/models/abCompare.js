@@ -8,6 +8,8 @@ module.exports = function(mongoose){
         name:{type:String},
         thumbA:{type:String},
         thumbB:{type:String},
+        width:{type:Number},
+        height:{type:Number},
         results:[{type : mongoose.Schema.ObjectId, ref : 'abcompare-results'}]
     });
 

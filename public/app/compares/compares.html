@@ -32,11 +32,17 @@
                     <input id="compare-urlB" type="text" ng-model="newCompareUrlB"
                            placeholder="http://app.simplymeasured.com/compare/id" required
                            class="input-xxlarge" />
+                    <input id="report-width" type="number" ng-model="newCompareWidth"
+                           placeholder="600"
+                           class="input-small" />x
+                    <input id="report-height" type="number" ng-model="newCompareHeight"
+                           placeholder="600"
+                           class="input-small" />
                 </form>
             </div>
             <div class="modal-footer">
                 <button class="btn" ng-click="showNewCompare = false" aria-hidden="true">Close</button>
-                <button class="btn btn-primary" ng-click="addCompare(newCompareTitle, newCompareUrlA, newCompareUrlB)">Add Compare</button>
+                <button class="btn btn-primary" ng-click="addCompare(newCompareTitle, newCompareUrlA, newCompareUrlB, newCompareWidth, newCompareHeight)">Add Compare</button>
             </div>
     </div>
     <div id="deleteCompare" class="modal hide fade" tabindex="-1" modal="showDeleteCompare" aria-hidden="true">

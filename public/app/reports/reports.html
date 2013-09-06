@@ -30,6 +30,12 @@
                     <input id="report-url" type="text" ng-model="newReportUrl"
                            placeholder="http://test.com/" required
                            class="input-xxlarge" />
+                    <input id="report-width" type="number" ng-model="newReportWidth"
+                           placeholder="600"
+                           class="input-mini" />x
+                    <input id="report-height" type="number" ng-model="newReportHeight"
+                           placeholder="600"
+                           class="input-mini" />
                     <!--
                     <label for="new-batch-name">Include this report in a new batch?</label>
                     <input id="new-batch-name" type="text" ng-model="newBatchName"
@@ -44,7 +50,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn" ng-click="showNewReport = false;" aria-hidden="true">Close</button>
-                <button class="btn btn-primary" ng-click="addReport(newReportTitle, newReportUrl);">Add Report</button>
+                <button class="btn btn-primary" ng-click="addReport(newReportTitle, newReportUrl, newReportWidth, newReportHeight);">Add Report</button>
             </div>
     </div>
     <div id="deleteReport" class="modal hide fade" tabindex="-1" modal="showDeleteReport" aria-hidden="true">

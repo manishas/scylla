@@ -85,10 +85,10 @@ define([
                 });
         };
 
-        $scope.addReport = function(name, url){
+        $scope.addReport = function(name, url, width, height){
             $scope.isProcessing = true;
-            console.log("New Report: ", name, url);
-            $http.post("/reports", {name:name,url:url})
+            console.log("New Report: ", name, url, width, height);
+            $http.post("/reports", {name:name,url:url, width:width, height:height})
                 .success(function(report){
                     $scope.showNewReport = false;
                     toastr.success("New Report Created: " + report.name + "<br>Now capturing first screenshot.");
