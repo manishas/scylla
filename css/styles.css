@@ -31,7 +31,7 @@ a:active  { color: #00464C; text-decoration: underline; }
 
 h1 { 
   height: 80px;
-  font: 46px/115px "Gotham_Light", sans-serif;
+  font: 46px/110px "Gotham_Light", sans-serif;
   color: #444444;
   text-align: center;
 }
@@ -122,7 +122,6 @@ h2 {
 #content ul {
   list-style: none;
 }
-#content ul li            { display: inline-block; }
 #content ul li:last-child { display: inline-block; border-top: 1px #d6d9db solid; }
 
 #content .feature {
