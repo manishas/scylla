@@ -2,28 +2,16 @@
 /* ------ ------ DEFAULTS ------ ------ */
 
 *          { padding: 0px; margin: 0px; }
-body       { background: #FFFFFF; }
-#bg_header { background: url("../images/bg_header2.png") repeat-x; width: 100%; height: 4px; }
-#bg_footer { background: url("../images/bg_footer2.png") repeat-x; width: 100%; height: 7px; }
-
-
-.rounded {
-  border-radius: 4px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-}
-.cell {
-  border-radius: 4px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  box-shadow: rgba(0,0,0,0.3) 0 0 3px, rgba(0,0,0,0.35) 0 2px 3px;
-  -moz-box-shadow: rgba(0,0,0,0.3) 0 0 3px, rgba(0,0,0,0.35) 0 2px 3px;
-  -webkit-box-shadow: rgba(0,0,0,0.3) 0 0 3px, rgba(0,0,0,0.35) 0 2px 3px;
-}
+body       { background: #FFFFFF;       }
+p, span    { color: #444444;            }
 
 .fLeft   { float: left;  }
 .fRight  { float: right; }
 .fClear  { float: both;  }
+
+.gotham_book { font-family: ;}
+
+
 
 ::selection      { background: #00bbcb; color: #f7f7f7; }
 ::-moz-selection { background: #00bbcb; color: #f7f7f7; }
@@ -33,8 +21,8 @@ a:visited { color: #005D65; text-decoration: none;      }
 a:hover   { color: #008C98; text-decoration: underline; }
 a:active  { color: #00464C; text-decoration: underline; }
 
-
-
+/* pink:  ff6364
+/* blue:  1b95d3
 
 
 /* ------ ------ STYLES ------ ------ */
@@ -42,61 +30,137 @@ a:active  { color: #00464C; text-decoration: underline; }
 .wrapper {
   width: 960px;
   margin: 0 auto;
+  padding: 0px 10px;
 }
 
 
 
 /* ------ HEADER ------ */
 #header {
-  position: fixed;
-  top: 0px;
   width: 100%;
-  height: 90px;
-  background: #ffffff url("../images/bg_linen-dark.png") 0 0 repeat;
-  border-bottom: 2px solid #C7D5D6;
-  z-index: 100;
+  height: 94px;
+  background: #ffffff url("../images/noise-overlay.png") 0 0 repeat;
+  /* border-bottom: 2px solid #C7D5D6; */
 }
+#header #stripe{
+  background: #1b95d3;
+  height: 4px;
+}
+#header #title {
+  font: 48px "Gotham_Black", sans-serif;
+  padding-top: 18px;
+}
+#header .btn_download {
+  width: 220px;
+  height: 50px;
+  margin: 20px 0px 20px 20px;
+  background: #839cb0;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  border-top: 1px #b7c7d4 solid;
+  border-bottom: 1px #7c7c7c solid;
+  font: 22px/50px "Gotham_Light", sans-serif;
+  color: #ffffff;
+  text-shadow: 0px -1px 0px #536e87;
+  -moz-text-shadow: 0px -1px 0px #536e87;
+  text-align: center;
+}
+
+
 
 
 
 /* ------ WINDOW ------ */
-#home {
-  height: 200px;
-  padding: 0px;
+#window {
+  height: 290px;
+  width: 100%;
+  background: #ffffff url("../images/darkBG.jpg") 0 0 repeat;
 }
-
+#window #description {
+  padding: 25px 0px;
+  width: 460px;
+  font: 16px/20px "Gotham_Light", sans-serif;
+  color: #ffffff;
+}
+#window #preview {
+  height: 261px;
+  width: 460px;
+  margin-top: 27px;
+  background: #b7b7b7;
+  -moz-border-radius: 6px 6px 0px 0px;
+  border-radius: 6px 6px 0px 0px;
+  border-top: 1px #cecece solid;
+  -moz-box-shadow:    0px 0px 8px rgba(0, 0, 0, 0.78);
+  -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.78);
+  box-shadow:         0px 0px 8px rgba(0, 0, 0, 0.78);
+}
 
 
 
 /* ------ CONTENT ------ */
-#home {
-  height: 200px;
-  padding: 0px;
+#window_cover {
+  width: 100%;
+  padding: 4px;
+  position: relative;
+  background: #ffffff url("../images/bg_stripes.png") 0 0 repeat;
 }
+
+#content {
+  height: 800px;
+  width: 100%;
+  background: #ffffff url("../images/bg_stripes.png") 0 0 repeat;
+}
+
+
+
+/* ------ INSTALL ------ */
+#install-top {
+  height: 72px;
+  width: 100%;
+  /* TK replace with transparent image later */
+  background: transparent url("../images/bg_grid_top_1L_TK_REPLACE_LATER.png") 0 0 repeat-x;
+}
+
+#install {
+  height: 361px;
+  width: 100%;
+  background: url("../images/bg_grid_pat.jpg") 0 0 repeat;
+}
+
 
 
 
 
 /* ------ FOOTER ------ */
 #footer {
-  height: 78px;
-  background: #ffffff url("../images/bg_linen-dark.png") 0 0 repeat;
-  border-top: 1px solid #C7D5D6;
-  padding: 30px 0px 20px 0px;
+  height: 74px;
+  background: #ffffff url("../images/darkBG.jpg") 0 0 repeat;
 }
-
-
 
 
 
 /* ------ ------ FONTS ------ ------ */
 
 @font-face {
-    font-family: 'Classic';
-    src: url('classicround-light-webfont.eot');
-    src: url('classicround-light-webfont.eot?#iefix') format('embedded-opentype'),
-         url('classicround-light-webfont.woff') format('woff'),
-         url('classicround-light-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+font-family: 'Gotham_Black';
+src:
+    local('Gotham Black'),
+    local('Gotham-Black'),
+    url('Gotham-Black.otf');
+}
+
+@font-face {
+font-family: 'Gotham_Medium';
+src:
+    local('Gotham Medium'),
+    local('Gotham-Medium'),
+    url('Gotham-Medium.otf');
+}
+
+@font-face {
+font-family: 'Gotham_Light';
+src:
+    local('Gotham Light'),
+    local('Gotham-Light'),
+    url('Gotham-Light.otf');
 }
