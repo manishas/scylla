@@ -9,10 +9,6 @@ p, span    { color: #444444;            }
 .fRight  { float: right; }
 .fClear  { float: both;  }
 
-.gotham_book { font-family: ;}
-
-
-
 ::selection      { background: #00bbcb; color: #f7f7f7; }
 ::-moz-selection { background: #00bbcb; color: #f7f7f7; }
 
@@ -31,6 +27,12 @@ a:active  { color: #00464C; text-decoration: underline; }
   width: 960px;
   margin: 0 auto;
   padding: 0px 10px;
+}
+
+h1 { 
+  font: 46px/100px "Gotham_Light", sans-serif;
+  color: #444444;
+  text-align: center;
 }
 
 
@@ -142,25 +144,29 @@ a:active  { color: #00464C; text-decoration: underline; }
 /* ------ ------ FONTS ------ ------ */
 
 @font-face {
-font-family: 'Gotham_Black';
-src:
-    local('Gotham Black'),
-    local('Gotham-Black'),
-    url('Gotham-Black.otf');
+  font-family: 'Gotham_Black';
+  src: url('webfont/gotham-black.eot');
+  src: url('webfont/gotham-black.eot') format('embedded-opentype'),
+       url('webfont/gotham-black.woff') format('woff'),
+       url('webfont/gotham-black.ttf') format('truetype'),
+       url('webfont/gotham-black.svg#GothamBlack') format('svg');
 }
 
 @font-face {
-font-family: 'Gotham_Medium';
-src:
-    local('Gotham Medium'),
-    local('Gotham-Medium'),
-    url('Gotham-Medium.otf');
+  font-family: 'Gotham_Medium';
+  src: url('webfont/gotham-medium.eot');
+  src: url('webfont/gotham-medium.eot') format('embedded-opentype'),
+       url('webfont/gotham-medium.woff') format('woff'),
+       url('webfont/gotham-medium.ttf') format('truetype'),
+       url('webfont/gotham-medium.svg#GothamMedium') format('svg');
 }
 
+
 @font-face {
-font-family: 'Gotham_Light';
-src:
-    local('Gotham Light'),
-    local('Gotham-Light'),
-    url('Gotham-Light.otf');
+  font-family: 'Gotham_Light';
+  src: url('webfont/gotham-light.eot');
+  src: url('webfont/gotham-light.eot') format('embedded-opentype'),
+       url('webfont/gotham-light.woff') format('woff'),
+       url('webfont/gotham-light.ttf') format('truetype'),
+       url('webfont/gotham-light.svg#GothamLight') format('svg');
 }
