@@ -3,7 +3,7 @@
 
 *          { padding: 0px; margin: 0px;  }
 body       { background: #FFFFFF;        }
-p, span    { color: #444444;             }
+p, span    { color: #222;             }
 span.bold  { font-family: "Gotham_Black" }
 
 .fLeft     { float: left;  }
@@ -34,7 +34,7 @@ a:active   { color: #1678aa; text-decoration: underline; }
 h1 { 
   height: 80px;
   font: 46px/110px "Gotham_Light", sans-serif;
-  color: #444444;
+  color: #222;
   text-align: center;
   padding-bottom: 30px;
 }
@@ -145,7 +145,7 @@ h1 {
 
 
 #content ul li ul    { list-style: disc; margin-top: 20px; }
-#content ul li ul li { color: #444; }
+#content ul li ul li { color: #222; }
 
 
 
@@ -189,11 +189,11 @@ h1 {
 #details .column h2 { padding: 44px 0px 12px 0px; }
 #details .column p {
   font: 16px/26px "Gotham_Light";
-  color: #444444;
+  color: #222;
 }
 #details .column ol {
   font: italic 16px/26px "Gotham_Light";
-  color: #999999;
+  color: #999;
 }
 
 
