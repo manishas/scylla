@@ -38,7 +38,9 @@
 
     <div id="window">
       <div class="wrapper">
-        <p id="description" class="fLeft">Scylla detects visual changes in web pages by capturing screenshots of webpages, comparing them and then alerting the user to the specific changes. It displays the visual changes in an easy-to-explore manner, which makes it accessible to all levels of technical ability. Scylla can serve as the first line of testing. Run immediately after a change, Scylla will allow you to immediately ensure that things changed as planned. Run after a refactor, it will allow you to be certain things remained the same. The built-in scheduling lets you capture screens first thing in the morning, and a summary email will let QA know if parts of the site require their attention.</p>
+        <p id="intro" class="fLeft">
+          Scylla detects visual changes in web pages by capturing screenshots of webpages, comparing them and then alerting the user to the specific changes. It displays the visual changes in an easy-to-explore manner, which makes it accessible to all levels of technical ability.
+        </p>
         <div id="preview" class="fRight"></div>
       </div>
     </div>
@@ -47,18 +49,48 @@
     <div id="window_cover"></div>
     <div id="content">
       <div class="wrapper">
-        <ul>
+        <ul id="layout">
 
-          <li>
+          <li class="layout">
+            <h1>Who Uses This Shit?</h1>
+            <div class="featureCol fLeft">
+              <h2>Developers</h2>
+              <p class="description">
+                As a Developer, Scylla can serve as the first line of testing.
+              </p>
+              <ul>
+                <li>Run it immediately after a change, and Scylla will allow you to immediately ensure that things changed as planned.</li>
+                <li>Run after a refactor, it will allow you to be certain things remained the same.</li>
+              </ul>
+            </div>
+            <div class="featureCol fRight">
+              <h2>Quality & Ops</h2>
+              <p class="description">
+                Quality and Ops’ focus on the end-user experience often means that they want to be notified immediately of anything that may negatively impact the user.
+              </p>
+              <ul>
+                <li>The built-in scheduling lets you capture screens independent of builds, ensuring that even out-of-process changes don’t go unnoticed. (like third-party CDNs, generated content, etc)</li>
+                <li>A simple API allows automated tools to generate new screenshots.</li>
+              </ul>
+            </div>
+            <br class="fCLear" />
+          </li>
+
+          <li class="layout">
+            <h1>Automating Reports</h1>
+            <p class="featureFull">The real value of Scylla is its ability to automate the visual testing. By setting up a batch of reports, you can run multiple reports at once, and even schedule the reports to run in the morning. If you add your email address as a “Watcher” on a batch, you’ll get a summary email after each scheduled run, a handy piece of news to greet you first thing in the morning.</p>
+          </li>
+
+          <li class="layout">
             <h1>Capturing Screenshots</h1>
-            <div class="feature fLeft">
+            <div class="featureCol fLeft">
               <img src="images/feature_icon.png" alt="feature_screen"/>
               <h2>Master Reports</h2>
               <p class="description">
                 Reports allow you to track a single URL over time. After you create a report, Scylla will immediately capture a screenshot and compare it against future snapshots.
               </p>
             </div>
-            <div class="feature fRight">
+            <div class="featureCol fRight">
               <img src="images/feature_icon.png" alt="feature_screen"/>
               <h2>A–B Compare</h2>
               <p class="description">
@@ -70,9 +102,9 @@
             <br class="fCLear" />
           </li>
 
-          <li>
-            <h1>Visual Diffs</h1>
-            <div class="feature fLeft">
+          <li class="layout">
+            <h1>Visual Differentials</h1>
+            <div class="featureCol fLeft">
               <img src="images/feature_icon.png" alt="feature_screen"/>
               <h2>Overlay</h2>
               <p class="description">
@@ -81,7 +113,7 @@
                 can quickly see exactly which pixels have changed.
               </p>
             </div>
-            <div class="feature fRight">
+            <div class="featureCol fRight">
               <img src="images/feature_icon.png" alt="feature_screen"/>
               <h2>Swipe</h2>
               <p class="description">
@@ -97,22 +129,27 @@
     </div>
 
 
-    <div id="install-top"></div>
-    <div id="install">
+    <div id="details-top"></div>
+    <div id="details">
       <div class="wrapper">
         <div class="column fLeft">
           <h2>Installation</h2>
             <ol>
               <li><p>Download archive or clone git URL</p></li>
-              <li><p>Install <a href="#">Vagrant</a></p></li>
+              <li><p>Install <a href="http://vagrantup.com/">Vagrant</a></p></li>
               <li><p>Optional: Configure SendGrid for sending emails.<br />Copy mail-example.js to mail.js add your sendgrid credentials.</p></li>
               <li><p>Type ‘vagrant up’ in the scylla directory</p></li>
               <li><p><span class="bold">Done!</span> Scylla is now running at: <a href="#">http://localhost:8090/</a><p></li>
             </ol>
-        </div>
-        <div class="column fRight">
           <h2>APIs</h2>
             <p>Scylla is built on a REST API, which allows simple integration with scripts and other services. The user interface urls mimic the REST urls for GETing data, while you can run a report or batch by GETing the ./run url.</p>
+        </div>
+        <div class="column fRight">
+          <h2>Name</h2>
+            <p>Scylla is a part of Greek Mythology, originally a beautiful daughter of a God, but turned into a sea monster.</p><br />
+            <p>She has 12 tentacles and is known to sit high up on a cliff and wait for sailors to sail close enough so that she can snatch them up or throw boulders down on top of them. She works in tandem with Charybdis.</p>
+          <h2>Behind The Curtain</h2>
+            <p>Scylla was developed by <a href="http://simplymeasured.com/">Simply Measured</a>.</p>
         </div>
         <br class="fClear" />
       </div>

@@ -18,6 +18,7 @@ a:visited  { color: #1678aa;                             }
 a:hover    { color: #29a5e4; text-decoration: underline; }
 a:active   { color: #1678aa; text-decoration: underline; }
 
+
 /* pink:  ff6364
 /* blue:  1b95d3
 
@@ -35,14 +36,19 @@ h1 {
   font: 46px/110px "Gotham_Light", sans-serif;
   color: #444444;
   text-align: center;
+  padding-bottom: 30px;
 }
 
-h2 {
+#content h2 {
+  font: 30px/30px "Gotham_Medium", sans-serif;
+  color: #1b95d3;
+  padding: 25px 0px 12px 0px;
+}
+#details h2 {
   font: 30px/30px "Gotham_Medium", sans-serif;
   color: #ff6364;
-  padding-bottom: 12px;
+  padding: 25px 0px 12px 0px;
 }
-
 
 
 /* ------ HEADER ------ */
@@ -86,11 +92,11 @@ h2 {
   width: 100%;
   background: #ffffff url("../images/darkBG.jpg") 0 0 repeat;
 }
-#window #description {
-  padding: 25px 0px;
+#window #intro {
   width: 460px;
-  font: 16px/20px "Gotham_Light", sans-serif;
-  color: #ffffff;
+  margin-top: 45px;
+  font: 22px/29px "Gotham_Light", sans-serif;
+  color: #e2e2e2;
 }
 #window #preview {
   height: 261px;
@@ -116,54 +122,76 @@ h2 {
 }
 
 #content {
-  height: 800px;
-  width: 100%;
+  padding-bottom: 30px;
   background: #ffffff url("../images/bg_stripes.png") 0 0 repeat;
-}
-#content ul {
-  list-style: none;
-}
-#content ul li:last-child { display: inline-block; border-top: 1px #d6d9db solid; }
-
-#content .feature {
-  width: 460px;
-  height: 300px;
-  text-align: center;
-}
-#content .feature img {
-  width: 300px;
-  height: 100px;
-  margin: 30px 80px 25px 80px;
-}
-#content .feature .description {
   font: 16px/20px "Gotham_Light", sans-serif;
 }
 
 
 
+#content ul#layout           { list-style: none; }
+#content ul#layout li.layout {
+  display: inline-block;
+  width: 940px;
+  margin-bottom: 60px;
+  border-top: 1px #d6d9db solid;
+  text-align: center;
+}
+#content ul#layout li.layout:first-child {
+  border-top: none;
+  text-align: left;
+}
+#content ul#layout li.layout:first-child h2 { padding: 0px 0px 12px 0px; }
+
+
+#content ul li ul    { list-style: disc; margin-top: 20px; }
+#content ul li ul li { color: #444; }
+
+
+
+
+
+#content .featureCol {
+  width: 460px;
+  font: 16px/20px "Gotham_Light", sans-serif;
+}
+#content .featureCol img {
+  width: 300px;
+  margin: 0px 80px;
+}
+
+#content .featureFull {
+  width: 630px;
+  padding: 0px 160px;
+  text-align: center;
+}
+
+
+
+
 /* ------ INSTALL ------ */
-#install-top {
+#details-top {
   height: 72px;
   width: 100%;
   /* TK replace with transparent image later */
   background: transparent url("../images/bg_grid_top_1L_TK_REPLACE_LATER.png") 0 0 repeat-x;
 }
 
-#install {
-  height: 361px;
+#details {
+  height: 550px;
   width: 100%;
   background: url("../images/bg_grid_pat.jpg") 0 0 repeat;
 }
-#install .column {
+#details .column {
   width: 460px;
-  padding-top: 40px;
 }
 
-#install .column p {
+#details .column h2 { padding: 44px 0px 12px 0px; }
+#details .column p {
   font: 16px/26px "Gotham_Light";
   color: #444444;
 }
-#install .column ol {
+#details .column ol {
   font: italic 16px/26px "Gotham_Light";
   color: #999999;
 }
