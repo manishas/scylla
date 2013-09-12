@@ -48,31 +48,47 @@
     <div id="content">
       <div class="wrapper">
         <ul>
+
           <li>
             <h1>Capturing Screenshots</h1>
             <div class="feature fLeft">
-              <div class="icon"></div>
+              <img src="images/feature_icon.png" alt="feature_screen"/>
               <h2>Master Reports</h2>
-              <p class="description">Reports allow you to track a single URL over time. After you create a report, Scylla will immediately capture a screenshot and compare it against future snapshots.</p>
+              <p class="description">
+                Reports allow you to track a single URL over time. After you create a report, Scylla will immediately capture a screenshot and compare it against future snapshots.
+              </p>
             </div>
             <div class="feature fRight">
-              <div class="icon"></div>
+              <img src="images/feature_icon.png" alt="feature_screen"/>
               <h2>A–B Compare</h2>
-              <p class="description">Compare allows you to track the differences between<br />two separate URLs. This is great when trying to<br />compare a local version to a server version of a site.</p>
+              <p class="description">
+                Compare allows you to track the differences between<br />
+                two separate URLs. This is great when trying to<br />
+                compare a local version to a server version of a site.
+              </p>
             </div>
             <br class="fCLear" />
           </li>
+
           <li>
             <h1>Visual Diffs</h1>
             <div class="feature fLeft">
-              <div class="icon"></div>
+              <img src="images/feature_icon.png" alt="feature_screen"/>
               <h2>Overlay</h2>
-              <p class="description">Generate an image with all pixels that have changed in<br />red. This is overlayed on top of the new image so you<br />can quickly see exactly which pixels have changed.</p>
+              <p class="description">
+                Generate an image with all pixels that have changed in<br />
+                red. This is overlayed on top of the new image so you<br />
+                can quickly see exactly which pixels have changed.
+              </p>
             </div>
             <div class="feature fRight">
-              <div class="icon"></div>
+              <img src="images/feature_icon.png" alt="feature_screen"/>
               <h2>Swipe</h2>
-              <p class="description">Use Swipe to slide a vertical seam between the images<br />to see tiny adjustments in height or color that<br />would be impossible to notice without such a tool.</p>
+              <p class="description">
+                Use Swipe to slide a vertical seam between the images<br />
+                to see tiny adjustments in height or color that<br />
+                would be impossible to notice without such a tool.
+              </p>
             </div>
             <br class="fCLear" />
           </li>
@@ -84,8 +100,21 @@
     <div id="install-top"></div>
     <div id="install">
       <div class="wrapper">
-
-
+        <div class="column fLeft">
+          <h2>Installation</h2>
+            <ol>
+              <li><p>Download archive or clone git URL</p></li>
+              <li><p>Install <a href="#">Vagrant</a></p></li>
+              <li><p>Optional: Configure SendGrid for sending emails.<br />Copy mail-example.js to mail.js add your sendgrid credentials.</p></li>
+              <li><p>Type ‘vagrant up’ in the scylla directory</p></li>
+              <li><p><span class="bold">Done!</span> Scylla is now running at: <a href="#">http://localhost:8090/</a><p></li>
+            </ol>
+        </div>
+        <div class="column fRight">
+          <h2>APIs</h2>
+            <p>Scylla is built on a REST API, which allows simple integration with scripts and other services. The user interface urls mimic the REST urls for GETing data, while you can run a report or batch by GETing the ./run url.</p>
+        </div>
+        <br class="fClear" />
       </div>
     </div>
 

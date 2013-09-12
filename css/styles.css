@@ -1,21 +1,22 @@
 
 /* ------ ------ DEFAULTS ------ ------ */
 
-*          { padding: 0px; margin: 0px; }
-body       { background: #FFFFFF;       }
-p, span    { color: #444444;            }
+*          { padding: 0px; margin: 0px;  }
+body       { background: #FFFFFF;        }
+p, span    { color: #444444;             }
+span.bold  { font-family: "Gotham_Black" }
 
-.fLeft   { float: left;  }
-.fRight  { float: right; }
-.fClear  { float: both;  }
+.fLeft     { float: left;  }
+.fRight    { float: right; }
+.fClear    { float: both;  }
 
 ::selection      { background: #00bbcb; color: #f7f7f7; }
 ::-moz-selection { background: #00bbcb; color: #f7f7f7; }
 
-a:link    { color: #00757F; text-decoration: none;      }
-a:visited { color: #005D65; text-decoration: none;      }
-a:hover   { color: #008C98; text-decoration: underline; }
-a:active  { color: #00464C; text-decoration: underline; }
+a:link     { color: #1b95d3;                             }
+a:visited  { color: #1678aa;                             }
+a:hover    { color: #29a5e4; text-decoration: underline; }
+a:active   { color: #1678aa; text-decoration: underline; }
 
 /* pink:  ff6364
 /* blue:  1b95d3
@@ -39,7 +40,7 @@ h1 {
 h2 {
   font: 30px/30px "Gotham_Medium", sans-serif;
   color: #ff6364;
-  text-align: center;
+  padding-bottom: 12px;
 }
 
 
@@ -127,17 +128,15 @@ h2 {
 #content .feature {
   width: 460px;
   height: 300px;
+  text-align: center;
 }
-#content .feature .icon {
+#content .feature img {
   width: 300px;
   height: 100px;
-  background: transparent url("../images/feature_icon.png") 0 0 no-repeat;
   margin: 30px 80px 25px 80px;
 }
 #content .feature .description {
   font: 16px/20px "Gotham_Light", sans-serif;
-  text-align: center;
-  margin-top: 12px;
 }
 
 
@@ -155,7 +154,19 @@ h2 {
   width: 100%;
   background: url("../images/bg_grid_pat.jpg") 0 0 repeat;
 }
+#install .column {
+  width: 460px;
+  padding-top: 40px;
+}
 
+#install .column p {
+  font: 16px/26px "Gotham_Light";
+  color: #444444;
+}
+#install .column ol {
+  font: italic 16px/26px "Gotham_Light";
+  color: #999999;
+}
 
 
 
