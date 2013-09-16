@@ -1,22 +1,22 @@
 
 /* ------ ------ DEFAULTS ------ ------ */
 
-*          { padding: 0px; margin: 0px;  }
-body       { background: #FFFFFF;        }
-p, span    { color: #222;             }
-span.bold  { font-family: "Gotham_Black" }
+*                { padding: 0px; margin: 0px;  }
+body             { background: #FFFFFF;        }
+p, span          { color: #222;                }
+span.bold        { font-family: "Gotham_Black" }
 
-.fLeft     { float: left;  }
-.fRight    { float: right; }
-.fClear    { float: both;  }
+.fLeft           { float: left;  }
+.fRight          { float: right; }
+.fClear          { float: both;  }
 
 ::selection      { background: #00bbcb; color: #f7f7f7; }
 ::-moz-selection { background: #00bbcb; color: #f7f7f7; }
 
-a:link     { color: #1b95d3;                             }
-a:visited  { color: #1678aa;                             }
-a:hover    { color: #29a5e4; text-decoration: underline; }
-a:active   { color: #1678aa; text-decoration: underline; }
+a:link           { color: #1b95d3;                             }
+a:visited        { color: #1678aa;                             }
+a:hover          { color: #29a5e4; text-decoration: underline; }
+a:active         { color: #1678aa; text-decoration: underline; }
 
 
 /* pink:  ff6364
@@ -56,7 +56,6 @@ h1 {
   width: 100%;
   height: 94px;
   background: #ffffff url("../images/noise-overlay.png") 0 0 repeat;
-  /* border-bottom: 2px solid #C7D5D6; */
 }
 #header #stripe{
   background: #1b95d3;
@@ -77,7 +76,7 @@ h1 {
   border-bottom: 1px #7c7c7c solid;
   font: 22px/50px "Gotham_Light", sans-serif;
   color: #ffffff;
-  text-shadow: 0px -1px 0px #536e87;
+  text-shadow:      0px -1px 0px #536e87;
   -moz-text-shadow: 0px -1px 0px #536e87;
   text-align: center;
 }
@@ -104,7 +103,7 @@ h1 {
   margin-top: 27px;
   background: #b7b7b7;
   -moz-border-radius: 6px 6px 0px 0px;
-  border-radius: 6px 6px 0px 0px;
+  border-radius:      6px 6px 0px 0px;
   border-top: 1px #cecece solid;
   -moz-box-shadow:    0px 0px 8px rgba(0, 0, 0, 0.78);
   -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.78);
