@@ -98,10 +98,10 @@ h1 {
   color: #e2e2e2;
 }
 #window #preview {
-  height: 261px;
+  height: 260px;
   width: 460px;
+  background: transparent url("../images/tiles_home.jpg") 0 0 no-repeat;
   margin-top: 27px;
-  background: #b7b7b7;
   -moz-border-radius: 6px 6px 0px 0px;
   border-radius:      6px 6px 0px 0px;
   border-top: 1px #cecece solid;
@@ -155,8 +155,19 @@ h1 {
   font: 16px/20px "Gotham_Light", sans-serif;
 }
 #content .featureCol img {
-  width: 300px;
-  margin: 0px 80px;
+  width: 460px;
+/*  margin: 0px 80px;*/
+  -moz-border-radius: 4px 4px 0px 0px;
+  border-radius:      4px 4px 0px 0px;
+  -moz-box-shadow:    0px 0px 4px #6E6E6E;
+  -webkit-box-shadow: 0px 0px 4px #6E6E6E;
+  box-shadow:         0px 0px 4px #6E6E6E;
+}
+#content .featureCol .shadow_cover {
+  width: 460px;
+  padding: 4px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 #content .featureFull {
@@ -200,8 +211,14 @@ h1 {
 
 /* ------ FOOTER ------ */
 #footer {
-  height: 74px;
-  background: #ffffff url("../images/darkBG.jpg") 0 0 repeat;
+  height: 60px;
+  background: #fff url("../images/darkBG.jpg") 0 0 repeat;
+  color: #e2e2e2;
+}
+
+#footer a {
+  font: 18px/64px "Gotham_Light";
+  color: #e2e2e2;
 }
 
 
