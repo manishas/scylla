@@ -1,0 +1,254 @@
+
+/* ------ ------ DEFAULTS ------ ------ */
+
+*                { padding: 0px; margin: 0px;  }
+body             { background: #FFFFFF;        }
+p, span          { color: #222;                }
+span.bold        { font-family: "Gotham_Black" }
+
+.fLeft           { float: left;  }
+.fRight          { float: right; }
+.fClear          { float: both;  }
+
+::selection      { background: #00bbcb; color: #f7f7f7; }
+::-moz-selection { background: #00bbcb; color: #f7f7f7; }
+
+a:link           { color: #1b95d3;                             }
+a:visited        { color: #1678aa;                             }
+a:hover          { color: #29a5e4; text-decoration: underline; }
+a:active         { color: #1678aa; text-decoration: underline; }
+
+
+/* pink:  ff6364
+/* blue:  1b95d3
+
+
+/* ------ ------ STYLES ------ ------ */
+
+.wrapper {
+  width: 960px;
+  margin: 0 auto;
+  padding: 0px 10px;
+}
+
+h1 { 
+  height: 80px;
+  font: 46px/110px "Gotham_Light", sans-serif;
+  color: #222;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+#content h2 {
+  font: 30px/30px "Gotham_Medium", sans-serif;
+  color: #1b95d3;
+  padding: 25px 0px 12px 0px;
+}
+#details h2 {
+  font: 30px/30px "Gotham_Medium", sans-serif;
+  color: #ff6364;
+  padding: 25px 0px 12px 0px;
+}
+
+
+/* ------ HEADER ------ */
+#header {
+  width: 100%;
+  height: 94px;
+  background: #ffffff url("../images/noise-overlay.png") 0 0 repeat;
+}
+#header #stripe{
+  background: #1b95d3;
+  height: 4px;
+}
+#header #title {
+  font: 48px "Gotham_Black", sans-serif;
+  padding-top: 18px;
+}
+#header .btn_download {
+  width: 220px;
+  height: 50px;
+  margin: 20px 0px 20px 20px;
+  background: #839cb0;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  border-top: 1px #b7c7d4 solid;
+  border-bottom: 1px #7c7c7c solid;
+  font: 22px/50px "Gotham_Light", sans-serif;
+  color: #ffffff;
+  text-shadow:      0px -1px 0px #536e87;
+  -moz-text-shadow: 0px -1px 0px #536e87;
+  text-align: center;
+}
+
+
+
+
+
+/* ------ WINDOW ------ */
+#window {
+  height: 290px;
+  width: 100%;
+  background: #ffffff url("../images/darkBG.jpg") 0 0 repeat;
+}
+#window #intro {
+  width: 460px;
+  margin-top: 45px;
+  font: 22px/29px "Gotham_Light", sans-serif;
+  color: #e2e2e2;
+}
+#window #preview {
+  height: 260px;
+  width: 460px;
+  background: transparent url("../images/tiles_home.jpg") 0 0 no-repeat;
+  margin-top: 27px;
+  -moz-border-radius: 6px 6px 0px 0px;
+  border-radius:      6px 6px 0px 0px;
+  border-top: 1px #cecece solid;
+  -moz-box-shadow:    0px 0px 8px rgba(0, 0, 0, 0.78);
+  -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.78);
+  box-shadow:         0px 0px 8px rgba(0, 0, 0, 0.78);
+}
+
+
+
+/* ------ CONTENT ------ */
+#window_cover {
+  width: 100%;
+  padding: 4px;
+  position: relative;
+  background: #ffffff url("../images/bg_stripes.png") 0 0 repeat;
+}
+
+#content {
+  padding-bottom: 30px;
+  background: #ffffff url("../images/bg_stripes.png") 0 0 repeat;
+  font: 16px/20px "Gotham_Light", sans-serif;
+}
+
+
+
+#content ul#layout           { list-style: none; }
+#content ul#layout li.layout {
+  display: inline-block;
+  width: 940px;
+  margin-bottom: 60px;
+  border-top: 1px #d6d9db solid;
+  text-align: center;
+}
+#content ul#layout li.layout:first-child {
+  border-top: none;
+  text-align: left;
+}
+#content ul#layout li.layout:first-child h2 { padding: 0px 0px 12px 0px; }
+
+
+#content ul li ul    { list-style: disc; margin-top: 20px; }
+#content ul li ul li { color: #222; }
+
+
+
+
+
+#content .featureCol {
+  width: 460px;
+  font: 16px/20px "Gotham_Light", sans-serif;
+}
+#content .featureCol img {
+  width: 460px;
+/*  margin: 0px 80px;*/
+  -moz-border-radius: 4px 4px 0px 0px;
+  border-radius:      4px 4px 0px 0px;
+  -moz-box-shadow:    0px 0px 4px #6E6E6E;
+  -webkit-box-shadow: 0px 0px 4px #6E6E6E;
+  box-shadow:         0px 0px 4px #6E6E6E;
+}
+#content .featureCol .shadow_cover {
+  width: 460px;
+  padding: 4px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+#content .featureFull {
+  width: 630px;
+  padding: 0px 160px;
+  text-align: center;
+}
+
+
+
+
+/* ------ INSTALL ------ */
+#details-top {
+  height: 72px;
+  width: 100%;
+  /* TK replace with transparent image later */
+  background: transparent url("../images/bg_grid_top_1L_TK_REPLACE_LATER.png") 0 0 repeat-x;
+}
+
+#details {
+  height: 550px;
+  width: 100%;
+  background: url("../images/bg_grid_pat.jpg") 0 0 repeat;
+}
+#details .column {
+  width: 460px;
+}
+
+#details .column h2 { padding: 44px 0px 12px 0px; }
+#details .column p {
+  font: 16px/26px "Gotham_Light";
+  color: #222;
+}
+#details .column ol {
+  font: italic 16px/26px "Gotham_Light";
+  color: #999;
+}
+
+
+
+
+/* ------ FOOTER ------ */
+#footer {
+  height: 60px;
+  background: #fff url("../images/darkBG.jpg") 0 0 repeat;
+  color: #e2e2e2;
+}
+
+#footer a {
+  font: 18px/64px "Gotham_Light";
+  color: #e2e2e2;
+}
+
+
+
+/* ------ ------ FONTS ------ ------ */
+
+@font-face {
+  font-family: 'Gotham_Black';
+  src: url('webfont/gotham-black.eot');
+  src: url('webfont/gotham-black.eot') format('embedded-opentype'),
+       url('webfont/gotham-black.woff') format('woff'),
+       url('webfont/gotham-black.ttf') format('truetype'),
+       url('webfont/gotham-black.svg#GothamBlack') format('svg');
+}
+
+@font-face {
+  font-family: 'Gotham_Medium';
+  src: url('webfont/gotham-medium.eot');
+  src: url('webfont/gotham-medium.eot') format('embedded-opentype'),
+       url('webfont/gotham-medium.woff') format('woff'),
+       url('webfont/gotham-medium.ttf') format('truetype'),
+       url('webfont/gotham-medium.svg#GothamMedium') format('svg');
+}
+
+
+@font-face {
+  font-family: 'Gotham_Light';
+  src: url('webfont/gotham-light.eot');
+  src: url('webfont/gotham-light.eot') format('embedded-opentype'),
+       url('webfont/gotham-light.woff') format('woff'),
+       url('webfont/gotham-light.ttf') format('truetype'),
+       url('webfont/gotham-light.svg#GothamLight') format('svg');
+}
