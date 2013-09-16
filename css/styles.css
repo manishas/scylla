@@ -53,7 +53,7 @@ h1 {
 
 /* ------ HEADER ------ */
 #header {
-  width: 100%;
+
   height: 94px;
   background: #ffffff url("../images/noise-overlay.png") 0 0 repeat;
 }
@@ -88,7 +88,7 @@ h1 {
 /* ------ WINDOW ------ */
 #window {
   height: 290px;
-  width: 100%;
+
   background: #ffffff url("../images/darkBG.jpg") 0 0 repeat;
 }
 #window #intro {
@@ -114,7 +114,7 @@ h1 {
 
 /* ------ CONTENT ------ */
 #window_cover {
-  width: 100%;
+
   padding: 4px;
   position: relative;
   background: #ffffff url("../images/bg_stripes.png") 0 0 repeat;
@@ -182,14 +182,12 @@ h1 {
 /* ------ INSTALL ------ */
 #details-top {
   height: 72px;
-  width: 100%;
   /* TK replace with transparent image later */
   background: transparent url("../images/bg_grid_top_1L_TK_REPLACE_LATER.png") 0 0 repeat-x;
 }
 
 #details {
   height: 550px;
-  width: 100%;
   background: url("../images/bg_grid_pat.jpg") 0 0 repeat;
 }
 #details .column {
