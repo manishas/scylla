@@ -20,24 +20,6 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         scylla: scyllaConfig,
-        watch: {
-            test: {
-                files:[
-                    'test/**/*.js'
-                ],
-                tasks: ['mocha']
-            },
-            livereload: {
-                files: [
-                    '<%= scylla.app %>/*.html',
-                    '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
-                    '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-                    'test/**/*.js',
-                    '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}'
-                ],
-                tasks: ['livereload']
-            }
-        },
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
@@ -48,6 +30,12 @@ module.exports = function (grunt) {
                 '<%= scylla.frontend %>/app/{,*/}*.js',
                 'test/spec/{,*/}*.js'
             ]
+        },
+        release: {
+            options: {
+                npm: false,
+                npmtag: true
+            }
         }
     });
 

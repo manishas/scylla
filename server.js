@@ -28,11 +28,13 @@ cli.main(function(args, options) {
     //mongoose.set('debug', true);
 
     app.configure(function () {
+        app.use(express.static(__dirname + '/public'));
         app.use(function(req, res, next){
             console.log("-->" + req.path);
+            console.log(req.body);
             next();
+            console.log("<--" + req.path);
         });
-        app.use(express.static(__dirname + '/public'));
         app.use(express.bodyParser());
         app.use(express.cookieParser());
         app.use(express.session({secret: "Scylla", store: new MemoryStore()}));
