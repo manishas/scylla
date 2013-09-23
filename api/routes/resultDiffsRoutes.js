@@ -1,34 +1,34 @@
-module.exports = function(app, models, controllers){
+module.exports = function(server, models, controllers){
     'use strict';
     var utils = require('./routeUtils');
 
 
-    app.get('/result-diffs', function(req, res) {
+    server.get('/result-diffs', function(req, res, next) {
         controllers.resultDiffs.find()
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.get('/report-results/:resultId/diffs', function(req, res) {
+    server.get('/report-results/:resultId/diffs', function(req, res, next) {
         controllers.resultDiffs.findForResult(req.params.resultId)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.get('/result-diffs/:diffId', function(req, res) {
+    server.get('/result-diffs/:diffId', function(req, res, next) {
         controllers.resultDiffs
             .findById(req.params.diffId,
                 req.query.includeReport,
                 req.query.includeResults)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.put('/result-diffs/:diffId', function(req, res) {
+    server.put('/result-diffs/:diffId', function(req, res, next) {
         controllers.resultDiffs
             .update(req.params.diffId, req.body)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
 
-    app.del('/result-diffs/:diffId', function(req, res) {
+    server.del('/result-diffs/:diffId', function(req, res, next) {
         controllers.resultDiffs
             .remove(req.params.diffId)
             .then(function(deleteResults){
@@ -37,13 +37,13 @@ module.exports = function(app, models, controllers){
                     _id:req.params.diffId
                 };
             })
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.post('/result-diffs', function(req, res) {
+    server.post('/result-diffs', function(req, res, next) {
         controllers.resultDiffs
             .createNew(req.body)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
 
     });
 

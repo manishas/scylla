@@ -1,4 +1,4 @@
-module.exports = function(app, models){
+module.exports = function(models){
     'use strict';
     var Q = require("q");
     var crypto = require('crypto');

@@ -1,26 +1,26 @@
-module.exports = function(app, models, controllers){
+module.exports = function(server, models, controllers){
     'use strict';
     var utils = require('./routeUtils');
 
 
-    app.get('/report-results', function(req, res) {
+    server.get('/report-results', function(req, res, next) {
         controllers.reportResults.find()
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.get('/report-results/:resultId', function(req, res) {
+    server.get('/report-results/:resultId', function(req, res, next) {
         controllers.reportResults.findById(req.params.resultId)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
 
     });
 
-    app.put('/report-results/:resultId', function(req, res) {
+    server.put('/report-results/:resultId', function(req, res, next) {
         controllers.reportResults
             .update(req.params.resultId, req.body)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.del('/report-results/:resultId', function(req, res) {
+    server.del('/report-results/:resultId', function(req, res, next) {
         controllers.reportResults
             .remove(req.params.resultId)
             .then(function(deleteResults){
@@ -29,7 +29,7 @@ module.exports = function(app, models, controllers){
                     _id:req.params.resultId
                 };
             })
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
         //TODO: Move to promises once diffsController is created
         var resultId = req.params.resultId;
         controllers.resultDiffs.find(
@@ -42,7 +42,7 @@ module.exports = function(app, models, controllers){
             });
     });
 
-    app.post('/reports/:reportId/results', function(req, res) {
+    server.post('/reports/:reportId/results', function(req, res, next) {
         controllers.reportResults
             .createNew(req.body)
             .then(function(result){
@@ -53,7 +53,7 @@ module.exports = function(app, models, controllers){
                         return result;
                     });
             })
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
 
     });
 };

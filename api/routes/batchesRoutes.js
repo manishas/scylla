@@ -1,28 +1,27 @@
-module.exports = function(app, models, controllers){
+module.exports = function(server, models, controllers){
     'use strict';
     var utils = require('./routeUtils');
 
-
-    app.get('/batches', function(req, res) {
+    server.get('/batches', function(req, res, next) {
         controllers.batches.find(req.query.includeResults)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.get('/batches/:batchId', function(req, res) {
+    server.get('/batches/:batchId', function(req, res, next) {
         controllers.batches
             .findById(req.params.batchId,
                       req.query.includeReports,
                       req.query.includeResults)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.put('/batches/:batchId', function(req, res) {
+    server.put('/batches/:batchId', function(req, res, next) {
         controllers.batches
             .update(req.params.batchId, req.body)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.del('/batches/:batchId', function(req, res) {
+    server.del('/batches/:batchId', function(req, res, next) {
         controllers.batches
             .remove(req.params.batchId)
             .then(function(deleteResults){
@@ -31,25 +30,25 @@ module.exports = function(app, models, controllers){
                     _id:req.params.batchId
                 };
             })
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.del('/batches/:batchId/reports/:reportId', function(req, res) {
+    server.del('/batches/:batchId/reports/:reportId', function(req, res, next) {
         controllers.batches
             .removeReportFromBatch(req.params.batchId, req.params.reportId)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.post('/batches', function(req, res) {
+    server.post('/batches', function(req, res, next) {
         controllers.batches
             .createNew(req.body)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.post('/batches/:batchId/reports', function (req, res) {
+    server.post('/batches/:batchId/reports', function (req, res, next) {
         controllers.batches
             .addReportToBatch(req.body, req.params.batchId)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
 
     });
 

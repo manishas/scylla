@@ -10,12 +10,46 @@ cli.parse({
     port: ['p', 'The Port Number', 'number', 3000]
 });
 
+var restify = require('restify');
+var bunyan = require('bunyan');
+var NAME = 'scylla';
+
+// In true UNIX fashion, debug messages go to stderr, and audit records go
+// to stdout, so you can split them as you like in the shell
+var LOG = bunyan.createLogger({
+    name: NAME,
+    streams: [ {
+        level: (process.env.LOG_LEVEL || 'info'),
+        stream: process.stderr
+    }, {
+        // This ensures that if we get a WARN or above all debug records
+        // related to that request are spewed to stderr - makes it nice
+        // filter out debug messages in prod, but still dump on user
+        // errors so you can debug problems
+        level: 'debug',
+        type: 'raw',
+        stream: new restify.bunyan.RequestCaptureStream({
+            level: bunyan.WARN,
+            maxRecords: 100,
+            maxRequestIds: 1000,
+            stream: process.stderr
+        })
+    } ],
+    serializers: restify.bunyan.serializers
+});
+
 
 cli.main(function(args, options) {
 
-    var express = require('express');
-    var app = express();
-    var MemoryStore = require('connect').session.MemoryStore;
+
+    var restServer = restify.createServer({
+        name: 'Scylla',
+        log:LOG
+    });
+    restServer.use(restify.requestLogger());
+    restServer.use(restify.queryParser());
+    restServer.use(restify.bodyParser());
+
     var SendGrid = require('sendgrid').SendGrid;
     var mailConfig = require('./config/mail');
 
@@ -26,20 +60,8 @@ cli.main(function(args, options) {
 
     var mongoose = require('mongoose');
     //mongoose.set('debug', true);
+    mongoose.connect('mongodb://localhost/scylla');
 
-    app.configure(function () {
-        app.use(express.static(__dirname + '/public'));
-        app.use(function(req, res, next){
-            console.log("-->" + req.path);
-            console.log(req.body);
-            next();
-            console.log("<--" + req.path);
-        });
-        app.use(express.bodyParser());
-        app.use(express.cookieParser());
-        app.use(express.session({secret: "Scylla", store: new MemoryStore()}));
-        mongoose.connect('mongodb://localhost/scylla');
-    });
 
 
     var models = {
@@ -65,39 +87,42 @@ cli.main(function(args, options) {
         };
     };
 
-    var schedController = require('./api/controllers/scheduleController')(app);
-    var emailController = require('./api/controllers/emailController')(app, models, sendgrid);
+    var schedController = require('./api/controllers/scheduleController')();
+    var emailController = require('./api/controllers/emailController')(models, sendgrid);
 
     var controllers = {
-        abCompares      : require('./api/controllers/abComparesController')(app, models),
-        abCompareResults: require('./api/controllers/abCompareResultsController')(app, models),
-        account         : require('./api/controllers/accountController')(app, models),
-        reports         : require('./api/controllers/reportsController')(app, models),
-        reportResults   : require('./api/controllers/reportResultsController')(app, models),
-        batches         : require('./api/controllers/batchesController')(app, models, schedController, executeBatch),
-        batchResults    : require('./api/controllers/batchResultsController')(app, models),
-        resultDiffs     : require('./api/controllers/resultDiffsController')(app, models),
-        charybdis       : require('./api/controllers/charybdisController')(app, "localhost", options.port),
+        abCompares      : require('./api/controllers/abComparesController')(models),
+        abCompareResults: require('./api/controllers/abCompareResultsController')(models),
+        account         : require('./api/controllers/accountController')(models),
+        reports         : require('./api/controllers/reportsController')(models),
+        reportResults   : require('./api/controllers/reportResultsController')(models),
+        batches         : require('./api/controllers/batchesController')(models, schedController, executeBatch),
+        batchResults    : require('./api/controllers/batchResultsController')(models),
+        resultDiffs     : require('./api/controllers/resultDiffsController')(models),
+        charybdis       : require('./api/controllers/charybdisController')("localhost", options.port),
         schedule        : schedController,
         email           : emailController
     };
 
     var routes = {
-        abcompares      : require('./api/routes/abComparesRoutes')(app, models, controllers),
-        abcompareresults: require('./api/routes/abCompareResultsRoutes')(app, models, controllers),
-        account         : require('./api/routes/accountRoutes')(app, models, controllers),
-        reports         : require('./api/routes/reportsRoutes')(app, models, controllers),
-        reportResults   : require('./api/routes/reportResultsRoutes')(app, models, controllers),
-        batches         : require('./api/routes/batchesRoutes')(app, models, controllers),
-        batchResults    : require('./api/routes/batchResultsRoutes')(app, models, controllers),
-        resultDiffs     : require('./api/routes/resultDiffsRoutes')(app, models, controllers),
-        charybdis       : require('./api/routes/charybdisRoutes')(app, models, controllers),
-        monitoring      : require('./api/routes/monitoringRoutes')(app, models, controllers)
+        abcompares      : require('./api/routes/abComparesRoutes')(restServer, models, controllers),
+        abcompareresults: require('./api/routes/abCompareResultsRoutes')(restServer, models, controllers),
+        reports         : require('./api/routes/reportsRoutes')(restServer, models, controllers),
+        reportResults   : require('./api/routes/reportResultsRoutes')(restServer, models, controllers),
+        resultDiffs     : require('./api/routes/resultDiffsRoutes')(restServer, models, controllers),
+        batches         : require('./api/routes/batchesRoutes')(restServer, models, controllers),
+        batchResults    : require('./api/routes/batchResultsRoutes')(restServer, models, controllers),
+        charybdis       : require('./api/routes/charybdisRoutes')(restServer, models, controllers),
+        monitoring      : require('./api/routes/monitoringRoutes')(restServer, models, controllers)
     };
 
+    //We serve the 'static' site AFTER the API,
+    restServer.get(/\//, restify.serveStatic({
+        directory: './public',
+        default:'index.html'
+    }));
 
-
-    app.listen(options.port);
+    restServer.listen(options.port);
 
     console.log("Listening on local port: " + options.port);
 //Initialize the schedule

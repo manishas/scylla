@@ -1,26 +1,26 @@
-module.exports = function(app, models, controllers){
+module.exports = function(server, models, controllers){
     'use strict';
     var utils = require('./routeUtils');
 
 
-    app.get('/abcompare-results', function(req, res) {
+    server.get('/abcompare-results', function(req, res, next) {
         controllers.abCompareResults.find()
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.get('/abcompare-results/:resultId', function(req, res) {
+    server.get('/abcompare-results/:resultId', function(req, res, next) {
         controllers.abCompareResults.findById(req.params.resultId)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
 
     });
 
-    app.put('/abcompare-results/:resultId', function(req, res) {
+    server.put('/abcompare-results/:resultId', function(req, res, next) {
         controllers.abCompareResults
             .update(req.params.resultId, req.body)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.del('/abcompare-results/:resultId', function(req, res) {
+    server.del('/abcompare-results/:resultId', function(req, res, next) {
         controllers.abCompareResults
             .remove(req.params.resultId)
             .then(function(deleteResults){
@@ -29,10 +29,10 @@ module.exports = function(app, models, controllers){
                     _id:req.params.resultId
                 };
             })
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.post('/abcompares/:compareId/results', function(req, res) {
+    server.post('/abcompares/:compareId/results', function(req, res, next) {
         controllers.abCompareResults
             .createNew(req.body)
             .then(function(result){
@@ -43,7 +43,7 @@ module.exports = function(app, models, controllers){
                         return result;
                     });
             })
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
 
     });
 };
