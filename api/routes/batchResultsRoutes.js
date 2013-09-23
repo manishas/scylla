@@ -1,24 +1,24 @@
-module.exports = function(app, models, controllers){
+module.exports = function(server, models, controllers){
     'use strict';
     var utils = require('./routeUtils');
 
-    app.get('/batch-results', function(req, res) {
+    server.get('/batch-results', function(req, res, next) {
         controllers.batchResults.find()
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.get('/batch-results/:resultId', function(req, res) {
+    server.get('/batch-results/:resultId', function(req, res, next) {
         controllers.batchResults.findById(req.params.resultId)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.put('/batch-results/:resultId', function(req, res) {
+    server.put('/batch-results/:resultId', function(req, res, next) {
         controllers.batchResults
             .update(req.params.resultId, req.body)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.del('/batch-results/:resultId', function(req, res) {
+    server.del('/batch-results/:resultId', function(req, res, next) {
         controllers.batchResults
             .remove(req.params.resultId)
             .then(function(deleteResults){
@@ -27,10 +27,10 @@ module.exports = function(app, models, controllers){
                     _id:req.params.resultId
                 };
             })
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.post('/batches/:batchId/results', function(req, res) {
+    server.post('/batches/:batchId/results', function(req, res, next) {
         controllers.batchResults
             .createNew(req.body)
             .then(function(result){
@@ -40,7 +40,7 @@ module.exports = function(app, models, controllers){
                         return result;
                     });
             })
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
 
     });
 

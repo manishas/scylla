@@ -4,8 +4,10 @@ module.exports = function(ObjectId){
     var execDeferredBridge = function(deferred){
         return function(err, result){
             if(err){
+                console.log("Failing");
                 deferred.reject(err);
             } else {
+                console.log("Resolving");
                 deferred.resolve(result);
             }
         };

@@ -1,16 +1,16 @@
-module.exports = function(app, models, controllers){
+module.exports = function(server, models, controllers){
     'use strict';
     var utils = require('./routeUtils');
 
     /** Routes **/
-    app.get('/accounts/:id', function(req, res) {
+    server.get('/accounts/:id', function(req, res, next) {
         var accountId =
             (req.params.id === 'me' ) ? req.session.accountId : req.params.id;
         controllers.account.findById(accountId)
-            .then(utils.success(res), utils.fail(res));
+            .then(utils.success(res, next), utils.fail(res, next));
     });
 
-    app.get('/account/authenticated', function(req, res) {
+    server.get('/account/authenticated', function(req, res, next) {
         if ( req.session.loggedIn ) {
             res.send(200);
         } else {
@@ -24,17 +24,17 @@ module.exports = function(app, models, controllers){
         password:utils.v.required
     };
 
-    app.post('/account/register', function(req, res) {
+    server.post('/account/register', function(req, res, next) {
         utils.validateInputs(req.body, registeredValidators )
             .then(function(body){
                 controllers.account.register(body.email, body.password, body.name)
-                    .then(utils.success(res), utils.fail(res));
+                    .then(utils.success(res, next), utils.fail(res, next));
             }, function(message){
                 res.send(400, message);
             });
     });
 
-    app.post('/account/login', function(req, res) {
+    server.post('/account/login', function(req, res, next) {
         //console.log('login request');
         var email = req.body.email;
         var password = req.body.password;

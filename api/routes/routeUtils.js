@@ -1,23 +1,25 @@
 module.exports = (function(){
     'use strict';
+    var restify = require('restify');
     var Q = require('q');
     var util = require('util');
 
-    var normalSuccess = function(res){
+    var normalSuccess = function(res, next){
         return function(value){
             if(value){
                 res.send(value);
+                next();
             } else {
-                res.send(404);
+                next(new restify.ResourceNotFound("Not Found"));
             }
         };
     };
 
-    var normalFail = function(res){
+    var normalFail = function(res, next){
         return function(error){
             console.error("\nRoute Failure: ", util.inspect(error));
             console.log(error.stack);
-            res.send(500, {message:util.inspect(error)});
+            next(new restify.InternalError(util.inspect(error)));
         };
     };
 

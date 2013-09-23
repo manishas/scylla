@@ -1,4 +1,4 @@
-module.exports = function(app, models){
+module.exports = function(models){
     'use strict';
     var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;
@@ -8,6 +8,7 @@ module.exports = function(app, models){
     var execDeferredDeleteBridge = commonController.execDeferredDeleteBridge;
 
     var find = function find(){
+        console.log("Reports Controller");
         var deferred = Q.defer();
         models.Report.find()
             .populate({path:"masterResult", select:"-result"})

@@ -1,4 +1,4 @@
-module.exports = function(app, models, schedController, executeBatch){
+module.exports = function(models, schedController, executeBatch){
     'use strict';
     var Q = require('q');
     var ObjectId = require('mongoose').Types.ObjectId;

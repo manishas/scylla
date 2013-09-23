@@ -1,4 +1,4 @@
-module.exports = function(app, host, port){
+module.exports = function(host, port){
     'use strict';
     var charybdis = require("charybdis")();
 

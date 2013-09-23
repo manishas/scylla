@@ -1,4 +1,4 @@
-module.exports = function(app, models, sendgrid){
+module.exports = function(models, sendgrid){
     'use strict';
 
     var path = require("path");
