@@ -35,6 +35,17 @@ if [ ! -f /var/log/3mongosetup ];
 then
     echo -e "${yellow}Installing MongoDB${NC}"
     sudo apt-get install -y mongodb-10gen python g++ make
+
+    sudo apt-get install -y postgresql
+    sudo -u postgres createuser -S -D -R -l scylla
+    sudo -u postgres psql -U postgres -d postgres -c "alter user scylla with password 'scylla';"
+    sudo apt-get install -y openjdk-7-jre-headless
+    wget http://superb-dca2.dl.sourceforge.net/project/liquibase/Liquibase%20Core/liquibase-3.0.4-bin.tar.gz
+    tar -xzf liquibase-3.0.4-bin.tar.gz /vagrant/db/liquibase
+    wget -O /vagrant/db/liquibase/postgresql.jar http://jdbc.postgresql.org/download/postgresql-9.2-1003.jdbc4.jar
+    chown scylla -R /vagrant/db/liquibase
+    chmod a+x -R /vagrant/db/liquibase/liquibase
+
     touch /var/log/3mongosetup
 fi
 

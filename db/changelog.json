@@ -1,0 +1,72 @@
+{
+    "databaseChangeLog": [
+        {
+            "preConditions": [
+                {
+                    "runningAs": {
+                        "username": "scylla"
+                    }
+                }
+            ]
+        },
+
+        {
+            "changeSet": {
+                "id": "1",
+                "author": "dustyjewett",
+                "changes": [
+                    {
+                        "createTable": {
+                            "tableName": "report",
+                            "columns": [
+                                {
+                                    "column": {
+                                        "name": "_id",
+                                        "type": "uuid",
+                                        "constraints": {
+                                            "primaryKey": true,
+                                            "nullable": false
+                                        }
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "url",
+                                        "type": "varchar(255)"
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "name",
+                                        "type": "varchar(50)",
+                                        "constraints": {
+                                            "nullable": false
+                                        }
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "width",
+                                        "type": "int"
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "height",
+                                        "type": "int"
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "masterResult",
+                                        "type": "uuid"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

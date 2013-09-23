@@ -31,6 +31,11 @@ module.exports = function (grunt) {
                 'test/spec/{,*/}*.js'
             ]
         },
+        shell:{
+            updatedb:{
+                command:"./db/liquibase/liquibase  --defaultsFile db/liquibase.properties update"
+            }
+        },
         release: {
             options: {
                 npm: false,
