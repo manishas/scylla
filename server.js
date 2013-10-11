@@ -7,9 +7,10 @@
 var cli = require('cli');
 
 cli.parse({
-    port: ['p', 'The Port Number', 'number', 3000]
+    port: ['p', 'The Port Number', 'number', 3000],
+    https_port: ['sp', 'The HTTPS Port Number', 'number', 3443]
 });
-
+var fs = require('fs');
 var restify = require('restify');
 var bunyan = require('bunyan');
 var NAME = 'scylla';
@@ -41,28 +42,16 @@ var LOG = bunyan.createLogger({
 
 cli.main(function(args, options) {
 
-
-    var restServer = restify.createServer({
-        name: 'Scylla',
-        log:LOG
-    });
-    restServer.use(restify.requestLogger());
-    restServer.use(restify.queryParser());
-    restServer.use(restify.bodyParser());
-
     var SendGrid = require('sendgrid').SendGrid;
     var mailConfig = require('./config/mail');
 
     var Q = require('q');
     Q.longStackSupport = true;
-
     var sendgrid = new SendGrid(mailConfig.user, mailConfig.key);
 
     var mongoose = require('mongoose');
     //mongoose.set('debug', true);
     mongoose.connect('mongodb://localhost/scylla');
-
-
 
     var models = {
         ObjectId       : mongoose.Types.ObjectId,
@@ -76,55 +65,78 @@ cli.main(function(args, options) {
         ResultDiff     : require('./api/models/resultDiff')(mongoose)
     };
 
-    var executeBatch = function (batchId) {
-        return function () {
-            controllers.charybdis.executeOnBatch(batchId.toString())
-                .then(function (batchBundle) {
-                    emailController.sendBatchResultEmail(batchBundle.batch, batchBundle.batchResult);
-                }, function (error) {
-                    console.log("Error running Charybdis on BatchId: ", batchId, error);
-                });
+
+    var httpServer = restify.createServer({
+        name: 'Scylla',
+        log:LOG
+    });
+    var httpsServer = restify.createServer({
+        name: 'Scylla Secure',
+        log:LOG,
+        key: fs.readFileSync('/etc/ssl/self-signed/server.key'),
+        certificate: fs.readFileSync('/etc/ssl/self-signed/server.crt')
+    });
+
+    var setupServer = function(restServer){
+        restServer.use(restify.requestLogger());
+        restServer.use(restify.queryParser());
+        restServer.use(restify.bodyParser());
+
+
+        var executeBatch = function (batchId) {
+            return function () {
+                controllers.charybdis.executeOnBatch(batchId.toString())
+                    .then(function (batchBundle) {
+                        emailController.sendBatchResultEmail(batchBundle.batch, batchBundle.batchResult);
+                    }, function (error) {
+                        console.log("Error running Charybdis on BatchId: ", batchId, error);
+                    });
+            };
         };
-    };
 
-    var schedController = require('./api/controllers/scheduleController')();
-    var emailController = require('./api/controllers/emailController')(models, sendgrid);
+        var schedController = require('./api/controllers/scheduleController')();
+        var emailController = require('./api/controllers/emailController')(models, sendgrid);
 
-    var controllers = {
-        abCompares      : require('./api/controllers/abComparesController')(models),
-        abCompareResults: require('./api/controllers/abCompareResultsController')(models),
-        account         : require('./api/controllers/accountController')(models),
-        reports         : require('./api/controllers/reportsController')(models),
-        reportResults   : require('./api/controllers/reportResultsController')(models),
-        batches         : require('./api/controllers/batchesController')(models, schedController, executeBatch),
-        batchResults    : require('./api/controllers/batchResultsController')(models),
-        resultDiffs     : require('./api/controllers/resultDiffsController')(models),
-        charybdis       : require('./api/controllers/charybdisController')("localhost", options.port),
-        schedule        : schedController,
-        email           : emailController
-    };
+        var controllers = {
+            abCompares      : require('./api/controllers/abComparesController')(models),
+            abCompareResults: require('./api/controllers/abCompareResultsController')(models),
+            account         : require('./api/controllers/accountController')(models),
+            reports         : require('./api/controllers/reportsController')(models),
+            reportResults   : require('./api/controllers/reportResultsController')(models),
+            batches         : require('./api/controllers/batchesController')(models, schedController, executeBatch),
+            batchResults    : require('./api/controllers/batchResultsController')(models),
+            resultDiffs     : require('./api/controllers/resultDiffsController')(models),
+            charybdis       : require('./api/controllers/charybdisController')("localhost", options.port),
+            schedule        : schedController,
+            email           : emailController
+        };
 
-    var routes = {
-        abcompares      : require('./api/routes/abComparesRoutes')(restServer, models, controllers),
-        abcompareresults: require('./api/routes/abCompareResultsRoutes')(restServer, models, controllers),
-        reports         : require('./api/routes/reportsRoutes')(restServer, models, controllers),
-        reportResults   : require('./api/routes/reportResultsRoutes')(restServer, models, controllers),
-        resultDiffs     : require('./api/routes/resultDiffsRoutes')(restServer, models, controllers),
-        batches         : require('./api/routes/batchesRoutes')(restServer, models, controllers),
-        batchResults    : require('./api/routes/batchResultsRoutes')(restServer, models, controllers),
-        charybdis       : require('./api/routes/charybdisRoutes')(restServer, models, controllers),
-        monitoring      : require('./api/routes/monitoringRoutes')(restServer, models, controllers)
-    };
+        var routes = {
+            abcompares      : require('./api/routes/abComparesRoutes')(restServer, models, controllers),
+            abcompareresults: require('./api/routes/abCompareResultsRoutes')(restServer, models, controllers),
+            reports         : require('./api/routes/reportsRoutes')(restServer, models, controllers),
+            reportResults   : require('./api/routes/reportResultsRoutes')(restServer, models, controllers),
+            resultDiffs     : require('./api/routes/resultDiffsRoutes')(restServer, models, controllers),
+            batches         : require('./api/routes/batchesRoutes')(restServer, models, controllers),
+            batchResults    : require('./api/routes/batchResultsRoutes')(restServer, models, controllers),
+            charybdis       : require('./api/routes/charybdisRoutes')(restServer, models, controllers),
+            monitoring      : require('./api/routes/monitoringRoutes')(restServer, models, controllers)
+        };
 
-    //We serve the 'static' site AFTER the API,
-    restServer.get(/\//, restify.serveStatic({
-        directory: './public',
-        default:'index.html'
-    }));
+        //We serve the 'static' site AFTER the API,
+        restServer.get(/\//, restify.serveStatic({
+            directory: './public',
+            default:'index.html'
+        }));
+    }
+    setupServer(httpServer);
+    setupServer(httpsServer);
 
-    restServer.listen(options.port);
 
-    console.log("Listening on local port: " + options.port);
+    httpServer.listen(options.port);
+    httpsServer.listen(options.https_port)
+
+    console.log("Listening on local ports: " + options.port + ", " + options.https_port);
 //Initialize the schedule
 
     models.Batch.find(function (err, batches) {

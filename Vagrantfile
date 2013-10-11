@@ -18,6 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision :shell, :path => "vagrantBootstrap.sh"
   config.vm.network :forwarded_port, host: 8090, guest: 3000
+  config.vm.network :forwarded_port, host: 8091, guest: 3443
   config.ssh.forward_agent = true
 
   # Create a forwarded port mapping which allows access to a specific port

@@ -17,6 +17,7 @@ require([
     'home/pageController',
     'home/homeController',
     'reports/reportController',
+    'reports/reportBookmarkletController',
     'reports/reportDetailController',
     'compares/comparesController',
     'compares/compareDetailController',
@@ -31,6 +32,7 @@ require([
     PageController,
     HomeController,
     ReportController,
+    ReportBookmarkletController,
     ReportDetailController,
     ComparesController,
     CompareDetailController,
@@ -51,6 +53,9 @@ require([
             .when('/reports',
                   {templateUrl:'app/reports/reports.html',
                       controller:"ReportController"})
+            .when('/reports/bookmarklet',
+                  {templateUrl:'app/reports/reportBookmarklet.html',
+                      controller:"ReportBookmarkletController"})
             .when('/reports/:id',
                   {templateUrl:'app/reports/reportDetail.html',
                       controller:"ReportDetailController"})
