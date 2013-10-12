@@ -80,7 +80,7 @@ define([
         };
 
         $scope.saveBatch = function(batch){
-            return $http.post("/batches/", batch)
+            return $http.post("/batches", batch)
                 .success(function(batch){
                     $scope.getAllBatches();
                     toastr.success("Batch Saved: " + batch.name);

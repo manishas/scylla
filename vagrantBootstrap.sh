@@ -27,7 +27,12 @@ fi
 if [ ! -f /var/log/2systemsetup ];
 then
     echo -e "${yellow}Installing system pre-reqs${NC}"
-    sudo apt-get install -y git imagemagick
+    sudo apt-get install -y git imagemagick openssl
+
+#Generate our own self-signed ssl keys
+    mkdir /etc/ssl/self-signed && cd /etc/ssl/self-signed
+    openssl genrsa -out server.key 2048 && openssl req -new -key server.key -out server.csr -subj '/C=US/ST=Washington/L=Seattle/O=Scylla/OU=Scylla/CN=Scylla' && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
     touch /var/log/1systemsetup
 fi
 

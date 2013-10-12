@@ -7,9 +7,10 @@
 var cli = require('cli');
 
 cli.parse({
-    port: ['p', 'The Port Number', 'number', 3000]
+    port: ['p', 'The Port Number', 'number', 3000],
+    https_port: ['sp', 'The HTTPS Port Number', 'number', 3443]
 });
-
+var fs = require('fs');
 var restify = require('restify');
 var bunyan = require('bunyan');
 var NAME = 'scylla';
@@ -41,28 +42,16 @@ var LOG = bunyan.createLogger({
 
 cli.main(function(args, options) {
 
-
-    var restServer = restify.createServer({
-        name: 'Scylla',
-        log:LOG
-    });
-    restServer.use(restify.requestLogger());
-    restServer.use(restify.queryParser());
-    restServer.use(restify.bodyParser());
-
     var SendGrid = require('sendgrid').SendGrid;
     var mailConfig = require('./config/mail');
 
     var Q = require('q');
     Q.longStackSupport = true;
-
     var sendgrid = new SendGrid(mailConfig.user, mailConfig.key);
 
     var mongoose = require('mongoose');
     //mongoose.set('debug', true);
     mongoose.connect('mongodb://localhost/scylla');
-
-
 
     var models = {
         ObjectId       : mongoose.Types.ObjectId,
@@ -104,27 +93,52 @@ cli.main(function(args, options) {
         email           : emailController
     };
 
-    var routes = {
-        abcompares      : require('./api/routes/abComparesRoutes')(restServer, models, controllers),
-        abcompareresults: require('./api/routes/abCompareResultsRoutes')(restServer, models, controllers),
-        reports         : require('./api/routes/reportsRoutes')(restServer, models, controllers),
-        reportResults   : require('./api/routes/reportResultsRoutes')(restServer, models, controllers),
-        resultDiffs     : require('./api/routes/resultDiffsRoutes')(restServer, models, controllers),
-        batches         : require('./api/routes/batchesRoutes')(restServer, models, controllers),
-        batchResults    : require('./api/routes/batchResultsRoutes')(restServer, models, controllers),
-        charybdis       : require('./api/routes/charybdisRoutes')(restServer, models, controllers),
-        monitoring      : require('./api/routes/monitoringRoutes')(restServer, models, controllers)
-    };
 
-    //We serve the 'static' site AFTER the API,
-    restServer.get(/\//, restify.serveStatic({
-        directory: './public',
-        default:'index.html'
-    }));
 
-    restServer.listen(options.port);
+    var httpServer = restify.createServer({
+        name: 'Scylla',
+        log:LOG
+    });
+    var httpsServer = restify.createServer({
+        name: 'Scylla Secure',
+        log:LOG,
+        key: fs.readFileSync('/etc/ssl/self-signed/server.key'),
+        certificate: fs.readFileSync('/etc/ssl/self-signed/server.crt')
+    });
 
-    console.log("Listening on local port: " + options.port);
+    var setupServer = function(restServer){
+        restServer.use(restify.requestLogger());
+        restServer.use(restify.queryParser());
+        restServer.use(restify.bodyParser());
+
+
+
+        var routes = {
+            abcompares      : require('./api/routes/abComparesRoutes')(restServer, models, controllers),
+            abcompareresults: require('./api/routes/abCompareResultsRoutes')(restServer, models, controllers),
+            reports         : require('./api/routes/reportsRoutes')(restServer, models, controllers),
+            reportResults   : require('./api/routes/reportResultsRoutes')(restServer, models, controllers),
+            resultDiffs     : require('./api/routes/resultDiffsRoutes')(restServer, models, controllers),
+            batches         : require('./api/routes/batchesRoutes')(restServer, models, controllers),
+            batchResults    : require('./api/routes/batchResultsRoutes')(restServer, models, controllers),
+            charybdis       : require('./api/routes/charybdisRoutes')(restServer, models, controllers),
+            monitoring      : require('./api/routes/monitoringRoutes')(restServer, models, controllers)
+        };
+
+        //We serve the 'static' site AFTER the API,
+        restServer.get(/\//, restify.serveStatic({
+            directory: './public',
+            default:'index.html'
+        }));
+    }
+    setupServer(httpServer);
+    setupServer(httpsServer);
+
+
+    httpServer.listen(options.port);
+    httpsServer.listen(options.https_port)
+
+    console.log("Listening on local ports: " + options.port + ", " + options.https_port);
 //Initialize the schedule
 
     models.Batch.find(function (err, batches) {
