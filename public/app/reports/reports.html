@@ -11,7 +11,9 @@
         <div class="media-body">
             <h4 class="media-heading"><a ng-href="#/reports/{{report._id}}">{{report.name}}</a>
                 <a ng-click="deleteReport(report);" class="clickable"><i class="icon-trash" title="Delete Report"></i></a></h4>
-            <span>Stats</span>
+            <span>{{report.url}}</span><br/>
+            <span># of Screenshots: {{report.results.length}}</span><br/>
+            <span>Master: {{ dateFormat(report.masterResult.timestamp)}} </span>
         </div>
     </div>
     <div id="newReport" class="modal hide fade" tabindex="-1" modal="showNewReport" aria-hidden="true">

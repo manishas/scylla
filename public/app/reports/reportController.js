@@ -1,10 +1,12 @@
 define([
     "scyllaApp",
     "toastr",
+    "moment",
     "directives/spin/processingSpinner"
 ], function(
     scyllaApp,
     toastr,
+    moment,
     processingSpinner
     ){
     'use strict';
@@ -16,6 +18,10 @@ define([
         $scope.batches = [];
         $scope.reportToDelete = {};
 
+        $scope.dateFormat = function(isoString) {
+            if(typeof isoString === "undefined") return "";
+            return moment(isoString).format("MMMM Do, h:mm A");
+        };
 
         $scope.getThumbnail = function getThumbnail(report){
             if(report && report.masterResult) {
