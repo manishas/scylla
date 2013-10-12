@@ -20,6 +20,29 @@ module.exports = function(server, models, controllers){
             .then(utils.success(res, next), utils.fail(res, next));
     });
 
+    var masterImagePlucker = function(report){
+        if(!report || !report.master) {
+            return null;
+        } else {
+            return report.master.result;
+        }
+    };
+    var thumbImagePlucker = function(report){
+        if(!report || !report.master) {
+            return null;
+        } else {
+            return report.master.thumb;
+        }
+    }
+
+    server.get('/reports/:reportId/master', function(req, res, next) {
+        controllers.reports
+            .findById(req.params.reportId,
+                req.query.includeFullImage,
+                req.query.includeResults)
+            .then(utils.successImage(res, masterImagePlucker, next), utils.fail(res, next));
+    });
+
     server.put('/reports/:reportId', function(req, res, next) {
         controllers.reports
             .update(req.params.reportId, req.body)

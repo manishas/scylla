@@ -15,6 +15,20 @@ module.exports = (function(){
         };
     };
 
+    var imageSuccess = function(res, imagePlucker, next){
+        return function(value){
+            console.log("Returning image");
+            var image = imagePlucker(value)
+            if(image){
+                res.contentType("image/png");
+                var imageBuffer = new Buffer(image, 'base64');
+                res.write(imageBuffer);
+            } else {
+                next(new restify.ResourceNotFound("Not Found"));
+            }
+        }
+    };
+
     var normalFail = function(res, next){
         return function(error){
             console.error("\nRoute Failure: ", util.inspect(error));
@@ -60,6 +74,7 @@ module.exports = (function(){
 
     return {
         success:normalSuccess,
+        successImage:imageSuccess,
         fail:normalFail,
         validateInputs:validateInputs,
         v:simpleValidators
