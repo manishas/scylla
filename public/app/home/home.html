@@ -9,8 +9,18 @@
                 <p> <i class="icon-th-list"></i>
                     With Single URL <strong>Report</strong>s, we take a screenshot of a specific URL and allow you to
                     compare the current state with a known <strong>master</strong> (i.e. what you expect it to look like).<br />
-                    <a href="javascript:(function(){_my_script=document.createElement('SCRIPT'); _my_script.type='text/javascript'; _my_script.src='//localhost:8091/bookmarklet.js'; document.getElementsByTagName('head')[0].appendChild(_my_script);})();">Add to Scylla Bookmarklet</a>
+                    Drag this link:<a id='bookmarkletLink' href="" title="+Scylla">+Scylla</a> to your bookmark bar to create a bookmarklet
                 </p>
+                <script>
+                    $('#bookmarkletLink').attr('href', "javascript:" +
+                       "(function(){" +
+                       "   window.SCYLLA_URL = '" + window.location.protocol + '//' + window.location.host + "';" +
+                       "var bookmarklet_script=document.createElement('SCRIPT'); " +
+                       "bookmarklet_script.type='text/javascript'; " +
+                       "bookmarklet_script.src=window.SCYLLA_URL +'/bookmarklet.js'; " +
+                       "document.getElementsByTagName('head')[0].appendChild(bookmarklet_script); " +
+                    "})();");
+                </script>
                 <p> <i class="icon-sitemap" ></i>
                     These reports must be collected into a <strong>Batch</strong> of reports, which can be launched by
                     clicking on the Rocket when viewing the Batch Details. You may also choose to schedule a batch to
