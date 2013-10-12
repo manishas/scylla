@@ -65,6 +65,35 @@ cli.main(function(args, options) {
         ResultDiff     : require('./api/models/resultDiff')(mongoose)
     };
 
+    var executeBatch = function (batchId) {
+        return function () {
+            controllers.charybdis.executeOnBatch(batchId.toString())
+                .then(function (batchBundle) {
+                    emailController.sendBatchResultEmail(batchBundle.batch, batchBundle.batchResult);
+                }, function (error) {
+                    console.log("Error running Charybdis on BatchId: ", batchId, error);
+                });
+        };
+    };
+
+    var schedController = require('./api/controllers/scheduleController')();
+    var emailController = require('./api/controllers/emailController')(models, sendgrid);
+
+    var controllers = {
+        abCompares      : require('./api/controllers/abComparesController')(models),
+        abCompareResults: require('./api/controllers/abCompareResultsController')(models),
+        account         : require('./api/controllers/accountController')(models),
+        reports         : require('./api/controllers/reportsController')(models),
+        reportResults   : require('./api/controllers/reportResultsController')(models),
+        batches         : require('./api/controllers/batchesController')(models, schedController, executeBatch),
+        batchResults    : require('./api/controllers/batchResultsController')(models),
+        resultDiffs     : require('./api/controllers/resultDiffsController')(models),
+        charybdis       : require('./api/controllers/charybdisController')("localhost", options.port),
+        schedule        : schedController,
+        email           : emailController
+    };
+
+
 
     var httpServer = restify.createServer({
         name: 'Scylla',
@@ -83,33 +112,6 @@ cli.main(function(args, options) {
         restServer.use(restify.bodyParser());
 
 
-        var executeBatch = function (batchId) {
-            return function () {
-                controllers.charybdis.executeOnBatch(batchId.toString())
-                    .then(function (batchBundle) {
-                        emailController.sendBatchResultEmail(batchBundle.batch, batchBundle.batchResult);
-                    }, function (error) {
-                        console.log("Error running Charybdis on BatchId: ", batchId, error);
-                    });
-            };
-        };
-
-        var schedController = require('./api/controllers/scheduleController')();
-        var emailController = require('./api/controllers/emailController')(models, sendgrid);
-
-        var controllers = {
-            abCompares      : require('./api/controllers/abComparesController')(models),
-            abCompareResults: require('./api/controllers/abCompareResultsController')(models),
-            account         : require('./api/controllers/accountController')(models),
-            reports         : require('./api/controllers/reportsController')(models),
-            reportResults   : require('./api/controllers/reportResultsController')(models),
-            batches         : require('./api/controllers/batchesController')(models, schedController, executeBatch),
-            batchResults    : require('./api/controllers/batchResultsController')(models),
-            resultDiffs     : require('./api/controllers/resultDiffsController')(models),
-            charybdis       : require('./api/controllers/charybdisController')("localhost", options.port),
-            schedule        : schedController,
-            email           : emailController
-        };
 
         var routes = {
             abcompares      : require('./api/routes/abComparesRoutes')(restServer, models, controllers),
