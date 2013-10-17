@@ -33,7 +33,7 @@ then
     mkdir /etc/ssl/self-signed && cd /etc/ssl/self-signed
     openssl genrsa -out server.key 2048 && openssl req -new -key server.key -out server.csr -subj '/C=US/ST=Washington/L=Seattle/O=Scylla/OU=Scylla/CN=Scylla' && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
 
-    touch /var/log/1systemsetup
+    touch /var/log/2systemsetup
 fi
 
 if [ ! -f /var/log/3mongosetup ];
