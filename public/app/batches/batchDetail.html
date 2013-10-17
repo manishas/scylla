@@ -20,7 +20,9 @@
                 <div class="media-body">
                     <h4 class="media-heading"><a ng-href="#/reports/{{report._id}}">{{report.name}}</a>
                         <a  ng-click="removeReport(report._id)" class="clickable"><i class="icon-minus-sign" title="Remove report from this batch"></i></a></h4>
-                    <span>Stats</span>
+                    <span style="font-size: 10px">{{report.url}}</span><br/>
+                    <span># of Screenshots: {{report.results.length}}</span><br/>
+                    <span>Master: {{ dateFormat(report.masterResult.timestamp)}} </span>
                 </div>
             </div>
         </div>
