@@ -24,10 +24,7 @@ define([
         };
 
         $scope.getThumbnail = function getThumbnail(report){
-            if(report && report.masterResult) {
-                return report.masterResult.thumb;
-            }
-            return "images/reportHasNoMasterResult.png"
+            return "/reports/" + report._id + "/thumb";
         };
 
         $scope.getAllReports = function(){

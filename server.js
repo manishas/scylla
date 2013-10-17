@@ -94,14 +94,31 @@ cli.main(function(args, options) {
     };
 
 
+    var imageFormatter = function(res, req, body){
+        if (body instanceof Error)
+            res.statusCode = body.statusCode || 500;
+
+        if (!Buffer.isBuffer(body))
+            body = new Buffer(body.toString(), 'base64');
+
+        res.setHeader('Content-Length', body.length);
+        return (body);
+    };
 
     var httpServer = restify.createServer({
         name: 'Scylla',
-        log:LOG
+        log:LOG,
+        formatters:{
+            'image/png; q=0.9':imageFormatter
+        }
     });
     var httpsServer = restify.createServer({
         name: 'Scylla Secure',
         log:LOG,
+        formatters:{
+            'image/png; q=0.9':imageFormatter
+        },
+        formatters:imageFormatter,
         key: fs.readFileSync('/etc/ssl/self-signed/server.key'),
         certificate: fs.readFileSync('/etc/ssl/self-signed/server.crt')
     });

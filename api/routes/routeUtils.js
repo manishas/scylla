@@ -17,12 +17,15 @@ module.exports = (function(){
 
     var imageSuccess = function(res, imagePlucker, next){
         return function(value){
-            console.log("Returning image");
-            var image = imagePlucker(value)
+            var image = imagePlucker(value);
             if(image){
-                res.contentType("image/png");
-                var imageBuffer = new Buffer(image, 'base64');
-                res.write(imageBuffer);
+                //res.contentType("image/png");
+                res.setHeader('Content-Type', 'image/png');
+                var imageContents = image.replace(/^data:image\/png;base64,/, "");
+                var imageBuffer = new Buffer(imageContents, 'base64');
+                //res.write(imageBuffer);
+                res.end(imageBuffer, 'binary');
+                next();
             } else {
                 next(new restify.ResourceNotFound("Not Found"));
             }

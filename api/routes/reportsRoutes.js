@@ -21,26 +21,34 @@ module.exports = function(server, models, controllers){
     });
 
     var masterImagePlucker = function(report){
-        if(!report || !report.master) {
+        if(!report || !report.masterResult) {
             return null;
         } else {
-            return report.master.result;
+            return report.masterResult.result;
         }
     };
     var thumbImagePlucker = function(report){
-        if(!report || !report.master) {
+        if(!report || !report.masterResult) {
             return null;
         } else {
-            return report.master.thumb;
+            return report.masterResult.thumb;
         }
     }
 
     server.get('/reports/:reportId/master', function(req, res, next) {
         controllers.reports
             .findById(req.params.reportId,
-                req.query.includeFullImage,
+                true,
                 req.query.includeResults)
             .then(utils.successImage(res, masterImagePlucker, next), utils.fail(res, next));
+    });
+
+    server.get('/reports/:reportId/thumb', function(req, res, next) {
+        controllers.reports
+            .findById(req.params.reportId,
+                true,
+                req.query.includeResults)
+            .then(utils.successImage(res, thumbImagePlucker, next), utils.fail(res, next));
     });
 
     server.put('/reports/:reportId', function(req, res, next) {
