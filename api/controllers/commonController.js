@@ -7,7 +7,7 @@ module.exports = function(ObjectId){
                 console.log("Failing");
                 deferred.reject(err);
             } else {
-                console.log("Resolving");
+                //console.log(require('util').inspect(result));
                 deferred.resolve(result);
             }
         };

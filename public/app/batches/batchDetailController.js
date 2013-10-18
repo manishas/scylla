@@ -172,10 +172,7 @@ define([
         };
 
         $scope.getThumbnail = function getThumbnail(report){
-            if(report && report.masterResult) {
-                return report.masterResult.result;
-            }
-            return "images/reportHasNoMasterResult.png"
+            return "/reports/" + report._id + "/thumb";
         };
 
         $scope.getResultClass = function(result) {

@@ -31,7 +31,7 @@ module.exports = function(models, schedController, executeBatch){
                     var deferredPop = Q.defer();
                     //I really don't like this, but for some reason this populate call has to have a CB passed in, rather
                     //Than using exec() like everything else.
-                    models.Report.populate(batch.reports, "masterResult",
+                    models.Report.populate(batch.reports, {path:"masterResult", select:"-result -thumb"},
                         function(err, reports){
                             if(err){
                                 deferredPop.reject(err);

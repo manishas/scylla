@@ -7,7 +7,12 @@ module.exports = (function(){
     var normalSuccess = function(res, next){
         return function(value){
             if(value){
-                res.send(value);
+                try{
+                    res.send(value);
+                } catch(err){
+                   console.log("ERROR?", util.inspect(err));
+                }
+                //console.log("Sending: ", value);
                 next();
             } else {
                 next(new restify.ResourceNotFound("Not Found"));

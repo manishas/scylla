@@ -15,7 +15,7 @@ module.exports = function(server, models, controllers){
     server.get('/reports/:reportId', function(req, res, next) {
         controllers.reports
             .findById(req.params.reportId,
-                      req.query.includeFullImage,
+                      false,
                       req.query.includeResults)
             .then(utils.success(res, next), utils.fail(res, next));
     });

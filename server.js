@@ -109,7 +109,7 @@ cli.main(function(args, options) {
         name: 'Scylla',
         log:LOG,
         formatters:{
-            'image/png; q=0.9':imageFormatter
+            'image/png; q=0.3':imageFormatter
         }
     });
     var httpsServer = restify.createServer({

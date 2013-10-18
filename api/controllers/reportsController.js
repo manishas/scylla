@@ -11,7 +11,7 @@ module.exports = function(models){
         console.log("Reports Controller");
         var deferred = Q.defer();
         models.Report.find()
-            .populate({path:"masterResult", select:"-result"})
+            .populate({path:"masterResult", select:"-result -thumb"})
             .exec(execDeferredBridge(deferred));
         return deferred.promise;
     };
