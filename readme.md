@@ -31,7 +31,7 @@ Compare allows you to track the differences between two separate URLs. This is g
 The real value of Scylla is its ability to automate the visual testing. By setting up a batch of reports, you can run multiple reports at once, and even schedule the reports to run in the morning.  If you add your email address as a “Watcher” on a batch, you’ll get a summary email after each scheduled run, a handy piece of news to greet you first thing in the morning.
 
 ### Visual Diffs
-Scylla’s visual diff viewer let you compare screens in two ways.
+Scylla’s visual diff viewer lets you compare screens in two ways.
 
 #### Difference Overlay
 Scylla generates an image with all pixels that have changed in red.  We overlay this image on top of the new screenshot so that you can quickly see exactly which pixels have changed.  By adjusting the slider on the top, you can change the intensity of the red change markers.
@@ -46,7 +46,7 @@ Scylla comes with a vagrant script to make setting up a local server very simple
 2. Install [Vagrant]
 3. Optional: Configure SendGrid for sending emails.
     Copy mail-example.js to mail.js and add your sendgrid credentials.
-3. type ‘vagrant up’ in the scylla directory
+3. Type ‘vagrant up’ in the scylla directory
 4. Done! Scylla is now running at: http://localhost:8090/
 
 ## APIs
