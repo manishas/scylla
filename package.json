@@ -16,7 +16,7 @@
         "sinon": "1.7.3",
         "glob": "3.2.6",
         "cli": "0.4.5",
-        "charybdis": "git+https://github.com/simplymeasured/charybdis.git#0.6.0"
+        "charybdis": "git+https://github.com/simplymeasured/charybdis.git#0.6.1"
     },
     "devDependencies": {
         "chai": "*",
