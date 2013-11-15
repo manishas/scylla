@@ -13,9 +13,9 @@ module.exports = (function(){
                    console.log("ERROR?", util.inspect(err));
                 }
                 //console.log("Sending: ", value);
-                next();
+                return next();
             } else {
-                next(new restify.ResourceNotFound("Not Found"));
+                return next(new restify.ResourceNotFound("Not Found"));
             }
         };
     };
@@ -30,9 +30,11 @@ module.exports = (function(){
                 var imageBuffer = new Buffer(imageContents, 'base64');
                 //res.write(imageBuffer);
                 res.end(imageBuffer, 'binary');
-                next();
+                return next();
             } else {
-                next(new restify.ResourceNotFound("Not Found"));
+                console.log("No Image Found");
+                res.send(404, new Error('Image Not Found'));
+                return next(new restify.ResourceNotFound("Not Found"));
             }
         }
     };

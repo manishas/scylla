@@ -1,6 +1,6 @@
 {
     "name": "scylla",
-    "version": "0.5.3",
+    "version": "0.6.0",
     "description": "Scylla",
     "dependencies": {
         "restify": "2.6.0",
@@ -16,7 +16,7 @@
         "sinon": "1.7.3",
         "glob": "3.2.6",
         "cli": "0.4.5",
-        "charybdis": "git+https://github.com/simplymeasured/charybdis.git#0.5.20"
+        "charybdis": "git+https://github.com/simplymeasured/charybdis.git#0.6.0"
     },
     "devDependencies": {
         "chai": "*",
