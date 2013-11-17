@@ -10,12 +10,13 @@ var initModels = function initModels(databaseConfig, sync){
 
     modelNames.forEach(function(modelName){
         var modelInfo = require('./' + modelName)(Sequelize);
-        modelInfos[modelName] = modelInfo;
-        models[modelName] = db.define(modelInfo.name, modelInfo.schema, modelInfo.options);
+        modelInfos[modelInfo.name] = modelInfo;
+        models[modelInfo.name] = db.define(modelInfo.name, modelInfo.schema, modelInfo.options);
         console.log("Model Initialized: " + modelInfo.name);
     });
 
     //TODO: Ensure this doesn't destroy data
     if(sync) db.sync();
+    return models;
 };
 module.exports = initModels;

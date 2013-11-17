@@ -50,8 +50,9 @@ cli.main(function(args, options) {
     Q.longStackSupport = true;
     var sendgrid = new SendGrid(mailConfig.user, mailConfig.key);
 
-    var models = require('./api/models')(databaseConfig);
+    var models = require('./api/models')(databaseConfig, true);
 
+    console.log('Models: ', require('util').inspect(models));
     var controllers = {
         pages         : require('./api/controllers/pagesController')(models)
     };
