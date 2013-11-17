@@ -49,48 +49,21 @@ cli.main(function(args, options) {
     Q.longStackSupport = true;
     var sendgrid = new SendGrid(mailConfig.user, mailConfig.key);
 
-    var mongoose = require('mongoose');
-    //mongoose.set('debug', true);
-    mongoose.connect('mongodb://localhost/scylla');
+    var Sequelize = require("sequelize");
+    var sequelize = new Sequelize('scylla', 'postgres', 'scylla', {
+        dialect: 'postgres'
+    });
+
 
     var models = {
-        ObjectId       : mongoose.Types.ObjectId,
-        AbCompare      : require('./api/models/abCompare')(mongoose),
-        AbCompareResult: require('./api/models/abCompareResult')(mongoose),
-        Account        : require('./api/models/account')(mongoose),
-        ReportResult   : require('./api/models/reportResult')(mongoose),
-        Report         : require('./api/models/report')(mongoose),
-        BatchResult    : require('./api/models/batchResult')(mongoose),
-        Batch          : require('./api/models/batch')(mongoose),
-        ResultDiff     : require('./api/models/resultDiff')(mongoose)
+        Page           : require('./api/models/page')(sequelize)
     };
 
-    var executeBatch = function (batchId) {
-        return function () {
-            controllers.charybdis.executeOnBatch(batchId.toString())
-                .then(function (batchBundle) {
-                    emailController.sendBatchResultEmail(batchBundle.batch, batchBundle.batchResult);
-                }, function (error) {
-                    console.log("Error running Charybdis on BatchId: ", batchId, error);
-                });
-        };
-    };
-
-    var schedController = require('./api/controllers/scheduleController')();
-    var emailController = require('./api/controllers/emailController')(models, sendgrid);
+    //Sync up the database tables... this'll probably destroy data.
+    sequelize.sync();
 
     var controllers = {
-        abCompares      : require('./api/controllers/abComparesController')(models),
-        abCompareResults: require('./api/controllers/abCompareResultsController')(models),
-        account         : require('./api/controllers/accountController')(models),
-        reports         : require('./api/controllers/reportsController')(models),
-        reportResults   : require('./api/controllers/reportResultsController')(models),
-        batches         : require('./api/controllers/batchesController')(models, schedController, executeBatch),
-        batchResults    : require('./api/controllers/batchResultsController')(models),
-        resultDiffs     : require('./api/controllers/resultDiffsController')(models),
-        charybdis       : require('./api/controllers/charybdisController')("localhost", options.port),
-        schedule        : schedController,
-        email           : emailController
+        pages         : require('./api/controllers/pagesController')(models)
     };
 
 
@@ -131,15 +104,7 @@ cli.main(function(args, options) {
 
 
         var routes = {
-            abcompares      : require('./api/routes/abComparesRoutes')(restServer, models, controllers),
-            abcompareresults: require('./api/routes/abCompareResultsRoutes')(restServer, models, controllers),
-            reports         : require('./api/routes/reportsRoutes')(restServer, models, controllers),
-            reportResults   : require('./api/routes/reportResultsRoutes')(restServer, models, controllers),
-            resultDiffs     : require('./api/routes/resultDiffsRoutes')(restServer, models, controllers),
-            batches         : require('./api/routes/batchesRoutes')(restServer, models, controllers),
-            batchResults    : require('./api/routes/batchResultsRoutes')(restServer, models, controllers),
-            charybdis       : require('./api/routes/charybdisRoutes')(restServer, models, controllers),
-            monitoring      : require('./api/routes/monitoringRoutes')(restServer, models, controllers)
+            pages         : require('./api/routes/pagesRoutes')(restServer, models, controllers)
         };
 
         //We serve the 'static' site AFTER the API,
@@ -147,7 +112,8 @@ cli.main(function(args, options) {
             directory: './public',
             default:'index.html'
         }));
-    }
+    };
+
     setupServer(httpServer);
     setupServer(httpsServer);
 
@@ -156,14 +122,6 @@ cli.main(function(args, options) {
     httpsServer.listen(options.https_port)
 
     console.log("Listening on local ports: " + options.port + ", " + options.https_port);
-//Initialize the schedule
 
-    models.Batch.find(function (err, batches) {
-        if (err) throw "Problem loading Batches";
-        if (typeof batches.length === "undefined") batches = [batches];
-        batches.forEach(function (batch) {
-            controllers.schedule.addBatchToSchedule(batch, executeBatch(batch._id))
-        })
-    });
 
 })

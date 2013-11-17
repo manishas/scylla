@@ -1,13 +1,13 @@
-module.exports = function(ObjectId){
+module.exports = function(){
     'use strict';
 
     var execDeferredBridge = function(deferred){
-        return function(err, result){
+        return function(result){
             if(err){
                 console.log("Failing");
                 deferred.reject(err);
             } else {
-                //console.log(require('util').inspect(result));
+                console.log("Success: " + require('util').inspect(result));
                 deferred.resolve(result);
             }
         };
@@ -23,9 +23,6 @@ module.exports = function(ObjectId){
         };
     };
 
-    var toObjectIdArray = function toObjectIdArray(values){
-        return values.map(function(val){ return new ObjectId(val._id || val);});
-    };
 
     var first = function first(results){
         if(results.length === 0){
@@ -37,7 +34,6 @@ module.exports = function(ObjectId){
     };
 
     return {
-        toObjectIdArray:toObjectIdArray,
         execDeferredBridge:execDeferredBridge,
         execDeferredDeleteBridge:execDeferredDeleteBridge,
         first:first

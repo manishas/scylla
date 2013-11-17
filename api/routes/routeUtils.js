@@ -15,10 +15,29 @@ module.exports = (function(){
                 //console.log("Sending: ", value);
                 return next();
             } else {
+                res.send(404, new Error('Resource Not Found'));
                 return next(new restify.ResourceNotFound("Not Found"));
             }
         };
     };
+
+    var emptyOkSuccess = function(res,next){
+        return function(value){
+                console.log("Returning a 204", value);
+            if(value){
+                try{
+                    res.send(value);
+                } catch(err){
+                    console.log("ERROR?", util.inspect(err));
+                }
+                //console.log("Sending: ", value);
+                return next();
+            } else {
+                res.send(204, undefined);
+                return next();
+            }
+        };
+    }
 
     var imageSuccess = function(res, imagePlucker, next){
         return function(value){
@@ -85,6 +104,7 @@ module.exports = (function(){
     return {
         success:normalSuccess,
         successImage:imageSuccess,
+        successEmptyOk:emptyOkSuccess,
         fail:normalFail,
         validateInputs:validateInputs,
         v:simpleValidators
