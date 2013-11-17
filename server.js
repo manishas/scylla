@@ -44,23 +44,13 @@ cli.main(function(args, options) {
 
     var SendGrid = require('sendgrid').SendGrid;
     var mailConfig = require('./config/mail');
+    var databaseConfig = require('./config/database');
 
     var Q = require('q');
     Q.longStackSupport = true;
     var sendgrid = new SendGrid(mailConfig.user, mailConfig.key);
 
-    var Sequelize = require("sequelize");
-    var sequelize = new Sequelize('scylla', 'postgres', 'scylla', {
-        dialect: 'postgres'
-    });
-
-
-    var models = {
-        Page           : require('./api/models/page')(sequelize)
-    };
-
-    //Sync up the database tables... this'll probably destroy data.
-    sequelize.sync();
+    var models = require('./api/models')(databaseConfig);
 
     var controllers = {
         pages         : require('./api/controllers/pagesController')(models)

@@ -1,15 +1,18 @@
-module.exports = function(sequelize){
+module.exports = function(ORM){
     'use strict';
-    var Q = require('q');
-    var Sequelize = require("sequelize");
 
-    var Page = sequelize.define('Page', {
-        url: Sequelize.STRING,
-        name:Sequelize.STRING,
-        width:Sequelize.INTEGER,
-        height:Sequelize.INTEGER
-    });
+    return {
+        name:'Page',
+        schema:{
+            url: ORM.STRING,
+            name:ORM.STRING
+        },
+        options:{
 
-    return Page;
+        },
+        relationships:{
+
+        }
+    };
 
 };
