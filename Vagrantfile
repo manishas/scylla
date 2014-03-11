@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "precise64"
+  config.vm.box = "saucy64"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -20,6 +20,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, host: 8090, guest: 3000
   config.vm.network :forwarded_port, host: 8091, guest: 3443
   config.ssh.forward_agent = true
+
+  config.vm.provider "virtualbox" do |v|
+    v.customize ["modifyvm", :id, "--ioapic", "on"]
+    v.customize ["modifyvm", :id, "--cpus", "2"]
+#    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+#    v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+  end
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,

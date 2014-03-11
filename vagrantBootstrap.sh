@@ -36,18 +36,31 @@ then
     touch /var/log/2systemsetup
 fi
 
-if [ ! -f /var/log/3mongosetup ];
+if [ ! -f /var/log/3mysqlsetup ];
 then
-    echo -e "${yellow}Installing MongoDB${NC}"
-    sudo apt-get install -y mongodb-10gen python g++ make
-    touch /var/log/3mongosetup
+    echo -e "${yellow}Installing MySQL${NC}"
+    sudo debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password password scylla'
+    sudo debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password_again password scylla'
+    sudo apt-get install -y mysql-client-core-5.5 mysql-server-5.5
+
+    echo "CREATE USER 'scylla'@'localhost' IDENTIFIED BY 'scylla'" | mysql -uroot -pscylla
+    echo "CREATE DATABASE scylla" | mysql -uroot -pscylla
+    echo "GRANT ALL ON scylla.* TO 'scylla'@'localhost'" | mysql -uroot -pscylla
+    echo "flush privileges" | mysql -uroot -pscylla
+
+    if [ -f /vagrant/data/initial.sql ];
+    then
+        mysql -uroot -pscylla scylla < /vagrant/data/initial.sql
+    fi
+
+    touch /var/log/3mysqlsetup
 fi
 
 if [ ! -f /var/log/4nodejssetup ];
 then
     echo -e "${yellow}Installing NodeJS${NC}"
     sudo apt-get install -y nodejs
-    sudo npm install -g bower
+    sudo npm install -g bower supervisor bunyan
     touch /var/log/4nodejssetup
 fi
 

@@ -11,7 +11,7 @@ module.exports = function(ORM){
 
         },
         relationships:{
-
+            hasMany:"Snapshot"
         }
     };
 

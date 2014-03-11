@@ -6,10 +6,14 @@ module.exports = function(ORM){
         schema:{
             params: ORM.STRING,
             notes:ORM.STRING,
-            state:ORM.STRING
+            state:ORM.STRING,
+            imageId:ORM.STRING,
+            thumbId:ORM.STRING
         },
         options:{},
-        relationships:{}
+        relationships:{
+            belongsTo:"Page"
+        }
     };
 
 };

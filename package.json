@@ -17,9 +17,9 @@
     "cli": "0.4.5",
     "charybdis": "git+https://github.com/simplymeasured/charybdis.git#0.6.1",
     "sqlite3": "~2.1.19",
-    "sequelize": "~2.0.0-beta.1",
-    "sequelize-postgres": "~2.0.0-beta.1",
-    "sequelize-mysql": "~2.0.0-beta.1"
+    "socket.io": "~0.9.16",
+    "sequelize": "^1.7.0",
+    "mysql": "^2.1.0"
   },
   "devDependencies": {
     "chai": "*",
