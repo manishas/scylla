@@ -28,7 +28,8 @@
     "grunt-contrib-jshint": "~0.6.4",
     "grunt": "~0.4.1",
     "matchdep": "~0.1.2",
-    "grunt-release": "~0.5.1"
+    "grunt-release": "~0.5.1",
+    "sqlite3": "^2.1.19"
   },
   "main": "server.js",
   "scripts": {

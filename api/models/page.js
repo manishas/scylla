@@ -4,8 +4,20 @@ module.exports = function(ORM){
     return {
         name:'Page',
         schema:{
-            url: ORM.STRING,
-            name:ORM.STRING
+            url: {
+                type:ORM.STRING,
+                validate:{
+                    notEmpty:true,
+                    notNull:true
+                }
+            },
+            name:{
+                type:ORM.STRING,
+                validate:{
+                    notEmpty:true,
+                    notNull:true
+                }
+            }
         },
         options:{
 
