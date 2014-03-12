@@ -6,7 +6,7 @@ var initModels = function initModels(log, databaseConfig, sync){
     var relationships = {};
     var modelInfos = {};
     var db = new Sequelize('scylla', databaseConfig.user, databaseConfig.password, databaseConfig.properties);
-    var modelNames = ['page','snapshot'];
+    var modelNames = ['page','snapshot','image','thumb'];
     log.info("Initializing Models");
 
     modelNames.forEach(function(modelName){

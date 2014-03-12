@@ -8,7 +8,8 @@ module.exports = function(ORM){
                 type:ORM.STRING,
                 validate:{
                     notEmpty:true,
-                    notNull:true
+                    notNull:true,
+                    isUrl:true
                 }
             },
             name:{

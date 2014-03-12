@@ -4,15 +4,23 @@ module.exports = function(ORM){
     return {
         name:'Snapshot',
         schema:{
-            params: ORM.STRING,
-            notes:ORM.STRING,
-            state:ORM.STRING,
-            imageId:ORM.STRING,
-            thumbId:ORM.STRING
+            params: ORM.TEXT,
+            notes:ORM.TEXT,
+            console:ORM.TEXT,
+            /**
+             * Queued, Capturing, Complete
+             */
+            state:{
+                type:ORM.STRING,
+                validate:{
+                    isIn:[['Queued', 'Capturing', 'Complete']]
+                }
+            }
         },
         options:{},
         relationships:{
-            belongsTo:"Page"
+            belongsTo:"Page",
+            hasOne:"Image"
         }
     };
 
