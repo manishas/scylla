@@ -6,7 +6,7 @@ var initModels = function initModels(log, databaseConfig, sync){
     var relationships = {};
     var modelInfos = {};
     var db = new Sequelize('scylla', databaseConfig.user, databaseConfig.password, databaseConfig.properties);
-    var modelNames = ['page','snapshot','image','thumb'];
+    var modelNames = ['page','snapshot','image','thumb', 'user', 'suite'];
     log.info("Initializing Models");
 
     modelNames.forEach(function(modelName){
@@ -23,8 +23,13 @@ var initModels = function initModels(log, databaseConfig, sync){
         var relation = relationships[modelName];
         for(var relName in relation){
             var related = relation[relName];
-            log.info(related)
-            models[modelName][relName](models[related]);
+            var relAlias;
+            if(Array.isArray(related)){
+                relAlias = {as:related[1]};
+                related = related[0];
+            }
+            log.info(modelName + " " + relName + " " + related);
+            models[modelName][relName](models[related], relAlias);
         }
     }
 
