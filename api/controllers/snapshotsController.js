@@ -1,38 +1,37 @@
-module.exports = function(models, io){
+module.exports = function(LOG, models, io){
     'use strict';
+    var Q = require('q');
+    var shared = require('./commonController')(LOG);
 
 
     var list = function list(){
-        return models.Snapshot.findAll();
+        return Q(models.Snapshot.findAll());
     };
 
     var findById = function findById(id){
-        return models.Snapshot.find(id);
+        return Q(models.Snapshot.find(id));
     };
 
     var create = function create(properties, pageId){
         properties.PageId = pageId;
-        return models.Snapshot.build(properties).save()
-            .success(function(snapshot){
-                
-            });
+        return shared.buildAndValidateModel(models.Snapshot, properties);
     };
 
     var update = function update(id, properties){
-        return models.Snapshot.find(id)
+        return Q(models.Snapshot.find(id)
             .success(function(snapshot){
                 return snapshot.updateAttributes(properties);
-            });
+            }));
     };
 
     var destroy = function destroy(id){
-        return models.Snapshot.find(id)
+        return Q(models.Snapshot.find(id)
             .success(function(snapshot){
                 return snapshot.destroy()
                     .success(function(){
                         return undefined;
                     });
-            });
+            }));
     };
 
     return {

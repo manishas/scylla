@@ -39,6 +39,7 @@ cli.main(function(args, options) {
             'image/png; q=0.3':imageFormatter
         }
     });
+    /*
     var httpsServer = restify.createServer({
         name: 'Scylla Secure',
         log:LOG,
@@ -49,11 +50,12 @@ cli.main(function(args, options) {
         key: fs.readFileSync('/etc/ssl/self-signed/server.key'),
         certificate: fs.readFileSync('/etc/ssl/self-signed/server.crt')
     });
-    var io = require('socket.io').listen(httpsServer);
+    */
+    //var io = require('socket.io').listen(httpsServer);
 
     var controllers = {
-        pages         : require('./api/controllers/pagesController')(models, io),
-        snapshots     : require('./api/controllers/snapshotsController')(models, io)
+        pages         : require('./api/controllers/pagesController')(LOG, models),
+        snapshots     : require('./api/controllers/snapshotsController')(LOG, models)
     };
 
     var setupServer = function(restServer){
@@ -62,8 +64,9 @@ cli.main(function(args, options) {
         restServer.use(restify.bodyParser());
 
         var routes = {
-            pages         : require('./api/routes/pagesRoutes')(restServer, models, controllers),
-            snapshots     : require('./api/routes/snapshotsRoutes')(restServer, models, controllers)
+            monitoring    : require('./api/routes/monitoringRoutes')(LOG, restServer),
+            pages         : require('./api/routes/pagesRoutes')(LOG, restServer, models, controllers),
+            snapshots     : require('./api/routes/snapshotsRoutes')(LOG, restServer, models, controllers)
         };
 
         //We serve the 'static' site AFTER the API,
@@ -76,11 +79,11 @@ cli.main(function(args, options) {
 
 
     setupServer(httpServer);
-    setupServer(httpsServer);
+    //setupServer(httpsServer);
 
 
     httpServer.listen(options.port);
-    httpsServer.listen(options.https_port);
+    //httpsServer.listen(options.https_port);
 
     LOG.info("Listening on local ports: " + options.port + ", " + options.https_port);
 

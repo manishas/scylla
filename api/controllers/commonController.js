@@ -1,5 +1,8 @@
-module.exports = function(){
+module.exports = function(LOG){
     'use strict';
+    var Q = require('q');
+    var restify = require('restify');
+    var util = require('util');
 
     var execDeferredBridge = function(deferred){
         return function(result){
@@ -33,9 +36,32 @@ module.exports = function(){
         return results[0];
     };
 
+    var buildAndValidateModel = function buildAndValidateModel(Model, properties){
+        var model = Model.build(properties);
+        var validations = model.validate();
+        if(validations != null){
+            LOG.info("Validations Failed", validations);
+            return Q.reject(new ValidationError(require('util').inspect(validations)));
+        }
+        return Q(model.save());
+    }
+
+    var ValidationError = function ValidationError(message) {
+        restify.RestError.call(this, {
+            restCode: 'ValidationError',
+            statusCode: 400,
+            message: message,
+            constructorOpt: ValidationError
+        });
+        this.name = 'ValidationError';
+    };
+    util.inherits(ValidationError, restify.RestError);
+
     return {
         execDeferredBridge:execDeferredBridge,
         execDeferredDeleteBridge:execDeferredDeleteBridge,
-        first:first
+        first:first,
+        buildAndValidateModel:buildAndValidateModel,
+        ValidationError:ValidationError
     };
 };

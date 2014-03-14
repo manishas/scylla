@@ -1,34 +1,35 @@
-module.exports = function(models){
+module.exports = function(LOG, models){
     'use strict';
-
+    var Q = require('q');
+    var shared = require('./commonController')(LOG);
 
     var list = function list(){
-        return models.Page.findAll();
+        return Q(models.Page.findAll());
     };
 
     var findById = function findById(id){
-        return models.Page.find(id);
+        return Q(models.Page.find(id));
     };
 
     var create = function create(properties){
-        return models.Page.build(properties).save();
+        return shared.buildAndValidateModel(models.Page, properties);
     };
 
     var update = function update(id, properties){
-        return models.Page.find(id)
+        return Q(models.Page.find(id)
             .success(function(page){
                 return page.updateAttributes(properties);
-            });
+            }));
     };
 
     var destroy = function destroy(id){
-        return models.Page.find(id)
+        return Q(models.Page.find(id)
             .success(function(page){
                 return page.destroy()
                     .success(function(){
                         return undefined;
                     });
-            });
+            }));
     };
 
     return {

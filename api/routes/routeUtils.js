@@ -60,44 +60,14 @@ module.exports = (function(){
 
     var normalFail = function(res, next){
         return function(error){
-            console.error("\nRoute Failure: ", util.inspect(error));
-            console.log(error.stack);
-            next(new restify.InternalError(util.inspect(error)));
-        };
-    };
-
-    var validateInputs = function(body, rules){
-        var deferred = Q.defer();
-        if(typeof body === "undefined" || body === null){
-            deferred.reject({errors:{"body":"No Data Submitted"}});
-        } else {
-            var hasError = false;
-            var errors = {};
-            for(var property in rules){
-                var rule = rules[property];
-                var result = rule(body[property]);
-                if(result !== true){
-                    hasError = true;
-                    errors[property] = result;
-                }
-            }
-            if(hasError){
-                deferred.reject(errors);
+            if(error instanceof restify.RestError){
+                return next(error);
             } else {
-                deferred.resolve(body);
+                console.error("\nRoute Failure: ", util.inspect(error));
+                console.log(error.stack);
+                return next(new restify.InternalError(util.inspect(error)));
             }
-        }
-
-        return deferred.promise;
-    };
-
-    var simpleValidators = {
-        required:function(value){
-            if(typeof value === "undefined" || value === null || value === ""){
-                return "is required.";
-            }
-            return true;
-        }
+        };
     };
 
 
@@ -105,8 +75,6 @@ module.exports = (function(){
         success:normalSuccess,
         successImage:imageSuccess,
         successEmptyOk:emptyOkSuccess,
-        fail:normalFail,
-        validateInputs:validateInputs,
-        v:simpleValidators
+        fail:normalFail
     };
 })();

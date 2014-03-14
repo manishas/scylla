@@ -41,10 +41,14 @@ module.exports = function(host, port){
                     if(response.status != 404){
                         console.error("\nError with URL: ",requestObject.method, requestObject.path);
                         console.error("Status: " + response.status);
-                        response.body.read()
-                            .then(function(body){console.error(body.toString())});
+                        return response.body.read()
+                            .then(function(body){
+                                throw new Error(body.toString());
+                            });
+                    } else {
+                        throw new Error(response.status);
                     }
-                    throw new Error(response.status);
+
                 }
             });
 
