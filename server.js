@@ -13,6 +13,7 @@ cli.parse({
 });
 var fs = require('fs');
 var restify = require('restify');
+var path = require('path');
 
 
 cli.main(function(args, options) {
@@ -22,6 +23,8 @@ cli.main(function(args, options) {
     var SendGrid = require('sendgrid').SendGrid;
     var mailConfig = require('./config/mail');
     var databaseConfig = require('./config/database');
+    //Restify does some odd things, so this folder needs to be 2x deep
+    var imagePath = path.resolve( "images", "resources");
 
     var Q = require('q');
     Q.longStackSupport = true;
@@ -34,10 +37,7 @@ cli.main(function(args, options) {
 
     var httpServer = restify.createServer({
         name: 'Scylla',
-        log:LOG,
-        formatters:{
-            'image/png; q=0.3':imageFormatter
-        }
+        log:LOG
     });
     /*
     var httpsServer = restify.createServer({
@@ -55,25 +55,41 @@ cli.main(function(args, options) {
 
     var controllers = {
         pages         : require('./api/controllers/pagesController')(LOG, models),
-        snapshots     : require('./api/controllers/snapshotsController')(LOG, models)
+        snapshots     : require('./api/controllers/snapshotsController')(LOG, models),
+        charybdis     : require('./api/controllers/charybdisController')(LOG, models),
+        image         : require('./api/controllers/imageController')(LOG,models,imagePath)
     };
 
     var setupServer = function(restServer){
         restServer.use(restify.requestLogger());
         restServer.use(restify.queryParser());
         restServer.use(restify.bodyParser());
-
+        /*
+        //This can be REALLY noisy... I only ever use it when debugging
+        restServer.on('after', restify.auditLogger({
+            log: LOG
+        }));
+        */
         var routes = {
             monitoring    : require('./api/routes/monitoringRoutes')(LOG, restServer),
             pages         : require('./api/routes/pagesRoutes')(LOG, restServer, models, controllers),
-            snapshots     : require('./api/routes/snapshotsRoutes')(LOG, restServer, models, controllers)
+            snapshots     : require('./api/routes/snapshotsRoutes')(LOG, restServer, models, controllers),
+            charybdis     : require('./api/routes/charybdisRoutes')(LOG, restServer, models, controllers)
         };
+
+        //As mentioned above, Restify appends 'directory' when looking for these files
+        //So we need to create a directory structure that accommodates that.
+        restServer.get(/\/resources/, restify.serveStatic({
+            directory: './images',
+            default:'index.html'
+        }));
 
         //We serve the 'static' site AFTER the API,
         restServer.get(/\//, restify.serveStatic({
             directory: './public',
             default:'index.html'
         }));
+
 
     };
 

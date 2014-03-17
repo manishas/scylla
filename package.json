@@ -5,7 +5,7 @@
   "dependencies": {
     "restify": "2.6.0",
     "bunyan": "0.21.4",
-    "q-io": "1.6.6",
+    "q-io": "^1.6.6",
     "node-schedule": "0.1.10",
     "q": "0.9.5",
     "sendgrid": "0.2.12",
@@ -15,7 +15,7 @@
     "sinon": "1.7.3",
     "glob": "3.2.6",
     "cli": "0.4.5",
-    "charybdis": "git+https://github.com/simplymeasured/charybdis.git#0.6.1",
+    "charybdis": "git+https://github.com/simplymeasured/charybdis.git#v2",
     "sqlite3": "~2.1.19",
     "socket.io": "~0.9.16",
     "sequelize": "^1.7.0",

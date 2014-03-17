@@ -7,6 +7,7 @@ module.exports = function(ORM){
             params: ORM.TEXT,
             notes:ORM.TEXT,
             console:ORM.TEXT,
+            message:ORM.TEXT,
             /**
              * Queued, Capturing, Complete
              */

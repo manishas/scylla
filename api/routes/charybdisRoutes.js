@@ -1,16 +1,31 @@
-module.exports = function(server, models, controllers){
+module.exports = function(LOG, server, models, controllers){
     'use strict';
     var utils = require('./routeUtils');
 
-    server.get('/reports/:reportId/newMaster', function(req, res, next){
-        controllers.charybdis.captureReportSnapshot(req.params.reportId)
-            .then(function(reportResult){
-                //console.log(require('util').inspect(reportResult));
-                console.log("Setting result " + reportResult._id + " as master for report: " + req.params.reportId);
-                return controllers.reports.updateReportMaster(req.params.reportId, reportResult._id);
+
+    server.post('/pages/:pageId/captureSnapshot', function(req, res, next){
+        var pageId = req.params.pageId;
+        return controllers.pages.findById(pageId)
+            .then(function(page){
+                return controllers.charybdis.webPageToSnapshot(page.url, 800, 800);
             })
-            .then(utils.success(res, next), utils.fail(res, next));
+            .then(function(snapshotResult){
+
+                var fileContents = snapshotResult.image.contents;
+                delete snapshotResult.image.contents;
+
+                return controllers.image.saveSnapshotImage(pageId, fileContents)
+                    .then(function(filePath){
+                        LOG.info(snapshotResult);
+
+                        snapshotResult.image.url = filePath;
+                        return snapshotResult;
+                    })
+            })
+            .then(utils.success(res, next))
+            .fail(utils.fail(res, next));
     });
+    /*
 
     server.get('/reports/:reportId/run', function(req, res, next){
         controllers.charybdis.executeOnReport(req.params.reportId)
@@ -26,4 +41,5 @@ module.exports = function(server, models, controllers){
         controllers.charybdis.executeABCompare(req.params.compareId)
             .then(utils.success(res, next), utils.fail(res, next));
     });
+    */
 };
