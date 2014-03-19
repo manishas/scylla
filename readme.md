@@ -5,6 +5,8 @@
 ## Introduction
 Scylla detects visual changes in web pages by capturing screenshots of webpages, comparing them and then alerting the user to the specific changes. It displays the visual changes in an easy-to-explore manner, which makes it accessible to all levels of technical ability.
 
+Triggering a build....
+
 ### Developers
 As a Developer, Scylla can serve as the first line of testing.
 * Run it immediately after a change, and Scylla will allow you to immediately ensure that things changed as planned.
