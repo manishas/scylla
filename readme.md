@@ -16,7 +16,7 @@ Quality and Ops’ focus on the end-user experience often means that they want t
 * A simple API allows automated tools to generate new screenshots.
 
 
-## Getting Started
+## Getting Started with scylla
 
 ### Capturing Screenshots
 Scylla has two ways that you can capture and compare screenshots.
