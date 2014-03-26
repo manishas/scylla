@@ -7,3 +7,7 @@ branches:
   except:
     - gh-pages
     - project_website
+    
+notifications:
+  email:
+    - manisha@shippable.com
